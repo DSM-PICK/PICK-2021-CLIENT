@@ -4,6 +4,8 @@ import App from "./App";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
 import { BarLoader } from "react-spinners";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled from "@emotion/styled";
 
 const queryClient = new QueryClient({
@@ -23,6 +25,7 @@ const CircleBox = styled.div`
 
 ReactDOM.render(
   <React.StrictMode>
+    <ToastContainer position="top-right" hideProgressBar={true}/>
     <RecoilRoot>
       <Suspense
         fallback={
