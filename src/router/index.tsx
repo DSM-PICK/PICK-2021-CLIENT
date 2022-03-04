@@ -1,14 +1,16 @@
 import { FC } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import App from "../App";
-import Attendance from "../components/attendance/index";
+import SplashScreen from "../components/common/SplashScreen";
+import MainPage from "../page";
+import Login from "../page/Login";
 
 const Router: FC = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/attendance" element={<Attendance />} />
+        <Route path="/" element={<SplashScreen />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<MainPage />} />
       </Routes>
     </BrowserRouter>
   );
