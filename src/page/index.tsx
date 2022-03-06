@@ -30,11 +30,14 @@ export const MainWrapper = styled.div`
 
 export const Container = styled.div`
   width: 100%;
-  height: 83%;
+  height: 100%;
   margin: 0 auto;
   overflow: auto;
-  padding: 0 7%;
+  padding: 10% 7%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   canvas {
     position: absolute;
