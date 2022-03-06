@@ -3,7 +3,6 @@ import moment from "moment";
 import { useRecoilState } from "recoil";
 import { date } from "../../../modules/atom/calendar";
 import * as S from "./style";
-// import "../../../index.css";
 import { StateChangeHook } from "../../../utils/hook/stateChangeHook";
 import { useQuery } from "react-query";
 import schedule from "../../../utils/api/schedule/scheduleApi";
@@ -31,10 +30,6 @@ const CalendarContent = () => {
       keepPreviousData: true,
     }
   );
-
-  // 1. 달력의 스케줄이 있는 날짜는 일정이 표시됩니다.
-  // 2. 달력을 그리고 데이터를 불러온다.
-  // 3. 데이터의 날짜의 맞게 달력을 찍는다.
 
   function generate() {
     const today = baseDate;
@@ -86,7 +81,7 @@ const CalendarContent = () => {
                   <div className="teacher_list">
                     {_schedule?.director?.map(
                       (teacher: ScheduleTeacherType) => (
-                        <span>{teacher.name}</span>
+                        <span key={teacher.teacher_id}>{teacher.name}</span>
                       )
                     )}
                   </div>
