@@ -13,6 +13,8 @@ export const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
+  position: fixed;
+  z-index: 1;
 
   a > img {
     width: 200px;
@@ -41,7 +43,8 @@ export const HeaderWrapper = styled.div`
 
 export const FooterWrapper = styled(HeaderWrapper)`
   width: 100vw;
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   bottom: 0;
   display: flex;
   flex-direction: row;
