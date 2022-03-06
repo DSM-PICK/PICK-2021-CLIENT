@@ -33,6 +33,10 @@ export const StateBtnList: StateBtnType[] = [
 
 export const ClassButtonList: StateBtnType[] = [
   {
+    id: 1,
+    name: "전체",
+  },
+  {
     id: 2,
     floor: 2,
     name: "2층",
