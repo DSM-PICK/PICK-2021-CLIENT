@@ -10,26 +10,26 @@ import {
   TeacherFloorType,
   TeacherType,
 } from "../../../../utils/interface/teacher";
+import { modal } from "../../../../modules/atom/schedule";
 
 const TeacherChange = () => {
   const queryClient = useQueryClient();
-
   const teacherList = useRecoilValue(teacherListSelector);
   const baseDate = useRecoilValue(date);
   const dateContent = useRecoilValue(dateValue);
+  const modalOpen = useRecoilValue(modal);
 
   // 층별 선생님 리스트
   const { data: teacherFloor } = useQuery(
     ["teacher_floor", baseDate],
     () => teacherApi.getTeacherApi(baseDate.format("YYYY-MM-DD")),
     {
-      enabled: !!dateContent,
+      enabled: !!dateContent && modalOpen,
       cacheTime: Infinity,
       staleTime: Infinity,
     }
   );
 
-  console.log(teacherFloor?.data);
   const { mutate: patchTeacherHandle } = useMutation(
     ({ floor, id }: any) =>
       schedule.patchTeacher(baseDate.format("YYYY-MM-DD"), floor, id),

@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { date } from "../../../../modules/atom/calendar";
 import * as S from "../style";
 import { modal } from "../../../../modules/atom/schedule";
@@ -10,14 +10,14 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 const ScheduleChange = () => {
   const queryClient = useQueryClient();
   const baseDate = useRecoilValue(date);
-  const setModalOpen = useSetRecoilState(modal);
+  const [modalOpen, setModalOpen] = useRecoilState(modal);
 
   // 일정에 대한 state : 방과후 / 동아리 / 자습
   const { data: stateValue } = useQuery(
     ["state_value", baseDate],
     () => schedule.getScheduleDate(baseDate.format("YYYY-MM-DD")),
     {
-      enabled: !!baseDate,
+      enabled: !!baseDate && modalOpen,
       cacheTime: Infinity,
       staleTime: Infinity,
     }
