@@ -42,7 +42,7 @@ const ReasonItem = () => {
         className="text-input"
         placeholder="사유를 입력해주세요"
       />
-      <SaveButton onClick={inputResetHandle}>학생 추가</SaveButton>
+      <SaveButton onClick={inputResetHandle}>사유 등록</SaveButton>
     </EnrollmentItem>
   );
 };
@@ -84,11 +84,12 @@ const SaveButton = styled.button`
   outline: none;
   border: none;
   background-color: ${MainColor};
-  padding: 0 15px;
-  font-size: 17px;
+  padding: 10px 15px;
   color: white;
-  border-radius: 3px;
+  border-radius: 20px;
   margin: 2px 0;
+  filter: drop-shadow(0px 2px 5px rgba(153, 153, 153, 0.25));
+  font-size: 16px;
 `;
 
 export default ReasonItem;

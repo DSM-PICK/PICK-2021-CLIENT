@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import styled from "@emotion/styled";
-import { MainColor } from "../../../style/color";
+import { DefaultColor, MainColor } from "../../../style/color";
 import { attendanceData } from "../../../modules/atom/attendance";
 import { StateBtnType } from "../../../utils/interface/Attendance/StateBtnType";
 
@@ -27,8 +27,9 @@ const StateBtn = (props: Props) => {
         onChange(props.item.name);
       }}
       style={{
-        background: props.item.id === props.selected ? `${MainColor}` : "",
-        color: props.item.id === props.selected ? "white" : "black",
+        background:
+          props.item.id === props.selected ? `${MainColor}` : `${DefaultColor}`,
+        color: props.item.id === props.selected ? "white" : "#6B6B6B",
       }}
     >
       {props.item.name}
@@ -37,9 +38,10 @@ const StateBtn = (props: Props) => {
 };
 
 const FieldButtonWrap = styled.span`
-  padding: 9px 15px;
-  border-radius: 3px;
-  font-size: 17px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin-left: 5px;
+  filter: drop-shadow(0px 2px 5px rgba(153, 153, 153, 0.25));
 `;
 
 export default StateBtn;

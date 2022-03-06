@@ -81,7 +81,7 @@ const EnrollmentHistory = () => {
 
 const EnrollmentHistoryWrap = styled.form`
   width: 35%;
-  height: 70%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -113,14 +113,15 @@ const EnrollmentHistoryWrap = styled.form`
   }
 
   & button {
-    padding: 6px 0;
+    font-size: 16px;
+    padding: 10px 15px;
     outline: none;
     border: none;
-    border-radius: 3px;
+    border-radius: 20px;
     width: 100%;
     background: ${MainColor};
-    font-size: 18px;
     color: white;
+    filter: drop-shadow(0px 2px 5px rgba(153, 153, 153, 0.25));
   }
 `;
 
