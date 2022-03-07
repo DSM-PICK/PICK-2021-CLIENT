@@ -5,11 +5,15 @@ import { attendanceData } from "../../../../modules/atom/attendance";
 import teacher from "../../../../utils/api/teacher";
 import { StudentType } from "../../../../utils/interface/teacher";
 
-const NameItem = () => {
+type Props = {
+  inputValue: string;
+  setInputValue: any;
+};
+
+const NameItem = ({ inputValue, setInputValue }: Props) => {
   const [attendance, setAttendance] = useRecoilState(attendanceData);
   const [student, setStudent] = useState<StudentType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState("");
 
   const handleOnInputClick = (item: StudentType) => {
     setInputValue(item.name);
@@ -43,6 +47,7 @@ const NameItem = () => {
         type="text"
         name="name"
         value={inputValue}
+        defaultValue={attendance.name}
         onChange={(e) => setInputValue(e.target.value)}
         className="text-input"
         placeholder="이름을 입력해주세요"
@@ -99,6 +104,7 @@ const EnrollmentItem = styled.div`
 `;
 
 export const StudentList = styled.div<{ open: boolean }>`
+  z-index: 1;
   width: fit-content;
   height: fit-content;
   background-color: white;
