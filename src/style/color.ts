@@ -4,7 +4,7 @@ export const BoxColor = "#FFFFFF";
 export const DefaultColor = "#ededed";
 
 export const COLOR = {
-  orange: "#FF6E04", 
+  orange: "#FF6E04",
   white: "#FFFFFF",
   grey: "#E5E5E5",
   red: "#FF0101",

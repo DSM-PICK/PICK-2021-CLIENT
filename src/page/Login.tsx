@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { baseURL } from "../utils/api/axios";
-import { Logo } from "../utils/assets";
-import { User } from "../utils/interface/user";
+import { baseURL } from "../lib/api/mobile/axios";
+import { User } from "../lib/interface/mobile/user";
+import { Logo } from "../assets";
 import styled from "@emotion/styled";
 
 const Login = () => {

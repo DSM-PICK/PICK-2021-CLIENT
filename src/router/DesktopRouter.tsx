@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import SplashScreen from "../components/common/SplashScreen";
+import SplashScreen from "../components/mobile/common/SplashScreen";
 import MainPage from "../page";
 import Calendar from "../page/Calendar";
 import Login from "../page/Login";
