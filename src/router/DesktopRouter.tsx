@@ -5,7 +5,7 @@ import MainPage from "../page";
 import Calendar from "../page/Calendar";
 import Login from "../page/Login";
 
-const Router: FC = (): JSX.Element => {
+const DesktopRouter: FC = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
@@ -18,4 +18,4 @@ const Router: FC = (): JSX.Element => {
   );
 };
 
-export default Router;
+export default DesktopRouter;
