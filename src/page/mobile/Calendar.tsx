@@ -1,11 +1,11 @@
 import { ToastContainer } from "react-toastify";
 import styled from "@emotion/styled";
-import Header from "../components/mobile/common/header/Header";
-import Footer from "../components/mobile/common/header/Footer";
-import CalendarHead from "../components/mobile/calendar/calendarItem/CalendarHead";
-import CalendarContent from "../components/mobile/calendar/calendarItem/CalendarContent";
-import CalendarChangeBtn from "../components/mobile/calendar/calendarItem/CalendarChangeBtn";
-import ChangeModal from "../components/mobile/calendar/scheduleChange";
+import Header from "../../components/mobile/common/header/Header";
+import Footer from "../../components/mobile/common/header/Footer";
+import CalendarHead from "../../components/mobile/calendar/calendarItem/CalendarHead";
+import CalendarContent from "../../components/mobile/calendar/calendarItem/CalendarContent";
+import CalendarChangeBtn from "../../components/mobile/calendar/calendarItem/CalendarChangeBtn";
+import ChangeModal from "../../components/mobile/calendar/scheduleChange";
 
 const Calendar = () => {
   return (

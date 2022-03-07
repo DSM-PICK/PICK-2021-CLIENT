@@ -1,21 +1,30 @@
 import { FC } from "react";
-import { Route, BrowserRouter, Routes } from "react-router-dom";
-import SplashScreen from "../components/mobile/common/SplashScreen";
-import MainPage from "../page";
-import Calendar from "../page/Calendar";
-import Login from "../page/Login";
-
-const DesktopRouter: FC = (): JSX.Element => {
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import {
+  LoginPage,
+  ManageSchedulePage,
+  AttendanceCheckPage,
+  AttendanceChangePage,
+  StudentListPage,
+  AtcheckPage,
+  PasswordPage,
+} from "../page/desktop";
+const MainRouter: FC = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SplashScreen />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<MainPage />} />
-        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/" element={<AttendanceChangePage />} />
+        <Route path="/home" element={<AttendanceChangePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/schedule" element={<ManageSchedulePage />} />
+        <Route path="/manageschedule" element={<ManageSchedulePage />} />
+        <Route path="/studentlist" element={<StudentListPage />} />
+        <Route path="/atview" element={<AttendanceCheckPage />} />
+        <Route path="/atcheck" element={<AtcheckPage />} />
+        <Route path="/password" element={<PasswordPage />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
-export default DesktopRouter;
+export default MainRouter;
