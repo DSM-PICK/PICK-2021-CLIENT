@@ -29,8 +29,8 @@ export const selectCount = atom({
 export const attendanceData = atom<AttendancePostType>({
   key: "attendance",
   default: {
-    student_id: 0,
-    state: "이동",
+    student_id: null,
+    state: "",
     term: "",
     reason: "",
   },
