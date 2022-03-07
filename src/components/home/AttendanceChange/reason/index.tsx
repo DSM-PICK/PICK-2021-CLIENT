@@ -93,11 +93,12 @@ const SaveButton = styled.button`
   outline: none;
   border: none;
   background-color: ${MainColor};
-  padding: 0 15px;
-  font-size: 17px;
+  padding: 10px 15px;
   color: white;
-  border-radius: 3px;
+  border-radius: 20px;
   margin: 2px 0;
+  filter: drop-shadow(0px 2px 5px rgba(153, 153, 153, 0.25));
+  font-size: 16px;
 `;
 
 export default ReasonItem;
