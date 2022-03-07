@@ -13,7 +13,7 @@ export interface AttendanceType {
 export interface AttendancePostType {
   state: string;
   term: string;
-  student_id: number;
+  student_id: number | null;
   name?: string;
   reason: string;
 }

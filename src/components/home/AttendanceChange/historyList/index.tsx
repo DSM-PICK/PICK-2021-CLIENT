@@ -28,14 +28,14 @@ const EnrollmentHistory = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("attendance_list_value");
         toast.success("출결이 등록되었습니다.");
-        setAttendanceValue({
-          student_id: 0,
-          name: "",
-          state: "",
-          term: "",
-          reason: "",
-        });
-        setAttendanceList([]);
+        // setAttendanceValue({
+        //   student_id: 0,
+        //   name: "",
+        //   state: "",
+        //   term: "",
+        //   reason: "",
+        // });
+        // setAttendanceList([]);
       },
       onError: () => {
         toast.error("출결 등록에 실패했습니다.");
@@ -63,7 +63,7 @@ const EnrollmentHistory = () => {
                 <img
                   src={Close}
                   alt="삭제버튼"
-                  onClick={() => attendanceFilter(item.student_id)}
+                  onClick={() => attendanceFilter(item.student_id ?? 0)}
                 />
               </div>
             ))}

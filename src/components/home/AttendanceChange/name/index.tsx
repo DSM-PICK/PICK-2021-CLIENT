@@ -9,23 +9,32 @@ const NameItem = () => {
   const [attendance, setAttendance] = useRecoilState(attendanceData);
   const [student, setStudent] = useState<StudentType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState("");
 
-  const { name } = attendance;
-
-  const onStudent = (e: any) => {
-    const { value, name } = e.target;
-
-    teacher.getStudentNameApi(value).then((res) => setStudent(res.data));
-
+  const handleOnInputClick = (item: StudentType) => {
+    setInputValue(item.name);
     setAttendance({
       ...attendance,
-      [name]: value,
+      student_id: item.id,
+      name: item.name,
     });
+    setOpen(false);
   };
 
   useEffect(() => {
     student.length < 1 ? setOpen(false) : setOpen(true);
   }, [student]);
+
+  useEffect(() => {
+    if (inputValue === "") return;
+    const debounce = setTimeout(() => {
+      teacher.getStudentNameApi(inputValue).then((res) => {
+        setStudent(res.data);
+      });
+    }, 300);
+
+    return () => clearTimeout(debounce);
+  }, [inputValue]);
 
   return (
     <EnrollmentItem>
@@ -33,25 +42,21 @@ const NameItem = () => {
       <input
         type="text"
         name="name"
-        value={name}
-        onChange={(e) => onStudent(e)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         className="text-input"
         placeholder="이름을 입력해주세요"
+        autoComplete="off"
       />
       <StudentList open={open}>
-        {student?.map((item) => (
+        {student.map((item) => (
           <span
             key={item.id}
             onClick={() => {
-              setAttendance({
-                ...attendance,
-                student_id: item.id,
-                name: item.name,
-              });
-              setOpen(false);
+              handleOnInputClick(item);
             }}
           >
-            {item.name}
+            {`${item.gcn} ${item.name}`}
           </span>
         ))}
       </StudentList>
@@ -69,6 +74,7 @@ const EnrollmentItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
 
   .field-item {
     display: flex;
@@ -97,19 +103,16 @@ export const StudentList = styled.div<{ open: boolean }>`
   height: fit-content;
   background-color: white;
   box-shadow: 0px 4px 10px rgba(149, 149, 149, 0.25);
-  border-radius: 10px;
+  border-radius: 5px;
   display: ${({ open }) => (open ? "flex" : "none")};
   flex-direction: column;
   align-items: center;
-  padding: 10px 40px;
-  box-sizing: border-box;
+  padding: 10px 25px;
   position: absolute;
-  left: 27%;
-  z-index: 10;
-  top: 63%;
+  right: 20px;
+  top: 40px;
 
   & span {
-    margin-bottom: 6px;
     font-size: 20px;
   }
 `;
