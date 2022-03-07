@@ -30,9 +30,10 @@ export const attendanceData = atom<AttendancePostType>({
   key: "attendance",
   default: {
     student_id: null,
-    state: "",
+    state: "외출",
     term: "",
     reason: "",
+    name: "",
   },
 });
 
