@@ -1,7 +1,27 @@
 * {
   margin: 0;
   padding: 0;
+  list-style: none;
+  outline: none;
+  text-decoration: none;
+  color: black;
   font-family: "NanumSquare";
+}
+
+p,
+a,
+li,
+span,
+strong,
+button,
+::placeholder,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  transform: skew(-0.1deg);
 }
 
 /* font-family: 'Noto Sans KR', sans-serif; */

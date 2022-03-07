@@ -5,9 +5,9 @@ interface Props {
 }
 
 export const MainWrapper = styled.section`
-  margin: 40px 0;
+  margin: 8% 0;
   width: 100%;
-  height: 33%;
+  height: 100%;
 `;
 
 export const SelectButtonWrapper = styled.div`
@@ -28,8 +28,9 @@ export const ListBoxWrapper = styled.div`
   border: 1px solid #e8e8e8;
   padding: 20px;
   box-sizing: border-box;
-  box-shadow: 0px 3px 9px rgba(169, 169, 169, 0.25);
-  border-radius: 3px;
+  box-shadow: 0px 3px 10px rgba(163, 163, 163, 0.25);
+  border-radius: 20px;
+
   text-align: center;
 
   .std {

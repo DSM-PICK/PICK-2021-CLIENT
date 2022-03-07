@@ -22,9 +22,10 @@ export const AttendanceSelectWrapper = styled.a`
     width: 100%;
     height: 130px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 4px 10px #e5e5e5;
   }
+
   span {
     position: absolute;
     color: white;
