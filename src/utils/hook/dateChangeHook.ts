@@ -5,7 +5,7 @@ export function DateChangeHook(date: string) {
 
 export function DateNonYearHook(date: string) {
   const res = date.split("-");
-  return res[0] + "월" + res[1] + "일";
+  return res[0] + "월 " + res[1] + "일";
 }
 
 export function DatePeriodHook(date: string) {
