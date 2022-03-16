@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   attendanceData,
   attendanceDataList,
@@ -13,8 +13,9 @@ import { AttendancePostType } from "../../../../../lib/interface/mobile/Attendan
 
 const EnrollmentHistory = () => {
   const queryClient = useQueryClient();
+  const teacher_id = localStorage.getItem("teacher_id");
 
-  const [attendanceValue, setAttendanceValue] = useRecoilState(attendanceData);
+  const attendanceValue = useRecoilValue(attendanceData);
   const [attendanceList, setAttendanceList] =
     useRecoilState(attendanceDataList);
 
@@ -22,20 +23,26 @@ const EnrollmentHistory = () => {
     setAttendanceList(attendanceList.filter((item) => item.student_id !== id));
   };
 
+  console.log(
+    attendanceList.map((item) => [
+      {
+        teacher_id,
+        student_id: item.student_id,
+        trem: item.term,
+        state: item.state,
+        reason: item.reason,
+      },
+    ])
+  );
+
   const { mutate: PostAttendanceHandle } = useMutation(
-    () => attendance.postAttendance(attendanceValue),
+    () => attendance.postAttendance(attendanceList),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("attendance_list_value");
         toast.success("출결이 등록되었습니다.");
-        // setAttendanceValue({
-        //   student_id: 0,
-        //   name: "",
-        //   state: "",
-        //   term: "",
-        //   reason: "",
-        // });
-        // setAttendanceList([]);
+
+        setAttendanceList([]);
       },
       onError: () => {
         toast.error("출결 등록에 실패했습니다.");

@@ -82,11 +82,11 @@ export const ContentWrap = styled.div`
 export const ChangeBtnWrap = styled.section`
   width: 100%;
   display: flex;
-
   flex-direction: row;
   justify-content: flex-end;
 
   button {
+    position: absolute;
     padding: 8px 15px;
     background: ${MainColor};
     border: none;
@@ -100,6 +100,7 @@ export const ChangeBtnWrap = styled.section`
 
   .item_center {
     text-align: center;
+    margin: 0 auto;
   }
 `;
 

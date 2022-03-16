@@ -41,7 +41,7 @@ const CalendarItem = () => {
       ...attendance,
       term: DatePeriodChangeHook(date),
     });
-  }, [date]);
+  }, [date, attendance.term]);
 
   useEffect(() => {
     setDate({

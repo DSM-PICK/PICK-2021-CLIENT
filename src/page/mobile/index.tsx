@@ -29,7 +29,7 @@ export const MainWrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100%;
   margin: 0 auto;
   overflow: auto;

@@ -17,17 +17,12 @@ export default {
       data: { id },
     });
   },
-  postAttendance(data: AttendancePostType) {
+  postAttendance(data: AttendancePostType[]) {
+    console.log(data);
     return request({
       url: "/attendance",
       method: "post",
-      data: {
-        teacher_id: teacher_id,
-        student_id: data.student_id,
-        state: data.state,
-        term: data.term,
-        reason: data.reason,
-      },
+      data: data,
     });
   },
   patchAttendanceState(state: string) {
