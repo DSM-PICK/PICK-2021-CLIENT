@@ -4,17 +4,10 @@ import {
   searchStatus,
   searchedStudents,
   StudentObject,
-  SDateValue,
-  FDateValue,
   SelectedIndex,
   Today,
 } from "../../../../../modules/desktop/atom/ATChange";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-  useResetRecoilState,
-} from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import * as S from "./styles";
 import { AttendanceChangeColumn } from "../../styles";
 import SelectedStudent from "./SelectedStudents/index";
@@ -28,20 +21,15 @@ const Add: FC = (): JSX.Element => {
   const [searchedStudentsArr, setSearchedStudentsArr] =
     useRecoilState(searchedStudents);
   const [inputValue, setInputValue] = useState<string>("");
-  const [studentObject, setStudentObject] = useRecoilState<
-    StudentObjectType | any
-  >(StudentObject);
-  const setSelectedIndex = useSetRecoilState(SelectedIndex);
-  const resetSdate = useResetRecoilState(SDateValue);
-  const resetFdate = useResetRecoilState(FDateValue);
+  const [studentObject, setStudentObject] =
+    useRecoilState<StudentObjectType[]>(StudentObject);
+  const setSelectedIndex = useSetRecoilState<number>(SelectedIndex);
   const today = useRecoilValue(Today);
   const selectStudent = async (object: SelectedStudentsType) => {
     if (studentObject.find((value: any) => value.id === object.id)) {
       alert("이미 추가하신 학생입니다.");
       return;
     }
-    resetSdate();
-    resetFdate();
 
     const data = {
       id: object.id,
@@ -69,10 +57,7 @@ const Add: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(studentObject);
-  }, [studentObject]);
-
-  useEffect(() => {
+    if (inputValue === "") return;
     const debounce = setTimeout(() => {
       getStudentDataOnSearch();
     }, 400);
@@ -100,7 +85,7 @@ const Add: FC = (): JSX.Element => {
               searchedStudentsArr.length != 0 && search ? "flex" : "none"
             }
           >
-            {searchedStudentsArr.map((value: any) => {
+            {searchedStudentsArr.map((value: StudentObjectType) => {
               return (
                 <S.SearchedStudent
                   onClick={() => selectStudent(value)}

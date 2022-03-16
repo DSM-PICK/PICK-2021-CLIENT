@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import * as S from "./styles";
-import { Add, Date, Type, Reason } from "./ACColumn";
+import { Add, Date, Type, Reason } from "./AttendanceChangeColumn";
 import { useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
 import {
   ReasonAtom,
@@ -77,6 +77,10 @@ const AttendanceChange: FC = (): JSX.Element => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(studentObject);
+  }, [studentObject]);
+
   return (
     <S.Wrapper>
       <S.AttendanceAddWrapper>
@@ -120,6 +124,7 @@ const AttendanceChange: FC = (): JSX.Element => {
               onClick={() => {
                 setNavBarIndex(index);
               }}
+              key={value}
             >
               {value}
             </S.AttendanceChangeNav>

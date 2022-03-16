@@ -10,10 +10,11 @@ export interface StudentObjectType {
   name: string;
   sdate: string;
   fdate: string;
-  sclass: number;
-  fclass: number;
+  sclass: string;
+  fclass: string;
   type: number;
   reason: string;
+  teacher_id: string | null;
 }
 
 export interface postDataType {

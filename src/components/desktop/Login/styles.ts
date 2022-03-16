@@ -56,6 +56,11 @@ export const PasswordInput = styled.input`
   outline: none;
   padding: 0 24px;
   font-size: 18px;
+  font-family: "sans-serif";
+
+  &::placeholder {
+    font-family: "NanumSquare"
+  }
 `;
 
 export const UserHelpContainer = styled.div`
