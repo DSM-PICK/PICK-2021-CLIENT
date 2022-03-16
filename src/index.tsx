@@ -5,9 +5,12 @@ import { RecoilRoot } from "recoil";
 import { BarLoader } from "react-spinners";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Router from "./router";
+import MobileRouter from "./router/MobileRouter";
 import styled from "@emotion/styled";
 import "./style/global.css";
+import { isDesktop, isMobile } from "react-device-detect";
+import DesktopRouter from "./router/DesktopRouter";
+import App from "./App";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,7 +44,7 @@ ReactDOM.render(
         }
       >
         <QueryClientProvider client={queryClient}>
-          <Router />
+          <App />
         </QueryClientProvider>
       </Suspense>
     </RecoilRoot>

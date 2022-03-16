@@ -1,14 +1,10 @@
 import styled from "@emotion/styled";
-import { useRef } from "react";
 import { useRecoilState } from "recoil";
-import { attendanceData } from "../../../../modules/atom/attendance";
+import { attendanceData } from "../../../../modules/mobile/atom/attendance";
 import { MainColor } from "../../../../style/color";
 
 const ReasonItem = () => {
-  const reasonRef = useRef<any | null>(null);
   const [attendance, setAttendance] = useRecoilState(attendanceData);
-
-  const { reason } = attendance;
 
   const onChange = (e: any) => {
     e.preventDefault();
@@ -20,13 +16,13 @@ const ReasonItem = () => {
     });
   };
 
-  const inputResetHandle = () => {
+  const addStudents = () => {
     setAttendance({
-      student_id: 0,
-      state: "이동",
-      term: "",
-      reason: "",
-      name: "",
+      student_id: attendance.student_id,
+      state: attendance.state,
+      term: attendance.term,
+      reason: attendance.reason,
+      name: attendance.name,
     });
   };
 
@@ -34,15 +30,14 @@ const ReasonItem = () => {
     <EnrollmentItem>
       <SubTitle>사유</SubTitle>
       <input
-        ref={reasonRef}
         type="text"
         name="reason"
-        value={reason}
+        value={attendance.reason}
         onChange={(e) => onChange(e)}
         className="text-input"
         placeholder="사유를 입력해주세요"
       />
-      <SaveButton onClick={inputResetHandle}>학생 추가</SaveButton>
+      <SaveButton onClick={addStudents}>학생 추가</SaveButton>
     </EnrollmentItem>
   );
 };
@@ -84,11 +79,12 @@ const SaveButton = styled.button`
   outline: none;
   border: none;
   background-color: ${MainColor};
-  padding: 0 15px;
-  font-size: 17px;
+  padding: 10px 15px;
   color: white;
-  border-radius: 3px;
+  border-radius: 20px;
   margin: 2px 0;
+  filter: drop-shadow(0px 2px 5px rgba(153, 153, 153, 0.25));
+  font-size: 16px;
 `;
 
 export default ReasonItem;
