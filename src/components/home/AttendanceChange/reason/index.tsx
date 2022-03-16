@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
-import { attendanceData } from "../../../../modules/atom/attendance";
+import { attendanceData } from "../../../../modules/mobile/atom/attendance";
 import { MainColor } from "../../../../style/color";
 
 const ReasonItem = () => {
