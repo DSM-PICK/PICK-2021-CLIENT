@@ -18,11 +18,11 @@ const SelectedStudent: FC<Props> = ({ id, gcn, name }) => {
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] =
     useRecoilState<number>(SelectedIndex);
-  const [studentObejct, setStudentObject] = useRecoilState(StudentObject);
+  const [studentObject, setStudentObject] = useRecoilState(StudentObject);
 
   const deleteStudent = (id: number) => {
     setStudentObject(
-      studentObejct.filter((value: StudentObjectType) => value.id != id)
+      studentObject.filter((value: StudentObjectType) => value.id != id)
     );
   };
 
@@ -43,7 +43,14 @@ const SelectedStudent: FC<Props> = ({ id, gcn, name }) => {
         onClick={(e) => {
           e.stopPropagation();
           deleteStudent(id);
-          // setSelectedIndex(id - 1);
+          if (studentObject.length != 0) {
+            setSelectedIndex(
+              studentObject[
+                studentObject.findIndex((value) => value.id === selectedIndex) -
+                  1
+              ].id
+            );
+          }
         }}
       >
         삭제
