@@ -3,32 +3,26 @@ import { useQuery } from "react-query";
 import ListDeleteModal from "./AttendanceDelete";
 import ListItem from "./AttendanceItem";
 import attendance from "../../../../lib/api/mobile/attendance";
-import { BarLoader } from "react-spinners";
-import { MainColor } from "../../../../style/color";
 import * as S from "./style";
 import { AttendanceType } from "../../../../lib/interface/mobile/Attendance";
 
-const ListContainer = () => {
+type Props = {
+  selected: number;
+};
+
+const ListContainer = ({ selected }: Props) => {
   const [modal, setModal] = useState<boolean>(false);
 
-  const { data: attendanceListValue, isLoading } = useQuery(
-    ["attendance_list_value"],
-    () => attendance.getAttendance(),
+  const { data: attendanceListValue } = useQuery(
+    ["attendance_list_value", selected],
+    () => attendance.getAttendance(selected),
     {
+      enabled: !!selected,
       cacheTime: Infinity,
       staleTime: Infinity,
+      suspense: false,
     }
   );
-
-  if (isLoading)
-    return (
-      <BarLoader
-        color={MainColor}
-        height="4px"
-        width="100%"
-        speedMultiplier={0.5}
-      />
-    );
 
   return (
     <>
