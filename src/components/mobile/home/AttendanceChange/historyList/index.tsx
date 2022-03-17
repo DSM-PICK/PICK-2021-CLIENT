@@ -1,11 +1,8 @@
 import styled from "@emotion/styled";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  attendanceData,
-  attendanceDataList,
-} from "../../../../../modules/mobile/atom/attendance";
+import { useRecoilState } from "recoil";
+import { attendanceDataList } from "../../../../../modules/mobile/atom/attendance";
 import { MainColor } from "../../../../../style/color";
 import attendance from "../../../../../lib/api/mobile/attendance";
 import { Close } from "../../../../../assets";
@@ -13,9 +10,8 @@ import { AttendancePostType } from "../../../../../lib/interface/mobile/Attendan
 
 const EnrollmentHistory = () => {
   const queryClient = useQueryClient();
-  const teacher_id = localStorage.getItem("teacher_id");
+  // const teacher_id = localStorage.getItem("teacher_id");
 
-  const attendanceValue = useRecoilValue(attendanceData);
   const [attendanceList, setAttendanceList] =
     useRecoilState(attendanceDataList);
 
@@ -23,17 +19,17 @@ const EnrollmentHistory = () => {
     setAttendanceList(attendanceList.filter((item) => item.student_id !== id));
   };
 
-  console.log(
-    attendanceList.map((item) => [
-      {
-        teacher_id,
-        student_id: item.student_id,
-        trem: item.term,
-        state: item.state,
-        reason: item.reason,
-      },
-    ])
-  );
+  // console.log(
+  //   attendanceList.map((item) => [
+  //     {
+  //       teacher_id,
+  //       student_id: item.student_id,
+  //       trem: item.term,
+  //       state: item.state,
+  //       reason: item.reason,
+  //     },
+  //   ])
+  // );
 
   const { mutate: PostAttendanceHandle } = useMutation(
     () => attendance.postAttendance(attendanceList),

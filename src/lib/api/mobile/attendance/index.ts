@@ -2,8 +2,6 @@
 import { AttendancePostType } from "../../../interface/mobile/Attendance";
 import request from "../axios";
 
-const teacher_id = localStorage.getItem("teacher_id");
-
 export default {
   getAttendance() {
     return request({
