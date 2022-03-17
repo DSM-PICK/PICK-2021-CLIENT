@@ -44,10 +44,10 @@ const NameItem = ({ inputValue, setInputValue }: Props) => {
     <EnrollmentItem>
       <SubTitle>이름</SubTitle>
       <input
+        required
         type="text"
         name="name"
         value={inputValue}
-        defaultValue={attendance.name}
         onChange={(e) => setInputValue(e.target.value)}
         className="text-input"
         placeholder="이름을 입력해주세요"

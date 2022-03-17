@@ -62,6 +62,7 @@ const CalendarItem = () => {
             <span onClick={() => setOpen(true)}>{dateValue}</span>
             <div className="date_period">
               <input
+                required
                 type="text"
                 placeholder="_"
                 onChange={(e) =>
@@ -78,6 +79,7 @@ const CalendarItem = () => {
             <span onClick={() => setSecOpen(true)}>{dateSecValue}</span>
             <div className="date_period">
               <input
+                required
                 type="text"
                 placeholder="_"
                 onChange={(e) =>

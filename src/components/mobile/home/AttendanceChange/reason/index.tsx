@@ -43,6 +43,7 @@ const ReasonItem = () => {
     <EnrollmentItem>
       <SubTitle>사유</SubTitle>
       <input
+        required
         ref={reasonRef}
         type="text"
         name="reason"
