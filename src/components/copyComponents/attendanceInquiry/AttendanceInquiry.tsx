@@ -2,6 +2,7 @@ import React from "react";
 import * as S from "./styles";
 import Filter from "./Filter";
 import StudentStatus from "./StudentStatus";
+import Place from "./Place";
 const AttendanceInquiry = () => {
   return (
     <S.AtInquiryWrapper>
@@ -9,7 +10,7 @@ const AttendanceInquiry = () => {
       <S.AtInquiryBox>
         <S.StatusBox>
           <S.Calendar />
-          <S.Place />
+          <Place />
         </S.StatusBox>
         <Filter />
         <StudentStatus />
