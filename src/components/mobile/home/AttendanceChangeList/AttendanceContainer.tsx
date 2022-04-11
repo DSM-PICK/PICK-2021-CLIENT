@@ -11,7 +11,7 @@ type Props = {
 };
 
 const ListContainer = ({ selected }: Props) => {
-  const [modal, setModal] = useState<boolean>(false);
+  const [modal, setModal] = useState({ modal: false, attendance_id: "" });
 
   const { data: attendanceListValue } = useQuery(
     ["attendance_list_value", selected],
@@ -39,7 +39,7 @@ const ListContainer = ({ selected }: Props) => {
         </S.ListHeader>
 
         <S.ListContent>
-          {!!attendanceListValue?.data ? (
+          {!attendanceListValue?.data ? (
             <span style={{ margin: "auto", color: "#818181" }}>
               출결 변동 내역이 입력되지 않았습니다.
             </span>

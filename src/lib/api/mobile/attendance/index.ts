@@ -1,20 +1,20 @@
 /* eslint-disable import/no-anonymous-default-export */
+import moment from "moment";
 import { AttendancePostType } from "../../../interface/mobile/Attendance";
 import request from "../axios";
 
-const teacher_id = localStorage.getItem("teacher_id");
-
 export default {
   getAttendance(floor: number) {
+    const date = moment().format("YYYY-MM-DD");
+
     return request({
-      url: `/attendance?floor=${floor}`,
+      url: `/attendance/today?floor=${floor}&date=${"2022-04-06"}`,
     });
   },
   deleteAttendance(id: number) {
     return request({
-      url: "/attendance",
+      url: `/attendance/${id}`,
       method: "delete",
-      data: { id },
     });
   },
   postAttendance(data: AttendancePostType[]) {
