@@ -1,12 +1,14 @@
 export interface AttendanceType {
-  director_id: string;
   id: number;
-  memo: string | null;
+  attendance_id: number;
+  director_id: number;
   period: string | null;
   reason: string;
   state: string;
-  student_id: string;
+  name: string;
+  gcn: number;
   teacher_id: string;
+  teacher_name: string;
   term: string;
 }
 
