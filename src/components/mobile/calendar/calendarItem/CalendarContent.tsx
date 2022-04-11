@@ -28,6 +28,7 @@ const CalendarContent = () => {
       cacheTime: Infinity,
       staleTime: Infinity,
       keepPreviousData: true,
+      suspense: false,
     }
   );
 
