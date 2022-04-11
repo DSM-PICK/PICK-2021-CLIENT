@@ -17,8 +17,7 @@ const ListItem = ({ modal, setModal, item }: Props) => {
     >
       <div className="std">
         <span>
-          {item.gcn}
-          {item.name}
+          {item.gcn} {item.name}
         </span>
       </div>
       <span className="state">{item.state}</span>
