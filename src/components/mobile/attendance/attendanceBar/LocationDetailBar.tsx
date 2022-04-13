@@ -20,7 +20,6 @@ const LocationDetailBar = () => {
     localStorage.setItem("locationId", String(item?.id));
     navigate(`/attendance?floor=${floor}&id=${item.id}`);
     setSelected(item.id);
-    console.log(item.id);
   };
 
   const { data: placeValue } = useQuery(
@@ -33,8 +32,6 @@ const LocationDetailBar = () => {
       suspense: false,
     }
   );
-
-  console.log(placeValue);
 
   return (
     <S.SelectBarWrapper>
