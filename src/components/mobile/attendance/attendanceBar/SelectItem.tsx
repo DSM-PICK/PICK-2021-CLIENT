@@ -5,8 +5,8 @@ import * as S from "./style";
 
 interface Props {
   item: LocationType | StateBtnType;
-  selected: number;
-  selectedHandlerColor: any;
+  selected?: number;
+  selectedHandlerColor?: any;
 }
 
 const SelectItem = ({ item, selected, selectedHandlerColor }: Props) => {
