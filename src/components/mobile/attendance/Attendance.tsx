@@ -13,6 +13,7 @@ import Footer from "../common/header/Footer";
 import LocationDetailBar from "./attendanceBar/LocationDetailBar";
 import ContentHeader from "./contentHeader/ContentHeader";
 import ContentList from "./contentList/ContentList";
+import LocationFloorBar from "./attendanceBar/LocationFloorBar";
 
 const Attendance = () => {
   const [isChecked, setIsChecked] = useState(false); // 체크 여부
@@ -30,6 +31,7 @@ const Attendance = () => {
       enabled: !!id,
       cacheTime: Infinity,
       staleTime: Infinity,
+      suspense: false,
     }
   );
 
@@ -64,7 +66,7 @@ const Attendance = () => {
         <Header />
         <Footer />
         <div className="location_box">
-          <LocationDetailBar />
+          <LocationFloorBar />
           <LocationDetailBar />
         </div>
         <S.ContentWrapper>
