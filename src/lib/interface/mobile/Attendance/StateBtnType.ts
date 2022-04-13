@@ -62,3 +62,26 @@ export const ClassButtonList: StateBtnType[] = [
     name: "특별실",
   },
 ];
+
+export const FloorBtnList: StateBtnType[] = [
+  {
+    id: 2,
+    floor: 2,
+    name: "2층",
+  },
+  {
+    id: 3,
+    floor: 3,
+    name: "3층",
+  },
+  {
+    id: 4,
+    floor: 4,
+    name: "4층",
+  },
+  {
+    id: 5,
+    floor: 5,
+    name: "5층",
+  },
+];
