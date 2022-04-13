@@ -16,7 +16,7 @@ export const SelectBarWrapper = styled.div`
 `;
 
 export const SelectItem = styled.div`
-  width: calc(100% / 5);
+  width: 100%;
   min-width: 18vw;
   display: flex;
   justify-content: center;
