@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { MemberType } from "../../../../lib/interface/mobile/major";
+import { StudentAttendanceType } from "../../../../lib/interface/mobile/Attendance";
 import { selectCount } from "../../../../modules/mobile/atom/attendance";
 import StateContainer from "./StateContainer";
 import * as S from "./style";
 
 interface Props {
-  item: MemberType;
+  item: StudentAttendanceType;
   checkHandle: (e: any) => void;
 }
 
@@ -25,7 +25,7 @@ const StdListItem = ({ item, checkHandle }: Props) => {
   return (
     <>
       <S.StudentItem check={check}>
-        <label key={item.id} className="checkbox">
+        <label key={item.student_id} className="checkbox">
           <input
             type="checkbox"
             value={item.student_name}
