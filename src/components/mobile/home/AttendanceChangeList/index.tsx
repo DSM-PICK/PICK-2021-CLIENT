@@ -9,7 +9,7 @@ import {
 } from "../../../../lib/interface/mobile/Attendance/StateBtnType";
 
 const AttendanceChangeList = () => {
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(1);
 
   const selectedHandlerColor = (item: StateBtnType) => {
     setSelected(item.id);
