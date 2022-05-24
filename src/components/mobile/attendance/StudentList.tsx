@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import * as S from "./styles";
+import { AttendanceType } from "../../../lib/interface/mobile/Attendance";
+import * as S from "./style";
 
 const timeArray = ["학생", "8교시", "9교시", "10교시"];
 const arr = [...Array(20)].map((v, i) => i);
 const time = new Array(3).fill(0);
-const StudentList = () => {
+
+interface Props {
+  data: AttendanceType;
+}
+
+const StudentList = ({ data }: Props) => {
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
   const [selected, setSelected] = useState<string[]>([
     ...Array(arr.length * time.length).fill(" "),
@@ -55,7 +60,7 @@ const StudentList = () => {
           <S.Title key={index}>{title}</S.Title>
         ))}
       </S.StudentListTitle>
-      {arr.map((stduent, index) => (
+      {data?.student_list.map((student, index) => (
         <S.StudentList key={index}>
           <S.CheckBoxContainer>
             <input
@@ -66,7 +71,9 @@ const StudentList = () => {
             />
             <label htmlFor={String(index)} />
           </S.CheckBoxContainer>
-          <span>2216 이진우</span>
+          <span>
+            {student.gcn} {student.student_name}
+          </span>
 
           {time.map((array, i) => (
             <S.StudentSelect
@@ -76,6 +83,7 @@ const StudentList = () => {
               value={selected[index * 3 + i]}
             >
               <option value=" "> </option>
+              <option value=" ">출석</option>
               <option value="이동">이동</option>
               <option value="외출">외출</option>
               <option value="무단">무단</option>

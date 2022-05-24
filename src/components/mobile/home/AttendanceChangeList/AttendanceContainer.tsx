@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ListDeleteModal from "./AttendanceDelete";
 import ListItem from "./AttendanceItem";
 import attendance from "../../../../lib/api/mobile/attendance";
 import * as S from "./style";
-import { AttendanceType } from "../../../../lib/interface/mobile/Attendance";
+import { AttendanceListType } from "../../../../lib/interface/mobile/Attendance";
+import _ from "lodash";
 
 type Props = {
   selected: number;
@@ -12,6 +13,7 @@ type Props = {
 
 const ListContainer = ({ selected }: Props) => {
   const [modal, setModal] = useState({ modal: false, attendance_id: "" });
+  const [attendanceData, setAttendanceData] = useState<any>();
 
   const { data: attendanceListValue } = useQuery(
     ["attendance_list_value", selected],
@@ -23,6 +25,10 @@ const ListContainer = ({ selected }: Props) => {
       suspense: false,
     }
   );
+
+  useEffect(() => {
+    setAttendanceData(_.uniqBy(attendanceListValue?.data, "student_id"));
+  }, [attendanceListValue?.data, selected]);
 
   return (
     <>
@@ -39,13 +45,18 @@ const ListContainer = ({ selected }: Props) => {
         </S.ListHeader>
 
         <S.ListContent>
-          {!attendanceListValue?.data ? (
+          {attendanceData === [] ? (
             <span style={{ margin: "auto", color: "#818181" }}>
               출결 변동 내역이 입력되지 않았습니다.
             </span>
           ) : (
-            attendanceListValue?.data?.map((item: AttendanceType) => (
-              <ListItem setModal={setModal} modal={modal} item={item} />
+            attendanceData?.map((item: AttendanceListType) => (
+              <ListItem
+                key={item.attendance_id}
+                setModal={setModal}
+                modal={modal}
+                item={item}
+              />
             ))
           )}
         </S.ListContent>

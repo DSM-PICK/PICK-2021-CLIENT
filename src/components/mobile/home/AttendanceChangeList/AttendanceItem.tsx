@@ -1,11 +1,11 @@
 import { DatePeriodHook } from "../../../../utils/dateChangeHook";
-import { AttendanceType } from "../../../../lib/interface/mobile/Attendance";
+import { AttendanceListType } from "../../../../lib/interface/mobile/Attendance";
 import * as S from "./style";
 
 interface Props {
   modal: any;
   setModal: any;
-  item: AttendanceType;
+  item: AttendanceListType;
 }
 
 const ListItem = ({ modal, setModal, item }: Props) => {
