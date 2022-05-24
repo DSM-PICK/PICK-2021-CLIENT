@@ -1,15 +1,23 @@
+// 출결 가져오기 출석 타입
 export interface AttendanceType {
-  id: number;
-  attendance_id: number;
-  director_id: number;
-  period: string | null;
-  reason: string;
+  schedule: string;
+  location_name: string;
+  class_name: string;
+  head_name: string;
+  student_list: StudentAttendanceType[];
+}
+
+export interface StudentAttendanceType {
+  gcn: string;
+  student_id: number;
+  student_name: string;
+  student_attendance: StudentAttendanceType[];
+}
+
+export interface StudentAttendanceType {
+  period: number;
+  location_name: string | null;
   state: string;
-  name: string;
-  gcn: number;
-  teacher_id: string;
-  teacher_name: string;
-  term: string;
 }
 
 export interface AttendancePostType {
@@ -20,14 +28,22 @@ export interface AttendancePostType {
   reason: string;
 }
 
-export interface studentType {
-  id: string;
-  name: string;
-  gcn: string;
-  state: string;
-}
-
 export interface directorType {
   id: string;
   floor: number;
+}
+
+// 출결 사전 변동 내역 리스트 타입
+export interface AttendanceListType {
+  attendance_id: number;
+  director_id: number;
+  gcn: string;
+  name: string;
+  period: number;
+  reason: string;
+  state: string;
+  student_id: number;
+  teacher_id: string;
+  teacher_name: string;
+  term: string;
 }

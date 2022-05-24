@@ -1,14 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
-import moment from "moment";
 import { AttendancePostType } from "../../../interface/mobile/Attendance";
 import request from "../axios";
 
 export default {
   getAttendance(floor: number) {
-    const date = moment().format("YYYY-MM-DD");
-
     return request({
-      url: `/attendance/today?floor=${floor}&date=${"2022-04-06"}`,
+      url: `/attendance/today?floor=${floor}`,
     });
   },
   deleteAttendance(id: number) {
@@ -30,6 +27,11 @@ export default {
       url: "/attendance/state",
       method: "patch",
       data: { state },
+    });
+  },
+  getAttendanceList(location_id: number) {
+    return request({
+      url: `/attendance/${location_id}`,
     });
   },
 };
