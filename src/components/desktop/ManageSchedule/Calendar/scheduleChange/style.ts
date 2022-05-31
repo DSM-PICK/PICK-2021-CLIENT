@@ -115,9 +115,8 @@ export const TeacherItemBox = styled.div`
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 4%;
   position: relative;
+  margin-top: 32px;
 
   & button {
     width: 48%;

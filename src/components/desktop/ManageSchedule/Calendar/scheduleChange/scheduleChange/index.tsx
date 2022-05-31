@@ -43,14 +43,21 @@ const ScheduleChange = () => {
 
   return (
     <S.StateWrapper>
-      <div className="state_wrap">
-        <span>{StateChangeHook(stateValue?.data?.name)}</span>
-      </div>
-      <ul className="state_list">
-        <li onClick={() => patchScheduleHandle("SELF_STUDY")}>자습</li>
-        <li onClick={() => patchScheduleHandle("AFTER_SCHOOL")}>방과후</li>
-        <li onClick={() => patchScheduleHandle("MAJOR")}>동아리</li>
-      </ul>
+      {StateChangeHook(stateValue?.data?.name) === "" ||
+      StateChangeHook(stateValue?.data?.name) === undefined ? (
+        <></>
+      ) : (
+        <>
+          <div className="state_wrap">
+            <span>{StateChangeHook(stateValue?.data?.name)}</span>
+          </div>
+          <ul className="state_list">
+            <li onClick={() => patchScheduleHandle("SELF_STUDY")}>자습</li>
+            <li onClick={() => patchScheduleHandle("AFTER_SCHOOL")}>방과후</li>
+            <li onClick={() => patchScheduleHandle("MAJOR")}>동아리</li>
+          </ul>
+        </>
+      )}
     </S.StateWrapper>
   );
 };

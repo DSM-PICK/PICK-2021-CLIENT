@@ -80,7 +80,8 @@ const TeacherChange = () => {
 
   return (
     <>
-      {teacherFloor?.data?.teachers?.length !== 0 ? (
+      {teacherFloor?.data?.teachers?.length !== 0 &&
+      teacherFloor?.data != undefined ? (
         <S.TeacherInfoWrapper>
           <S.FloorItemBox>
             {teacherFloor?.data?.teachers?.map((item: TeacherFloorType) => {
