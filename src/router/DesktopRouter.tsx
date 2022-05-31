@@ -16,7 +16,6 @@ const MainRouter: FC = (): JSX.Element => {
         <Route path="/home" element={<AttendanceChangePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/schedule" element={<ManageSchedulePage />} />
-        <Route path="/manageschedule" element={<ManageSchedulePage />} />
         <Route path="/studentlist" element={<StudentListPage />} />
         <Route path="/atview" element={<AttendanceCheckPage />} />
         <Route path="/password" element={<PasswordPage />} />

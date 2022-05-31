@@ -1,12 +1,12 @@
 import { FC } from "react";
-import ManageSchedule from "../../../components/desktop/ManageSchedule/ManageSchedule";
 import Header from "../../../components/desktop/Header/Header";
+import Calendar from "../../../components/desktop/ManageSchedule/Calendar";
 
 const ManageSchedulePage: FC = (): JSX.Element => {
   return (
     <>
       <Header />
-      <ManageSchedule />
+      <Calendar />
     </>
   );
 };
