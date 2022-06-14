@@ -17,10 +17,10 @@ const StdListItem = ({ item, checkHandle }: Props) => {
   const std = ["8교시", "9교시", "10교시"];
   // const [selectStudentList, setSelectStudentList] = useState([]);
 
-  const checkBoxClickHandle = () => {
-    setCheck(!check);
-    check ? setCount(count - 1) : setCount(count + 1);
-  };
+  // const checkBoxClickHandle = () => {
+  //   setCheck(!check);
+  //   check ? setCount(count - 1) : setCount(count + 1);
+  // };
 
   return (
     <>
