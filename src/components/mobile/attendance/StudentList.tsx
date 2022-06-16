@@ -11,7 +11,6 @@ import * as S from "./style";
 const timeArray = ["학생", "8교시", "9교시", "10교시"];
 const arr = [...Array(20)].map((v, i) => i);
 const time = new Array(3).fill(0);
-const list = ["출석", "이동", "외출", "무단", "현체", "귀가"];
 
 interface Props {
   data: AttendanceType;
@@ -138,11 +137,12 @@ const StudentList = ({ data }: Props) => {
           {student.student_attendance.map((std, idx) => {
             return (
               <Student
-                index={index}
+                key={idx}
                 idx={idx}
+                index={index}
                 handleChangeSelect={handleChangeSelect}
                 selected={selected}
-                student={std}
+                student={student}
                 selectState={selectState}
               />
             );

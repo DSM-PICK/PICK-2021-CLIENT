@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import * as S from "./style";
 
 type Props = {
@@ -24,9 +24,10 @@ const Student: FC<Props> = ({
       onChange={(e) => handleChangeSelect([index, idx], e, student)}
       value={selected[index * 3 + idx]}
       selectState={selectState}
-      defaultValue={student.state}
     >
-      <option value=" "> </option>
+      <option value=" " selected disabled>
+        {student.state}
+      </option>
       <option value=" ">출석</option>
       <option value="이동">이동</option>
       <option value="외출">외출</option>
