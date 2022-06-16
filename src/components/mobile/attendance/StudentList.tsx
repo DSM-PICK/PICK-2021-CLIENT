@@ -1,17 +1,35 @@
 import React, { useState } from "react";
-import { AttendanceType } from "../../../lib/interface/mobile/Attendance";
+import { useSetRecoilState } from "recoil";
+import {
+  AttendanceType,
+  StudentAttendanceType,
+} from "../../../lib/interface/mobile/Attendance";
+import { moveModal } from "../../../modules/mobile/atom/attendance";
+import Student from "./Student";
 import * as S from "./style";
 
 const timeArray = ["학생", "8교시", "9교시", "10교시"];
 const arr = [...Array(20)].map((v, i) => i);
 const time = new Array(3).fill(0);
+const list = ["출석", "이동", "외출", "무단", "현체", "귀가"];
 
 interface Props {
   data: AttendanceType;
 }
 
+interface StudentType {
+  student_id: number | any;
+  student_name: string | any;
+  gcn: number | any;
+  student_attendance: StudentAttendanceType[];
+}
+
 const StudentList = ({ data }: Props) => {
+  const [studentData, setStudentData] = useState<StudentType>();
+  const [state, setState] = useState<string>("");
+  const setModal = useSetRecoilState(moveModal);
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
+  const [selectState, setSelectState] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>([
     ...Array(arr.length * time.length).fill(" "),
   ]);
@@ -24,6 +42,7 @@ const StudentList = ({ data }: Props) => {
       setCheckStatus([]);
     }
   };
+
   const handleSingleCheck = (checked: boolean, id: number) => {
     if (checked) {
       setCheckStatus([...checkStatus, id]);
@@ -32,18 +51,59 @@ const StudentList = ({ data }: Props) => {
       setCheckStatus(checkStatus.filter((el) => el !== id));
     }
   };
-  const handleChangeSelect =
-    (id: number[]) => (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const selectarr = selected;
-      if (checkStatus.includes(id[0])) {
-        for (let i = 0; i < checkStatus.length; i++) {
-          selectarr[checkStatus[i] * 3 + id[1]] = e.target.value;
-        }
-      } else {
-        selectarr[id[0] * 3 + id[1]] = e.target.value;
+
+  const handleChangeSelect = (
+    id: number[],
+    e: React.ChangeEvent<HTMLSelectElement>,
+    student: any
+  ) => {
+    const selectarr = selected;
+
+    if (checkStatus.includes(id[0])) {
+      for (let i = 0; i < checkStatus.length; i++) {
+        selectarr[checkStatus[i] * 3 + id[1]] = e.target.value;
       }
-      setSelected([...selectarr]);
-    };
+    } else {
+      selectarr[id[0] * 3 + id[1]] = e.target.value;
+    }
+
+    setSelected([...selectarr]);
+    moveModalHandle(e.target.value);
+    setState(e.target.value);
+
+    setStudentData({
+      ...studentData,
+      gcn: student.gcn,
+      student_id: student.student_id,
+      student_name: student.student_name,
+      student_attendance: student.student_attendance,
+    });
+  };
+
+  // state가 이동이면 modal 띄우기
+  const moveModalHandle = (stateValue: string) => {
+    if (stateValue !== "출석") {
+      setSelectState(true);
+    } else {
+      setSelectState(false);
+    }
+
+    if (stateValue === "이동")
+      setModal({
+        open: true,
+        student_name: studentData?.student_name,
+        student_id: studentData?.student_id,
+        gcn: studentData?.gcn,
+      });
+    else
+      setModal({
+        open: false,
+        student_name: studentData?.student_name,
+        student_id: studentData?.student_id,
+        gcn: studentData?.gcn,
+      });
+  };
+
   return (
     <S.Container>
       <S.StudentListTitle>
@@ -75,23 +135,18 @@ const StudentList = ({ data }: Props) => {
             {student.gcn} {student.student_name}
           </span>
 
-          {time.map((array, i) => (
-            <S.StudentSelect
-              key={i}
-              id={String(index) + String(i)}
-              onChange={handleChangeSelect([index, i])}
-              value={selected[index * 3 + i]}
-            >
-              <option value=" "> </option>
-              <option value=" ">출석</option>
-              <option value="이동">이동</option>
-              <option value="외출">외출</option>
-              <option value="무단">무단</option>
-              <option value="현체">현체</option>
-              <option value="귀가">귀가</option>
-              <option value="취업">취업</option>
-            </S.StudentSelect>
-          ))}
+          {student.student_attendance.map((std, idx) => {
+            return (
+              <Student
+                index={index}
+                idx={idx}
+                handleChangeSelect={handleChangeSelect}
+                selected={selected}
+                student={std}
+                selectState={selectState}
+              />
+            );
+          })}
         </S.StudentList>
       ))}
     </S.Container>
