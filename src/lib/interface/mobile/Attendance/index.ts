@@ -11,10 +11,10 @@ export interface StudentAttendanceType {
   gcn: string;
   student_id: number;
   student_name: string;
-  student_attendance: StudentAttendanceType[];
+  student_attendance: StudentAttendanceDetailType[];
 }
 
-export interface StudentAttendanceType {
+export interface StudentAttendanceDetailType {
   period: number;
   location_name: string | null;
   state: string;
