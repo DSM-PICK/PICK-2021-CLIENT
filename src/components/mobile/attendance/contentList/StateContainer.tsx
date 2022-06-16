@@ -29,10 +29,6 @@ const StateContainer = (student: any) => {
       });
   }, [state]);
 
-  useEffect(() => {
-    //stateListRef.current
-  }, []);
-
   // 1. 학생 리스트에서 선택된 학생 리스트를 추출한다.
   // 2. 추출한 학생의 상태를 바꿔준다.
 

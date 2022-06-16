@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { MainColor } from "../../../style/color";
 
 export const MainWrapper = styled.section`
   width: 100%;
@@ -21,7 +22,7 @@ export const Container = styled.div`
   width: 100%;
   height: 50vh;
   overflow-y: scroll;
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 10px 0;
 `;
 
@@ -83,7 +84,7 @@ export const Title = styled.div`
   text-align: center;
 `;
 
-export const StudentSelect = styled.select`
+export const StudentSelect = styled.select<{ selectState: boolean }>`
   width: 140px;
   height: 30px;
   appearance: none;
@@ -92,4 +93,5 @@ export const StudentSelect = styled.select`
   font-size: 18px;
   outline: none;
   border: 1px solid #c7c7c7;
+  // background: ${({ selectState }) => (selectState ? MainColor : "")};
 `;

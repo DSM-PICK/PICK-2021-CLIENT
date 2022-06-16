@@ -3,7 +3,6 @@ import * as S from "./style";
 import QueryString from "query-string";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
-import { useState } from "react";
 import MoveModal from "./moveModal/MoveModal";
 import { checkList_atom } from "../../../modules/mobile/atom/attendance/studentAttendance";
 import { MainColor } from "../../../style/color";
@@ -16,9 +15,9 @@ import StudentList from "./StudentList";
 import AttendanceApi from "../../../lib/api/mobile/attendance";
 
 const Attendance = () => {
-  const [isChecked, setIsChecked] = useState(false); // 체크 여부
-  const [checkedItems, setCheckedItems] = useRecoilState(checkList_atom); // 체크된 요소들
-  //const [selectValue, setSelectValue] = useRecoilState(selectValue_atom);
+  // const [isChecked, setIsChecked] = useState(false); // 체크 여부
+  // const [checkedItems, setCheckedItems] = useRecoilState(checkList_atom); // 체크된 요소들
+  // const [selectValue, setSelectValue] = useRecoilState(selectValue_atom);
 
   const location = useLocation();
   const queryData = QueryString.parse(location.search);
@@ -35,32 +34,6 @@ const Attendance = () => {
     }
   );
 
-  console.log(attendanceData);
-
-  const checkHandle = (e: any) => {
-    setIsChecked(!isChecked);
-
-    checkItemHandle(e.target.parentNode, e.target.value, e.target.checked);
-  };
-
-  // 학생을 배열에 추가한다.
-  // 배ㅑㄹ테
-  const checkItemHandle = (box: any, id: number, isChecked: boolean) => {
-    if (isChecked) {
-      checkedItems.concat(id);
-      setCheckedItems(checkedItems);
-      box.style.backgroundColor = MainColor;
-    } else if (!isChecked && checkedItems.filter(id)) {
-      checkedItems.filter(id);
-      setCheckedItems(checkedItems);
-      box.style.backgroundColor = "#fff";
-    }
-
-    return checkedItems;
-  };
-
-  console.log(checkedItems);
-
   return (
     <S.MainWrapper>
       <MoveModal />
@@ -72,10 +45,6 @@ const Attendance = () => {
       </div>
       <S.ContentWrapper>
         <ContentHeader info={attendanceData?.data} />
-        {/* <ContentList
-          info={attendanceMajorValue?.data}
-          checkHandle={checkHandle}
-        /> */}
         <StudentList data={attendanceData?.data} />
       </S.ContentWrapper>
     </S.MainWrapper>
