@@ -18,6 +18,8 @@ const Student: FC<Props> = ({
   student,
   selectState,
 }) => {
+  console.log(selected[index * 3 + idx]);
+
   return (
     <S.StudentSelect
       id={String(index) + String(idx)}
@@ -25,7 +27,7 @@ const Student: FC<Props> = ({
       value={selected[index * 3 + idx]}
       selectState={selectState}
     >
-      <option value=" " selected disabled>
+      <option value=" " selected>
         {student.state}
       </option>
       <option value=" ">출석</option>
