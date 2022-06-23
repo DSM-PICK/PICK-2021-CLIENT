@@ -1,22 +1,21 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { attendanceData } from "../../../../../modules/mobile/atom/attendance";
+import {
+  attendanceData,
+  nameInputAtom,
+} from "../../../../../modules/mobile/atom/attendance";
 import teacher from "../../../../../lib/api/mobile/teacher";
 import { StudentType } from "../../../../../lib/interface/mobile/teacher";
 
-type Props = {
-  inputValue: string;
-  setInputValue: any;
-};
-
-const NameItem = ({ inputValue, setInputValue }: Props) => {
+const NameItem = () => {
+  const [nameInput, setNameInput] = useRecoilState(nameInputAtom);
   const [attendance, setAttendance] = useRecoilState(attendanceData);
   const [student, setStudent] = useState<StudentType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOnInputClick = (item: StudentType) => {
-    setInputValue(item.name);
+    setNameInput(item.name);
     setAttendance({
       ...attendance,
       student_id: item.id,
@@ -30,25 +29,28 @@ const NameItem = ({ inputValue, setInputValue }: Props) => {
   }, [student]);
 
   useEffect(() => {
-    if (inputValue === "") return;
+    if (nameInput === "") return;
     const debounce = setTimeout(() => {
-      teacher.getStudentNameApi(inputValue).then((res) => {
+      teacher.getStudentNameApi(nameInput).then((res) => {
         setStudent(res.data);
       });
     }, 300);
 
     return () => clearTimeout(debounce);
-  }, [inputValue]);
+  }, [nameInput]);
+
+  useEffect(() => {
+    console.log(attendance);
+  }, [attendance]);
 
   return (
     <EnrollmentItem>
       <SubTitle>이름</SubTitle>
       <input
-        required
         type="text"
         name="name"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={nameInput}
+        onChange={(e) => setNameInput(e.target.value)}
         className="text-input"
         placeholder="이름을 입력해주세요"
         autoComplete="off"

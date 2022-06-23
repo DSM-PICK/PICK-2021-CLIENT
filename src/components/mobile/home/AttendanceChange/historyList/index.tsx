@@ -1,16 +1,22 @@
 import styled from "@emotion/styled";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
-import { attendanceDataList } from "../../../../../modules/mobile/atom/attendance";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import {
+  attendanceData,
+  attendanceDataList,
+} from "../../../../../modules/mobile/atom/attendance";
 import { MainColor } from "../../../../../style/color";
-import attendance from "../../../../../lib/api/mobile/attendance";
+import attendanceApi from "../../../../../lib/api/mobile/attendance";
 import { Close } from "../../../../../assets";
 import { AttendancePostType } from "../../../../../lib/interface/mobile/Attendance";
 
 const EnrollmentHistory = () => {
   const queryClient = useQueryClient();
+  const attendance = useRecoilValue(attendanceData);
+  const resetAttendance = useResetRecoilState(attendanceData);
 
+  //  TODO :  서버 배열 형태로 바뀌면 body값 아래로 변경해야함
   const [attendanceList, setAttendanceList] =
     useRecoilState(attendanceDataList);
 
@@ -19,12 +25,13 @@ const EnrollmentHistory = () => {
   };
 
   const { mutate: PostAttendanceHandle } = useMutation(
-    () => attendance.postAttendance(attendanceList),
+    () => attendanceApi.postAttendance(attendance),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("attendance_list_value");
         toast.success("출결이 등록되었습니다.");
 
+        resetAttendance();
         setAttendanceList([]);
       },
       onError: () => {

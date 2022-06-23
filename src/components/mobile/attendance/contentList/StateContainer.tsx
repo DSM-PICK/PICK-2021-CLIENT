@@ -15,6 +15,7 @@ const StateContainer = (student: any) => {
   useEffect(() => {
     if (state === "이동")
       setModal({
+        ...modal,
         open: true,
         student_name: student.student.student_name,
         student_id: student.student.student_id,
@@ -22,6 +23,7 @@ const StateContainer = (student: any) => {
       });
     else
       setModal({
+        ...modal,
         open: false,
         student_name: student.student.student_name,
         student_id: student.student.student_id,
