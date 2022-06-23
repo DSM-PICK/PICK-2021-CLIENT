@@ -9,10 +9,17 @@ interface Props {
 }
 
 const ListItem = ({ modal, setModal, item }: Props) => {
+  //console.log(item);
+
   return (
     <S.StdListItem
       onClick={() =>
-        setModal({ modal: true, attendance_id: item.attendance_id })
+        setModal({
+          modal: true,
+          attendance_id: item.attendance_id,
+          name: item.name,
+          term: item.term,
+        })
       }
     >
       <div className="std">
@@ -23,7 +30,7 @@ const ListItem = ({ modal, setModal, item }: Props) => {
       <span className="state">{item.state}</span>
       <span className="date">{DatePeriodHook(item.term)}</span>
       <span className="reason">{item.reason}</span>
-      <span className="teacher">{item.teacher_id}</span>
+      <span className="teacher">{item.teacher_name}</span>
     </S.StdListItem>
   );
 };
