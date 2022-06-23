@@ -22,7 +22,7 @@ const Attendance = () => {
 
   const { data: attendanceData } = useQuery(
     ["attendance_data", id],
-    () => AttendanceApi.getAttendanceList(5),
+    () => AttendanceApi.getAttendanceList(id),
     {
       enabled: !!id,
       cacheTime: Infinity,
@@ -30,6 +30,8 @@ const Attendance = () => {
       suspense: false,
     }
   );
+
+  console.log(attendanceData?.data);
 
   return (
     <S.MainWrapper>

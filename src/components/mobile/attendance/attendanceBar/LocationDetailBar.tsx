@@ -12,7 +12,7 @@ const LocationDetailBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryData = QueryString.parse(location.search);
-  const floor: any = queryData.floor;
+  const floor = Number(queryData.floor);
 
   const [selected, setSelected] = useRecoilState(LoactionId);
 

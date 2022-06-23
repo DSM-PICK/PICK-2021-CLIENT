@@ -18,7 +18,7 @@ const LocationFloorBar = () => {
   };
 
   useEffect(() => {
-    navigate(`/attendance?floor=${selected}&id=`);
+    navigate(`/attendance?floor=${selected}&id=1`);
   }, [navigate, selected]);
 
   return (
