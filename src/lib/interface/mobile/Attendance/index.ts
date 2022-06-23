@@ -40,8 +40,7 @@ export interface directorType {
 
 // 출결 사전 변동 내역 리스트 타입
 export interface AttendanceListType {
-  attendance_id: number;
-  director_id: number;
+  id: number;
   gcn: string;
   name: string;
   period: number;
@@ -50,5 +49,4 @@ export interface AttendanceListType {
   student_id: number;
   teacher_id: string;
   teacher_name: string;
-  term: string;
 }
