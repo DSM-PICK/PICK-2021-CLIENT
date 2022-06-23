@@ -87,6 +87,10 @@ export const Placebar = styled.div`
 `;
 
 export const PlaceContent = styled.div`
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    overflow: auto;
   width: 55%;
   height: 100%;
   background: #f7f7f7;

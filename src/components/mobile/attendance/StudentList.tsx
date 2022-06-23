@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   AttendanceType,
   StudentAttendanceType,
@@ -26,12 +26,13 @@ interface StudentType {
 const StudentList = ({ data }: Props) => {
   const [studentData, setStudentData] = useState<StudentType>();
   const [state, setState] = useState<string>("");
-  const setModal = useSetRecoilState(moveModal);
+  const [modal, setModal] = useRecoilState(moveModal);
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
   const [selectState, setSelectState] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>([
     ...Array(arr.length * time.length).fill(" "),
   ]);
+
   const allCheckClick = (checked: boolean) => {
     if (checked) {
       const idArray: any = [];
@@ -89,6 +90,7 @@ const StudentList = ({ data }: Props) => {
 
     if (stateValue === "이동")
       setModal({
+        ...modal,
         open: true,
         student_name: studentData?.student_name,
         student_id: studentData?.student_id,
@@ -96,6 +98,7 @@ const StudentList = ({ data }: Props) => {
       });
     else
       setModal({
+        ...modal,
         open: false,
         student_name: studentData?.student_name,
         student_id: studentData?.student_id,

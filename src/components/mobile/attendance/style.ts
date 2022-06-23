@@ -93,6 +93,6 @@ export const StudentSelect = styled.select<{ selectState: boolean }>`
   font-size: 18px;
   outline: none;
   border: 1px solid #c7c7c7;
-  color: ${({ selectState }) => (selectState ? "white" : "black")};
-  background: ${({ selectState }) => (selectState ? MainColor : "")};
+  //  color: ${({ selectState }) => (selectState ? "white" : "black")};
+  //  background: ${({ selectState }) => (selectState ? MainColor : "")};
 `;
