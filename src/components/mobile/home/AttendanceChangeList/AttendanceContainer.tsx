@@ -32,7 +32,11 @@ const ListContainer = ({ selected }: Props) => {
 
   return (
     <>
-      <ListDeleteModal modal={modal} setModal={setModal} />
+      <ListDeleteModal
+        data={attendanceListValue?.data}
+        modal={modal}
+        setModal={setModal}
+      />
       <S.ListBoxWrapper>
         <S.ListHeader>
           <div className="std">

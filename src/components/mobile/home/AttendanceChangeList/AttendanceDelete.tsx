@@ -3,23 +3,27 @@ import { Close } from "../../../../assets";
 import * as S from "./style";
 import attendance from "../../../../lib/api/mobile/attendance";
 import { toast } from "react-toastify";
+import { AttendanceListType } from "../../../../lib/interface/mobile/Attendance";
 
 interface Props {
   modal: any;
   setModal: any;
+  data: AttendanceListType[];
 }
 
-const ListDeleteModal = ({ modal, setModal }: Props) => {
+const ListDeleteModal = ({ modal, setModal, data }: Props) => {
   const queryClient = useQueryClient();
 
   const deleteBtnClickHandle = () => {
-    deleteAttendance();
     setModal({ ...modal, modal: false });
+    data
+      ?.filter((std) => std?.name === modal?.name && std?.term === modal?.term)
+      .map((attendance) => deleteAttendance(attendance.attendance_id));
   };
 
   const { mutate: deleteAttendance } = useMutation(
     ["deleteAttendance"],
-    () => attendance.deleteAttendance(modal.attendance_id),
+    (attendance_id: number) => attendance.deleteAttendance(attendance_id),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("attendance_list_value");
