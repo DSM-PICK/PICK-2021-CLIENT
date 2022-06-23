@@ -54,9 +54,9 @@ const ListContainer = ({ selected }: Props) => {
               출결 변동 내역이 입력되지 않았습니다.
             </span>
           ) : (
-            attendanceData?.map((item: AttendanceListType) => (
+            attendanceData?.map((item: AttendanceListType, idx: number) => (
               <ListItem
-                key={item.attendance_id}
+                key={idx}
                 setModal={setModal}
                 modal={modal}
                 item={item}
