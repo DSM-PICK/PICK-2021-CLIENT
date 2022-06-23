@@ -53,8 +53,7 @@ const MoveModal = () => {
       return (
         <>
           <span>
-            {modal.gcn} {modal.student_name} 학생 {selectedPlace} 이동을
-            맞으신가요?
+            {modal.gcn} {modal.name} 학생 {selectedPlace} 이동을 맞으신가요?
           </span>
           <button>출석하기</button>
         </>
@@ -63,7 +62,7 @@ const MoveModal = () => {
       return (
         <>
           <span>
-            {modal.gcn} {modal.student_name} 학생 이동 교실을 선택해주세요.
+            {modal.gcn} {modal.name} 학생 이동 교실을 선택해주세요.
           </span>
           <button>출석하기</button>
         </>
@@ -83,7 +82,7 @@ const MoveModal = () => {
         <S.PlaceWrapper>
           <S.Placebar>
             <span>
-              {modal.gcn} {modal.student_name}
+              {modal.gcn} {modal.name}
             </span>
             <ul>
               {place.map((place, index) => (

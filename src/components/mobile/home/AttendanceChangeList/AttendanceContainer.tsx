@@ -49,7 +49,7 @@ const ListContainer = ({ selected }: Props) => {
         </S.ListHeader>
 
         <S.ListContent>
-          {attendanceData === [] ? (
+          {attendanceData?.length === 0 ? (
             <span style={{ margin: "auto", color: "#818181" }}>
               출결 변동 내역이 입력되지 않았습니다.
             </span>
