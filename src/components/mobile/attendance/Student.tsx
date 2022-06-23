@@ -18,7 +18,6 @@ const Student: FC<Props> = ({
   student,
   selectState,
 }) => {
-  console.log(selected[index * 3 + idx]);
 
   return (
     <S.StudentSelect

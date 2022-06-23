@@ -26,7 +26,6 @@ const Password: FC = (): JSX.Element => {
     }
     patchPassword(pw, id)
       .then((res: any) => {
-        console.log(res);
         navigate("/");
       })
       .catch((err: any) => setErrmsg("아이디가 일치하지 않습니다."));
