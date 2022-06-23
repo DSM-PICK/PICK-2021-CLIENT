@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const ReasonItem = () => {
   const [attendance, setAttendance] = useRecoilState(attendanceData);
   const resetNameInput = useResetRecoilState(nameInputAtom);
+  const resetAttendanceReset = useResetRecoilState(attendanceData);
 
   const [attendanceList, setAttendanceList] =
     useRecoilState(attendanceDataList);
@@ -43,6 +44,7 @@ const ReasonItem = () => {
 
       // 이름 입력 state reset
       resetNameInput();
+      //  resetAttendanceReset();
     }
   };
 
