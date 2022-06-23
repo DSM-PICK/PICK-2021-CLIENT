@@ -4,17 +4,19 @@ export interface AttendanceType {
   location_name: string;
   class_name: string;
   head_name: string;
+  period: number;
   student_list: StudentAttendanceType[];
 }
 
 export interface StudentAttendanceType {
+  id: number;
   gcn: string;
-  student_id: number;
-  student_name: string;
+  name: string;
   student_attendance: StudentAttendanceDetailType[];
 }
 
 export interface StudentAttendanceDetailType {
+  id: number;
   period: number;
   location_name: string | null;
   state: string;
