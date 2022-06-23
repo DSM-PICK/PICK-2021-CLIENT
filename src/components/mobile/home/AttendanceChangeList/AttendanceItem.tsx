@@ -1,4 +1,3 @@
-import { DatePeriodHook } from "../../../../utils/dateChangeHook";
 import { AttendanceListType } from "../../../../lib/interface/mobile/Attendance";
 import * as S from "./style";
 
@@ -9,16 +8,13 @@ interface Props {
 }
 
 const ListItem = ({ modal, setModal, item }: Props) => {
-  //console.log(item);
-
   return (
     <S.StdListItem
       onClick={() =>
         setModal({
           modal: true,
-          attendance_id: item.attendance_id,
+          attendance_id: item.id,
           name: item.name,
-          term: item.term,
         })
       }
     >
@@ -28,7 +24,7 @@ const ListItem = ({ modal, setModal, item }: Props) => {
         </span>
       </div>
       <span className="state">{item.state}</span>
-      <span className="date">{DatePeriodHook(item.term)}</span>
+      {/* <span className="date">{DatePeriodHook(item.term)}</span> */}
       <span className="reason">{item.reason}</span>
       <span className="teacher">{item.teacher_name}</span>
     </S.StdListItem>

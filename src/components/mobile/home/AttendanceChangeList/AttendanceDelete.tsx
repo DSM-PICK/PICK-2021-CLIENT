@@ -14,11 +14,14 @@ interface Props {
 const ListDeleteModal = ({ modal, setModal, data }: Props) => {
   const queryClient = useQueryClient();
 
+  // TODO : period 제대로 값 찍히면 삭제 API 로직 맞춰봐야함
   const deleteBtnClickHandle = () => {
     setModal({ ...modal, modal: false });
     data
-      ?.filter((std) => std?.name === modal?.name && std?.term === modal?.term)
-      .map((attendance) => deleteAttendance(attendance.attendance_id));
+      ?.filter(
+        (std) => std?.name === modal?.name && std?.period === modal?.period
+      )
+      .map((attendance) => deleteAttendance(attendance.id));
   };
 
   const { mutate: deleteAttendance } = useMutation(
