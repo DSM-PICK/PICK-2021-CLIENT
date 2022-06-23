@@ -22,11 +22,15 @@ export interface StudentAttendanceDetailType {
 
 export interface AttendancePostType {
   state: string;
-  term: string;
   student_id: number | null;
-  name?: string;
   reason: string;
+  start_date: string;
+  start_period: number | null;
+  end_date: string;
+  end_period: number | null;
   teacher_id?: any;
+
+  name?: string;
 }
 
 export interface directorType {

@@ -14,7 +14,7 @@ export default {
       method: "delete",
     });
   },
-  postAttendance(data: AttendancePostType[]) {
+  postAttendance(data: AttendancePostType) {
     console.log(data);
     return request({
       url: "/attendance",

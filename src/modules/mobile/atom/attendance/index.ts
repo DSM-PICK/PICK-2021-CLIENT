@@ -8,7 +8,13 @@ export const moveModal = atom({
     gcn: "",
     student_id: null,
     student_name: "",
+    period: 8,
   },
+});
+
+export const nameInputAtom = atom({
+  key: "nameInputAtom",
+  default: "",
 });
 
 export const stateValue = atom({
@@ -32,7 +38,10 @@ export const attendanceData = atom<AttendancePostType>({
     teacher_id: localStorage.getItem("teacher_id"),
     student_id: null,
     state: "외출",
-    term: "",
+    start_date: "",
+    start_period: null,
+    end_date: "",
+    end_period: null,
     reason: "",
     name: "",
   },
