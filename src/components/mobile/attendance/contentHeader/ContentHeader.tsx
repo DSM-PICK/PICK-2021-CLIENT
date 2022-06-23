@@ -13,8 +13,8 @@ const ContentHeader = ({ info }: Props) => {
         <span className="place">{info?.location_name}</span>
       </S.TitleWrapper>
       <S.SubTitleWrapper>
-        <span>동아리 인원 : {info?.student_list.length}명</span>
-        <span>부장 : {info?.head_name}</span>
+        <span>학생 수 : {info?.student_list.length}명</span>
+        {info?.head_name && <span>부장 : {info?.head_name}</span>}
       </S.SubTitleWrapper>
     </S.ContentWrapper>
   );

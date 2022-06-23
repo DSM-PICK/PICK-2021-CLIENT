@@ -134,7 +134,7 @@ const StudentList = ({ data }: Props) => {
             <label htmlFor={String(index)} />
           </S.CheckBoxContainer>
           <span>
-            {student.gcn} {student.student_name}
+            {student.gcn} {student.name}
           </span>
 
           {student.student_attendance.map((std, idx) => {

@@ -20,7 +20,7 @@ const ContentList = ({ info, checkHandle }: Props) => {
 
   useEffect(() => {
     info?.student_list?.filter((std) =>
-      std.student_name === checkedItems ? console.log(true) : console.log(false)
+      std.name === checkedItems ? console.log(true) : console.log(false)
     );
   }, [checkedItems, info?.student_list]);
 
@@ -41,7 +41,7 @@ const ContentList = ({ info, checkHandle }: Props) => {
           <>
             {info?.student_list.map((item: StudentAttendanceType) => (
               <StdListItem
-                key={item.student_id}
+                key={item.id}
                 item={item}
                 checkHandle={checkHandle}
               />

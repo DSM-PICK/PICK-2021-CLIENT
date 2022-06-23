@@ -15,15 +15,15 @@ const StdListItem = ({ item, checkHandle }: Props) => {
 
   return (
     <S.StudentItem check={check}>
-      <label key={item.student_id} className="checkbox">
+      <label key={item.id} className="checkbox">
         <input
           type="checkbox"
-          value={item.student_name}
+          value={item.name}
           onChange={(e) => checkHandle(e)}
         />
       </label>
       <span>{item.gcn}</span>
-      <span>{item.student_name}</span>
+      <span>{item.name}</span>
       {std.map((_, index) => (
         <StateContainer key={index} student={item} />
       ))}
