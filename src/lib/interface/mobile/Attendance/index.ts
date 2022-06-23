@@ -26,6 +26,7 @@ export interface AttendancePostType {
   student_id: number | null;
   name?: string;
   reason: string;
+  teacher_id?: any;
 }
 
 export interface directorType {

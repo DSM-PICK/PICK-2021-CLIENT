@@ -29,6 +29,7 @@ export const selectCount = atom({
 export const attendanceData = atom<AttendancePostType>({
   key: "attendance",
   default: {
+    teacher_id: localStorage.getItem("teacher_id"),
     student_id: null,
     state: "외출",
     term: "",

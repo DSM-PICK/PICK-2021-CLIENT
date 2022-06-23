@@ -30,6 +30,7 @@ const ReasonItem = () => {
       toast.error("날짜를 선택해주세요");
     } else {
       setAttendance({
+        ...attendance,
         student_id: attendance.student_id,
         state: attendance.state,
         term: attendance.term,

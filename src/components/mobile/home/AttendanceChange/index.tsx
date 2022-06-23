@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "@emotion/styled";
 import {
@@ -35,6 +35,7 @@ const AttendanceChange = () => {
       toast.error("날짜를 선택해주세요.");
     } else {
       setAttendance({
+        teacher_id: localStorage.getItem("teacher_id"),
         student_id: null,
         state: "외출",
         term: "",
@@ -45,10 +46,6 @@ const AttendanceChange = () => {
       setAttendanceList(attendanceList.concat(attendance));
     }
   };
-
-  useEffect(() => {
-    console.log(attendance);
-  }, [attendance]);
 
   return (
     <AttendanceChangeWrapper>
