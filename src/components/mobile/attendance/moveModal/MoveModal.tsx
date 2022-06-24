@@ -7,7 +7,7 @@ import { moveModal } from "../../../../modules/mobile/atom/attendance";
 import * as S from "./style";
 
 const MoveModal = () => {
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(1);
   const [modal, setModal] = useRecoilState(moveModal);
   const [selectedPlace, setSelectedPlace] = useState<string>("");
 
