@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   ClassButtonList,
@@ -14,6 +14,7 @@ const LocationBar = () => {
   const [selected, setSelected] = useState<number>(2);
   const setFloor = useSetRecoilState(floorData);
   const navigate = useNavigate();
+
   const { locationId } = useRecoilValue(LoactionId);
 
   const selectedHandlerColor = (item: StateBtnType) => {

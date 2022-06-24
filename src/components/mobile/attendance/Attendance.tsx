@@ -31,8 +31,6 @@ const Attendance = () => {
     }
   );
 
-  console.log(attendanceData?.data);
-
   return (
     <S.MainWrapper>
       <MoveModal />
