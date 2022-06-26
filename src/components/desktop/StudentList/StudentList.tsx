@@ -25,9 +25,6 @@ const StudentList = () => {
       setCheckStatus(checkStatus.filter((el) => el !== id));
     }
   };
-  useEffect(() => {
-    console.log(checkStatus);
-  }, [checkStatus]);
   return (
     <S.Container>
       <S.StudentListTitle>

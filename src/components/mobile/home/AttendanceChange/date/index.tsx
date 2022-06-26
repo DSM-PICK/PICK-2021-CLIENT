@@ -9,12 +9,12 @@ import {
   startDateValue,
 } from "../../../../../modules/mobile/atom/calendar";
 import { DateNonYearHook } from "../../../../../utils/dateChangeHook";
-import { DatePeriodChangeHook } from "../../../../../utils/datePeriodChangeHook";
 import { DateSplitHook } from "../../../../../utils/dateSplitHook";
 import CalendarEndModal from "./CalendarEndModal";
 import CalendarModal from "./CalendarModal";
 import * as S from "./style";
 
+// 끝
 const CalendarItem = () => {
   const setOpen = useSetRecoilState(calendarModal);
   const setSecOpen = useSetRecoilState(calendarEndModal);
@@ -24,31 +24,15 @@ const CalendarItem = () => {
   const [dateValue, setDateValue] = useState<any>(DateSplitHook(startDate));
   const [dateSecValue, setDateSecValue] = useState<any>(DateSplitHook(endDate));
 
-  const [date, setDate] = useState({
-    startDate: startDate.format("YYYY-MM-DD"),
-    endDate: endDate.format("YYYY-MM-DD"),
-    startPeriod: "",
-    endPeriod: "",
-  });
-
-  useEffect(() => {
-    setDateValue(DateNonYearHook(startDate.format("M-D")));
-    setDateSecValue(DateNonYearHook(endDate.format("M-D")));
-  }, [date, startDate, dateValue, endDate]);
-
   useEffect(() => {
     setAttendance({
       ...attendance,
-      term: DatePeriodChangeHook(date),
+      start_date: startDate.format("YYYY-MM-DD"),
+      end_date: endDate.format("YYYY-MM-DD"),
     });
-  }, [date, attendance.term]);
 
-  useEffect(() => {
-    setDate({
-      ...date,
-      startDate: startDate.format("YYYY-MM-DD"),
-      endDate: endDate.format("YYYY-MM-DD"),
-    });
+    setDateValue(DateNonYearHook(startDate.format("M-D")));
+    setDateSecValue(DateNonYearHook(endDate.format("M-D")));
   }, [startDate, endDate]);
 
   return (
@@ -62,12 +46,13 @@ const CalendarItem = () => {
             <span onClick={() => setOpen(true)}>{dateValue}</span>
             <div className="date_period">
               <input
+                required
                 type="text"
                 placeholder="_"
                 onChange={(e) =>
-                  setDate({
-                    ...date,
-                    startPeriod: e.target.value,
+                  setAttendance({
+                    ...attendance,
+                    start_period: Number(e.target.value),
                   })
                 }
               />
@@ -78,12 +63,13 @@ const CalendarItem = () => {
             <span onClick={() => setSecOpen(true)}>{dateSecValue}</span>
             <div className="date_period">
               <input
+                required
                 type="text"
                 placeholder="_"
                 onChange={(e) =>
-                  setDate({
-                    ...date,
-                    endPeriod: e.target.value,
+                  setAttendance({
+                    ...attendance,
+                    end_period: Number(e.target.value),
                   })
                 }
               />

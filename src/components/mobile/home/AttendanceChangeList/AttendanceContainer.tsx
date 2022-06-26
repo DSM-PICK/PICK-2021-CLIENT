@@ -1,38 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ListDeleteModal from "./AttendanceDelete";
 import ListItem from "./AttendanceItem";
 import attendance from "../../../../lib/api/mobile/attendance";
-import { BarLoader } from "react-spinners";
-import { MainColor } from "../../../../style/color";
 import * as S from "./style";
-import { AttendanceType } from "../../../../lib/interface/mobile/Attendance";
+import { AttendanceListType } from "../../../../lib/interface/mobile/Attendance";
+import _ from "lodash";
 
-const ListContainer = () => {
-  const [modal, setModal] = useState<boolean>(false);
+type Props = {
+  selected: number;
+};
 
-  const { data: attendanceListValue, isLoading } = useQuery(
-    ["attendance_list_value"],
-    () => attendance.getAttendance(),
+const ListContainer = ({ selected }: Props) => {
+  const [modal, setModal] = useState({ modal: false, attendance_id: "" });
+  const [attendanceData, setAttendanceData] = useState<any>();
+
+  const { data: attendanceListValue } = useQuery(
+    ["attendance_list_value", selected],
+    () => attendance.getAttendance(selected),
     {
+      enabled: !!selected,
       cacheTime: Infinity,
       staleTime: Infinity,
+      suspense: false,
     }
   );
 
-  if (isLoading)
-    return (
-      <BarLoader
-        color={MainColor}
-        height="4px"
-        width="100%"
-        speedMultiplier={0.5}
-      />
-    );
+  useEffect(() => {
+    setAttendanceData(_.uniqBy(attendanceListValue?.data, "student_id"));
+  }, [attendanceListValue?.data, selected]);
 
   return (
     <>
-      <ListDeleteModal modal={modal} setModal={setModal} />
+      <ListDeleteModal
+        data={attendanceListValue?.data}
+        modal={modal}
+        setModal={setModal}
+      />
       <S.ListBoxWrapper>
         <S.ListHeader>
           <div className="std">
@@ -45,13 +49,18 @@ const ListContainer = () => {
         </S.ListHeader>
 
         <S.ListContent>
-          {!!attendanceListValue?.data ? (
+          {attendanceData?.length === 0 ? (
             <span style={{ margin: "auto", color: "#818181" }}>
               출결 변동 내역이 입력되지 않았습니다.
             </span>
           ) : (
-            attendanceListValue?.data?.map((item: AttendanceType) => (
-              <ListItem setModal={setModal} modal={modal} item={item} />
+            attendanceData?.map((item: AttendanceListType, idx: number) => (
+              <ListItem
+                key={idx}
+                setModal={setModal}
+                modal={modal}
+                item={item}
+              />
             ))
           )}
         </S.ListContent>

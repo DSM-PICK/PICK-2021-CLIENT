@@ -7,5 +7,5 @@ export const FloorId = atom<number | undefined>({
 
 export const LoactionId = atom<number | any>({
   key: "LoactionId",
-  default: 3,
+  default: 1,
 });

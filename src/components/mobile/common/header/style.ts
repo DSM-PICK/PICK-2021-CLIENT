@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { HeadFootColor } from "../../../../style/color";
 
 interface Props {
   modal: boolean;
@@ -8,13 +7,15 @@ interface Props {
 export const HeaderWrapper = styled.div`
   width: 100%;
   height: 80px;
-  background-color: ${HeadFootColor};
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
   position: fixed;
   z-index: 1;
+
+  background: #ffffff;
+  box-shadow: 0px -3px 20px rgba(200, 200, 200, 0.56);
+  border-radius: 0px 0px 20px 20px;
 
   a > img {
     width: 200px;
@@ -49,9 +50,24 @@ export const FooterWrapper = styled(HeaderWrapper)`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  background: #ffffff;
+  box-shadow: 0px -3px 20px rgba(200, 200, 200, 0.25);
+  border-radius: 20px 20px 0px 0px;
 
-  a > img {
-    width: 50px;
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    span {
+      color: #6f828c;
+      font-weight: 600;
+    }
+
+    > img {
+      margin-bottom: 5px;
+      width: 30px;
+    }
   }
 `;
 

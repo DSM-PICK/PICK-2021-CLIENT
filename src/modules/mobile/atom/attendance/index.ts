@@ -1,14 +1,28 @@
 import { atom } from "recoil";
 import { AttendancePostType } from "../../../../lib/interface/mobile/Attendance";
 
-export const moveModal = atom({
+interface MoveModalType {
+  open: boolean;
+  gcn: string;
+  id: number | null;
+  name: string | null;
+  period: number;
+}
+
+export const moveModal = atom<MoveModalType>({
   key: "modal",
   default: {
     open: false,
     gcn: "",
-    student_id: null,
-    student_name: "",
+    id: null,
+    name: null,
+    period: 8,
   },
+});
+
+export const nameInputAtom = atom({
+  key: "nameInputAtom",
+  default: "",
 });
 
 export const stateValue = atom({
@@ -29,9 +43,13 @@ export const selectCount = atom({
 export const attendanceData = atom<AttendancePostType>({
   key: "attendance",
   default: {
+    teacher_id: localStorage.getItem("teacher_id"),
     student_id: null,
     state: "외출",
-    term: "",
+    start_date: "",
+    start_period: null,
+    end_date: "",
+    end_period: null,
     reason: "",
     name: "",
   },

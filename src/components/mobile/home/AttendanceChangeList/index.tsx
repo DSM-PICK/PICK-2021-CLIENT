@@ -28,7 +28,7 @@ const AttendanceChangeList = () => {
           />
         ))}
       </S.SelectButtonWrapper>
-      <ListContainer />
+      <ListContainer selected={selected} />
     </S.MainWrapper>
   );
 };

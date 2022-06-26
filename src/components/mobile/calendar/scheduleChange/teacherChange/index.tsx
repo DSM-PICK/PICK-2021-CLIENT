@@ -27,6 +27,7 @@ const TeacherChange = () => {
       enabled: !!dateContent && modalOpen,
       cacheTime: Infinity,
       staleTime: Infinity,
+      suspense: false,
     }
   );
 
