@@ -29,7 +29,7 @@ const DatePick: FC = (): JSX.Element => {
   const [sclass, setSclass] = useRecoilState<string>(SClassValue);
   const [fclass, setFclass] = useRecoilState<string>(FClassValue);
 
-  const handleClassInputS = (e: any) => {
+  const handleClassInputStart = (e: any) => {
     if (studentObject.length === 0) return;
     setStudentObject((prevArr: any) =>
       prevArr.map((value: any) => {
@@ -41,7 +41,7 @@ const DatePick: FC = (): JSX.Element => {
     setSclass(e.target.value);
   };
 
-  const handleClassInputF = (e: any) => {
+  const handleClassInputFinish = (e: any) => {
     if (studentObject.length === 0) return;
     setStudentObject((prevArr: any) =>
       prevArr.map((value: any) => {
@@ -136,7 +136,7 @@ const DatePick: FC = (): JSX.Element => {
               <S.ClassInput
                 maxLength={2}
                 value={sclass}
-                onChange={handleClassInputS}
+                onChange={handleClassInputStart}
               />
               <div>교시</div>
             </div>
@@ -156,7 +156,7 @@ const DatePick: FC = (): JSX.Element => {
               <S.ClassInput
                 maxLength={2}
                 value={fclass}
-                onChange={handleClassInputF}
+                onChange={handleClassInputFinish}
               />
               <div>교시</div>
             </div>

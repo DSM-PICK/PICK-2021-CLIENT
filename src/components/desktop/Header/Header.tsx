@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./styles";
 const RegisterArr = [
   { link: "/", title: "출결변경" },
-  { link: "/atcheck", title: "출석체크" },
   { link: "/schedule", title: "일정관리" },
   { link: "/atview", title: "출석조회" },
   { link: "/password", title: "비밀번호 변경" },

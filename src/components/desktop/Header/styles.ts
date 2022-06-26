@@ -12,7 +12,7 @@ export const Container = styled.div`
   border-bottom: 1px solid #e5e5e5;
 `;
 export const RegisterContainer = styled(Container)`
-  width: 904px;
+  width: 700px;
   padding: 0;
 `;
 export const RegisterBox = styled.div`

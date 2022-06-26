@@ -13,6 +13,7 @@ import { AttendancePostType } from "../../../../../lib/interface/mobile/Attendan
 
 const EnrollmentHistory = () => {
   const queryClient = useQueryClient();
+  
   const attendance = useRecoilValue(attendanceData);
   const resetAttendance = useResetRecoilState(attendanceData);
 

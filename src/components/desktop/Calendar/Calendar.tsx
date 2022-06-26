@@ -80,7 +80,7 @@ const Calendar: FC<Props> = ({ isOpen, index }): JSX.Element => {
 
   const renderDay = () => {
     //달력 칸 42개 렌더링하기
-    const dayArray: Array<any> = [];
+    const dayArray = [];
     for (let i = 1; i <= 42; i++) {
       dayArray.push(<S.Days key={i} />);
     }
@@ -110,7 +110,9 @@ const Calendar: FC<Props> = ({ isOpen, index }): JSX.Element => {
 
   const selectCalendar = (e: any, count: any) => {
     if (studentObject.length === 0) return;
-    const selectDate = `${year}-${month < 10 ? `0${month + 1}` : month + 1}-${
+    const selectDate = `${year}-${
+      month + 1 < 10 ? `0${month + 1}` : month + 1
+    }-${
       e.target.innerHTML < 10 ? `0${e.target.innerHTML}` : e.target.innerHTML
     }`;
     if (index === 0) {
