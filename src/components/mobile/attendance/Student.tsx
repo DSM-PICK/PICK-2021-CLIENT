@@ -1,4 +1,7 @@
 import { FC } from "react";
+import { useRecoilState } from "recoil";
+import { StudentAttendanceDetailType } from "../../../lib/interface/mobile/Attendance";
+import { moveModal } from "../../../modules/mobile/atom/attendance";
 import * as S from "./style";
 
 type Props = {
@@ -6,7 +9,7 @@ type Props = {
   idx: number;
   handleChangeSelect: any;
   selected: string[];
-  student: any;
+  student: StudentAttendanceDetailType;
   selectState: boolean;
 };
 
@@ -18,16 +21,30 @@ const Student: FC<Props> = ({
   student,
   selectState,
 }) => {
+  const [modal, setModal] = useRecoilState(moveModal);
+
+  const studentClickHandle = () => {
+    console.log(student);
+    console.log(idx);
+
+    setModal({
+      ...modal,
+      //name: String(student?.name),
+      id: Number(student?.id),
+      //  gcn: String(student?.gcn),
+    });
+  };
 
   return (
     <S.StudentSelect
+      // onClick={() => studentClickHandle()}
       id={String(index) + String(idx)}
       onChange={(e) => handleChangeSelect([index, idx], e, student)}
       value={selected[index * 3 + idx]}
       selectState={selectState}
     >
       <option value=" " selected>
-        {student.state}
+        {student?.state}
       </option>
       <option value=" ">출석</option>
       <option value="이동">이동</option>

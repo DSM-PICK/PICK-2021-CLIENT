@@ -36,7 +36,7 @@ export const StudentList = styled.div`
   font-size: 18px;
 
   span {
-    width: 140px;
+    width: 20%;
     text-align: center;
   }
 `;
@@ -80,7 +80,7 @@ export const CheckPoint = styled.input`
 `;
 export const Title = styled.div`
   font-size: 18px;
-  width: 140px;
+  width: 20%;
   text-align: center;
 `;
 
@@ -93,6 +93,13 @@ export const StudentSelect = styled.select<{ selectState: boolean }>`
   font-size: 18px;
   outline: none;
   border: 1px solid #c7c7c7;
-  //  color: ${({ selectState }) => (selectState ? "white" : "black")};
-  //  background: ${({ selectState }) => (selectState ? MainColor : "")};
+  /* color: ${({ selectState }) => (selectState ? "white" : "black")};
+  background: ${({ selectState }) => (selectState ? MainColor : "")}; */
+`;
+
+export const StdStateList = styled.div`
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `;
