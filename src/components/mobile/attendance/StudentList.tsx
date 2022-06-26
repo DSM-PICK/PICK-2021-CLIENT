@@ -23,7 +23,6 @@ const StudentList = ({ data }: Props) => {
   }
   timeArray.reverse();
 
-  const [studentData, setStudentData] = useState<StudentAttendanceType>();
   const [state, setState] = useState<string>("");
   const [modal, setModal] = useRecoilState(moveModal);
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
@@ -51,10 +50,11 @@ const StudentList = ({ data }: Props) => {
     }
   };
 
-  const handleChangeSelect = (
+  // select를 선택했을때 일어나는 함수
+  const changeSelectHandle = (
     id: number[],
     e: React.ChangeEvent<HTMLSelectElement>,
-    student: any
+    student: StudentAttendanceType
   ) => {
     const selectarr = selected;
 
@@ -66,21 +66,18 @@ const StudentList = ({ data }: Props) => {
       selectarr[id[0] * 3 + id[1]] = e.target.value;
     }
 
-    setSelected([...selectarr]);
-    moveModalHandle(e.target.value);
     setState(e.target.value);
-
-    setStudentData({
-      ...studentData,
-      gcn: student.gcn,
-      id: student.id,
-      name: student.name,
-      student_attendance: student.student_attendance,
-    });
+    // 선택된 select를 바꾸는 setState
+    setSelected([...selectarr]);
+    // state가 이동이면 모달 띄워주는 함수
+    moveModalHandle(e.target.value, student);
   };
 
   // state가 이동이면 modal 띄우기
-  const moveModalHandle = (stateValue: string) => {
+  const moveModalHandle = (
+    stateValue: string,
+    student: StudentAttendanceType
+  ) => {
     if (stateValue !== "출석") {
       setSelectState(true);
     } else {
@@ -91,17 +88,17 @@ const StudentList = ({ data }: Props) => {
       setModal({
         ...modal,
         open: true,
-        name: String(studentData?.name),
-        id: Number(studentData?.id),
-        gcn: String(studentData?.gcn),
+        name: String(student?.name),
+        id: Number(student?.id),
+        gcn: String(student?.gcn),
       });
     else
       setModal({
         ...modal,
         open: false,
-        name: String(studentData?.name),
-        id: Number(studentData?.id),
-        gcn: String(studentData?.gcn),
+        name: String(student?.name),
+        id: Number(student?.id),
+        gcn: String(student?.gcn),
       });
   };
 
@@ -119,7 +116,6 @@ const StudentList = ({ data }: Props) => {
       for (let j = 0; j < timeArray.length; j++) {
         if (isPeriodArray[i]?.period === timeArray[j]) {
           const test = timeArray.indexOf(timeArray[j]);
-          console.log(timeArray[j], true, test);
           stdArr[test] = isPeriodArray[i];
         }
 
@@ -173,9 +169,10 @@ const StudentList = ({ data }: Props) => {
                     key={idx}
                     idx={idx}
                     index={index}
-                    handleChangeSelect={handleChangeSelect}
+                    changeSelectHandle={changeSelectHandle}
                     selected={selected}
-                    student={std}
+                    student={student}
+                    std={std}
                     selectState={selectState}
                   />
                 );
