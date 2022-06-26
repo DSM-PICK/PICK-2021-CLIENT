@@ -1,36 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import {
   AttendanceType,
+  StudentAttendanceDetailType,
   StudentAttendanceType,
 } from "../../../lib/interface/mobile/Attendance";
 import { moveModal } from "../../../modules/mobile/atom/attendance";
 import Student from "./Student";
 import * as S from "./style";
 
-const timeArray = ["학생", "8교시", "9교시", "10교시"];
 const arr = [...Array(20)].map((v, i) => i);
-const time = new Array(3).fill(0);
 
 interface Props {
   data: AttendanceType;
 }
 
-interface StudentType {
-  student_id: number | any;
-  student_name: string | any;
-  gcn: number | any;
-  student_attendance: StudentAttendanceType[];
-}
-
 const StudentList = ({ data }: Props) => {
-  const [studentData, setStudentData] = useState<StudentType>();
+  // 8 9 10 교시 period로 계산해서 배열에 넣어주기
+  const timeArray: number[] = [];
+  for (let i = 10; i > 10 - data?.period; i--) {
+    timeArray.push(i);
+  }
+  timeArray.reverse();
+
+  const [studentData, setStudentData] = useState<StudentAttendanceType>();
   const [state, setState] = useState<string>("");
   const [modal, setModal] = useRecoilState(moveModal);
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
   const [selectState, setSelectState] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>([
-    ...Array(arr.length * time.length).fill(" "),
+    ...Array(arr.length * timeArray.length).fill(" "),
   ]);
 
   const allCheckClick = (checked: boolean) => {
@@ -74,8 +73,8 @@ const StudentList = ({ data }: Props) => {
     setStudentData({
       ...studentData,
       gcn: student.gcn,
-      student_id: student.student_id,
-      student_name: student.student_name,
+      id: student.id,
+      name: student.name,
       student_attendance: student.student_attendance,
     });
   };
@@ -92,18 +91,45 @@ const StudentList = ({ data }: Props) => {
       setModal({
         ...modal,
         open: true,
-        student_name: studentData?.student_name,
-        student_id: studentData?.student_id,
-        gcn: studentData?.gcn,
+        name: String(studentData?.name),
+        id: Number(studentData?.id),
+        gcn: String(studentData?.gcn),
       });
     else
       setModal({
         ...modal,
         open: false,
-        student_name: studentData?.student_name,
-        student_id: studentData?.student_id,
-        gcn: studentData?.gcn,
+        name: String(studentData?.name),
+        id: Number(studentData?.id),
+        gcn: String(studentData?.gcn),
       });
+  };
+
+  // student_attendance에 있는 정보 넘겨 주는 함수
+  const periodArray = (student: StudentAttendanceType) => {
+    let stdArr: any = [];
+    let isPeriodArray: any = [];
+    let stdDetail = student.student_attendance.map((atd) => atd);
+
+    for (let key = 0; key <= data.period - 1; key++) {
+      isPeriodArray.push(stdDetail[key]);
+    }
+
+    for (let i = 0; i < data.period; i++) {
+      for (let j = 0; j < timeArray.length; j++) {
+        if (isPeriodArray[i]?.period === timeArray[j]) {
+          const test = timeArray.indexOf(timeArray[j]);
+          console.log(timeArray[j], true, test);
+          stdArr[test] = isPeriodArray[i];
+        }
+
+        if (isPeriodArray[i]?.period !== timeArray[j]) {
+          stdArr.push(undefined);
+        }
+      }
+    }
+
+    return stdArr.splice(0, data.period);
   };
 
   return (
@@ -111,16 +137,19 @@ const StudentList = ({ data }: Props) => {
       <S.StudentListTitle>
         <S.CheckBoxContainer>
           <input
-            id={"every"}
-            type={"checkbox"}
+            id="every"
+            type="checkbox"
             onChange={(e) => allCheckClick(e.target.checked)}
             checked={checkStatus.length === arr.length}
           />
           <label htmlFor={"every"} />
         </S.CheckBoxContainer>
-        {timeArray.map((title, index) => (
-          <S.Title key={index}>{title}</S.Title>
-        ))}
+        <S.Title>학생</S.Title>
+        <S.StdStateList>
+          {timeArray.map((title, index) => (
+            <S.Title key={index}>{title}교시</S.Title>
+          ))}
+        </S.StdStateList>
       </S.StudentListTitle>
       {data?.student_list.map((student, index) => (
         <S.StudentList key={index}>
@@ -136,20 +165,23 @@ const StudentList = ({ data }: Props) => {
           <span>
             {student.gcn} {student.name}
           </span>
-
-          {student.student_attendance.map((std, idx) => {
-            return (
-              <Student
-                key={idx}
-                idx={idx}
-                index={index}
-                handleChangeSelect={handleChangeSelect}
-                selected={selected}
-                student={student}
-                selectState={selectState}
-              />
-            );
-          })}
+          <S.StdStateList>
+            {periodArray(student)?.map(
+              (std: StudentAttendanceDetailType, idx: number) => {
+                return (
+                  <Student
+                    key={idx}
+                    idx={idx}
+                    index={index}
+                    handleChangeSelect={handleChangeSelect}
+                    selected={selected}
+                    student={std}
+                    selectState={selectState}
+                  />
+                );
+              }
+            )}
+          </S.StdStateList>
         </S.StudentList>
       ))}
     </S.Container>
