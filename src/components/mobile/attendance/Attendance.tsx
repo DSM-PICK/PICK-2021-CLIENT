@@ -12,10 +12,6 @@ import StudentList from "./StudentList";
 import AttendanceApi from "../../../lib/api/mobile/attendance";
 
 const Attendance = () => {
-  // const [isChecked, setIsChecked] = useState(false); // 체크 여부
-  // const [checkedItems, setCheckedItems] = useRecoilState(checkList_atom); // 체크된 요소들
-  // const [selectValue, setSelectValue] = useRecoilState(selectValue_atom);
-
   const location = useLocation();
   const queryData = QueryString.parse(location.search);
   const id: any = queryData.id;
