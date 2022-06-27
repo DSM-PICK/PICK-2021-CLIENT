@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
 import {
   AttendanceType,
   StudentAttendanceDetailType,
   StudentAttendanceType,
 } from "../../../lib/interface/mobile/Attendance";
-import { moveModal } from "../../../modules/mobile/atom/attendance";
+import { moveModal, stateValue } from "../../../modules/mobile/atom/attendance";
+import attendanceApi from "../../../lib/api/mobile/attendance";
 import Student from "./Student";
 import * as S from "./style";
+import { toast } from "react-toastify";
+import moment from "moment";
 
 const arr = [...Array(20)].map((v, i) => i);
 
@@ -23,9 +27,12 @@ const StudentList = ({ data }: Props) => {
   }
   timeArray.reverse();
 
+  const date = moment().format("YYYY-MM-DD");
+  const queryClient = useQueryClient();
   const [state, setState] = useState<string>("");
   const [modal, setModal] = useRecoilState(moveModal);
 
+  const [attendance, setAttendance] = useState<any>(null);
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
   const [selectState, setSelectState] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>([
@@ -52,7 +59,7 @@ const StudentList = ({ data }: Props) => {
   };
 
   // select를 선택했을때 일어나는 함수
-  const changeSelectHandle = (
+  const changeSelectHandle = async (
     id: number[],
     e: React.ChangeEvent<HTMLSelectElement>,
     student: StudentAttendanceType,
@@ -70,9 +77,16 @@ const StudentList = ({ data }: Props) => {
 
     setState(e.target.value);
     // 선택된 select를 바꾸는 setState
-    setSelected([...selectarr]);
+    await setSelected([...selectarr]);
     // state가 이동이면 모달 띄워주는 함수
-    moveModalHandle(e.target.value, student, timeArray[id[1]], attendance_id);
+    await moveModalHandle(
+      e.target.value,
+      student,
+      timeArray[id[1]],
+      attendance_id
+    );
+
+    await attendanceHandle();
   };
 
   // state가 이동이면 modal 띄우기
@@ -90,8 +104,6 @@ const StudentList = ({ data }: Props) => {
 
     // attendance_id가 있을떄
     if (!!attendance_id) {
-      console.log(true);
-
       if (stateValue === "이동")
         setModal({
           ...modal,
@@ -115,7 +127,9 @@ const StudentList = ({ data }: Props) => {
           attendance_id,
         });
       }
-    } else {
+    }
+    // attendance_id undefiend 일때
+    else {
       if (stateValue === "이동")
         setModal({
           ...modal,
@@ -135,6 +149,16 @@ const StudentList = ({ data }: Props) => {
           gcn: String(student?.gcn),
           state: stateValue,
           period,
+        });
+        // attendance Set
+        setAttendance({
+          student_id: Number(student?.id),
+          state: stateValue,
+          end_period: period,
+          start_period: period,
+          end_date: date,
+          start_date: date,
+          reason: null,
         });
       }
     }
@@ -165,6 +189,50 @@ const StudentList = ({ data }: Props) => {
 
     return stdArr.splice(0, data.period);
   };
+
+  const attendanceHandle = () => {
+    console.log(state);
+
+    // 이동이면 MoveModal에서 처리하기 때문에 아무 요청도 보내지 않음
+
+    if (state === "이동") {
+      console.log("이동");
+    }
+    // state가 이동이 아닐때 API 호출
+    else {
+      if (modal.attendance_id) {
+        attendancePatchHandle();
+      } else {
+        attendancePostHandle();
+      }
+    }
+  };
+
+  const { mutate: attendancePatchHandle } = useMutation(
+    () => attendanceApi.patchAttendance(modal),
+    {
+      onSuccess: () => {
+        toast.success("학생 상태가 변경되었습니다.");
+        queryClient.invalidateQueries("attendance_data");
+      },
+      onError: () => {
+        queryClient.invalidateQueries("attendance_data");
+      },
+    }
+  );
+
+  const { mutate: attendancePostHandle } = useMutation(
+    () => attendanceApi.postAttendance(attendance),
+    {
+      onSuccess: () => {
+        toast.success("학생 상태가 변경되었습니다.");
+        queryClient.invalidateQueries("attendance_data");
+      },
+      onError: () => {
+        queryClient.invalidateQueries("attendance_data");
+      },
+    }
+  );
 
   return (
     <S.Container>
