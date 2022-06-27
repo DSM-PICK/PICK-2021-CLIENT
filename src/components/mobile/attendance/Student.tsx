@@ -3,6 +3,7 @@ import {
   StudentAttendanceDetailType,
   StudentAttendanceType,
 } from "../../../lib/interface/mobile/Attendance";
+import { MainColor } from "../../../style/color";
 import * as S from "./style";
 
 type Props = {
@@ -24,8 +25,6 @@ const Student: FC<Props> = ({
   std,
   selectState,
 }) => {
-  // const [modal, setModal] = useRecoilState(moveModal);
-
   return (
     <S.StudentSelect
       id={String(index) + String(idx)}
@@ -34,9 +33,14 @@ const Student: FC<Props> = ({
       }}
       value={selected[index * 3 + idx]}
       selectState={selectState}
+      style={{
+        background: std?.state.length > 0 ? MainColor : "",
+        color: std?.state.length > 0 ? "white" : "",
+        border: std?.state.length > 0 ? "none" : "",
+      }}
     >
       <option value=" " selected>
-        {std?.state}
+        {std?.state === "이동" && std?.location_name} {std?.state}
       </option>
       <option value=" ">출석</option>
       <option value="이동">이동</option>
