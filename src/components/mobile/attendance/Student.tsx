@@ -24,10 +24,14 @@ const Student: FC<Props> = ({
   std,
   selectState,
 }) => {
+  // const [modal, setModal] = useRecoilState(moveModal);
+
   return (
     <S.StudentSelect
       id={String(index) + String(idx)}
-      onChange={(e) => changeSelectHandle([index, idx], e, student)}
+      onChange={(e) => {
+        changeSelectHandle([index, idx], e, student, std?.id);
+      }}
       value={selected[index * 3 + idx]}
       selectState={selectState}
     >
