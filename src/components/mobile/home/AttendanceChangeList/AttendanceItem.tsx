@@ -6,10 +6,10 @@ interface Props {
   modal: any;
   setModal: any;
   item: AttendanceListType;
-}
+} 
 
 const ListItem = ({ modal, setModal, item }: Props) => {
-  const date = moment().format("M월 D일");
+  const date = moment().format("YYYY년 M월 D일");
 
   return (
     <S.StdListItem
@@ -29,7 +29,7 @@ const ListItem = ({ modal, setModal, item }: Props) => {
       </div>
       <span className="state">{item.state}</span>
       <span className="date">
-        {date} {item.period}교시 ~ {date} {item.period}교시
+        {date} {item.period}교시
       </span>
       <span className="reason">{item.reason}</span>
       <span className="teacher">{item.teacher_name}</span>
