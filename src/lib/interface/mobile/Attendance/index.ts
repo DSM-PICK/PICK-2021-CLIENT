@@ -31,6 +31,7 @@ export interface AttendancePostType {
   end_date: string;
   end_period: number | null;
   teacher_id?: any;
+  location_id: number;
 
   name?: string;
 }
