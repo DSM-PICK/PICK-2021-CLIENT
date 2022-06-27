@@ -53,11 +53,13 @@ export const AttendanceButton = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
+  line-height: 26px;
+  text-align: center;
 
   button {
     margin-top: 20px;
     font-size: 18px;
-    background: #a7d5ff;
+    background: #0a84ff;
     border-radius: 5px;
     filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.14));
     outline: none;
@@ -87,10 +89,10 @@ export const Placebar = styled.div`
 `;
 
 export const PlaceContent = styled.div`
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    overflow: auto;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  overflow: auto;
   width: 55%;
   height: 100%;
   background: #f7f7f7;
