@@ -1,23 +1,20 @@
 import { atom } from "recoil";
 import { AttendancePostType } from "../../../../lib/interface/mobile/Attendance";
 
-interface MoveModalType {
+export interface MoveModalType {
   open: boolean;
   gcn: string;
-  id: number | null;
+  student_id: number | null;
   name: string | null;
   period: number;
+  attendance_id: number | undefined;
+  location_id: number | undefined;
+  state: string;
 }
 
 export const moveModal = atom<MoveModalType>({
   key: "modal",
-  default: {
-    open: false,
-    gcn: "",
-    id: null,
-    name: null,
-    period: 8,
-  },
+  default: {} as MoveModalType,
 });
 
 export const nameInputAtom = atom({
