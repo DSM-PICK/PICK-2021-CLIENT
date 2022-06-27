@@ -25,6 +25,7 @@ const StudentList = ({ data }: Props) => {
 
   const [state, setState] = useState<string>("");
   const [modal, setModal] = useRecoilState(moveModal);
+
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
   const [selectState, setSelectState] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>([
@@ -54,7 +55,8 @@ const StudentList = ({ data }: Props) => {
   const changeSelectHandle = (
     id: number[],
     e: React.ChangeEvent<HTMLSelectElement>,
-    student: StudentAttendanceType
+    student: StudentAttendanceType,
+    attendance_id: number | undefined
   ) => {
     const selectarr = selected;
 
@@ -70,13 +72,15 @@ const StudentList = ({ data }: Props) => {
     // 선택된 select를 바꾸는 setState
     setSelected([...selectarr]);
     // state가 이동이면 모달 띄워주는 함수
-    moveModalHandle(e.target.value, student);
+    moveModalHandle(e.target.value, student, timeArray[id[1]], attendance_id);
   };
 
   // state가 이동이면 modal 띄우기
   const moveModalHandle = (
     stateValue: string,
-    student: StudentAttendanceType
+    student: StudentAttendanceType,
+    period: number,
+    attendance_id: number | undefined
   ) => {
     if (stateValue !== "출석") {
       setSelectState(true);
@@ -84,22 +88,56 @@ const StudentList = ({ data }: Props) => {
       setSelectState(false);
     }
 
-    if (stateValue === "이동")
-      setModal({
-        ...modal,
-        open: true,
-        name: String(student?.name),
-        id: Number(student?.id),
-        gcn: String(student?.gcn),
-      });
-    else
-      setModal({
-        ...modal,
-        open: false,
-        name: String(student?.name),
-        id: Number(student?.id),
-        gcn: String(student?.gcn),
-      });
+    // attendance_id가 있을떄
+    if (!!attendance_id) {
+      console.log(true);
+
+      if (stateValue === "이동")
+        setModal({
+          ...modal,
+          open: true,
+          name: String(student?.name),
+          student_id: Number(student?.id),
+          gcn: String(student?.gcn),
+          state: stateValue,
+          period,
+          attendance_id,
+        });
+      else {
+        setModal({
+          ...modal,
+          open: false,
+          name: String(student?.name),
+          student_id: Number(student?.id),
+          gcn: String(student?.gcn),
+          state: stateValue,
+          period,
+          attendance_id,
+        });
+      }
+    } else {
+      if (stateValue === "이동")
+        setModal({
+          ...modal,
+          open: true,
+          name: String(student?.name),
+          student_id: Number(student?.id),
+          gcn: String(student?.gcn),
+          state: stateValue,
+          period,
+        });
+      else {
+        setModal({
+          ...modal,
+          open: false,
+          name: String(student?.name),
+          student_id: Number(student?.id),
+          gcn: String(student?.gcn),
+          state: stateValue,
+          period,
+        });
+      }
+    }
   };
 
   // student_attendance에 있는 정보 넘겨 주는 함수
