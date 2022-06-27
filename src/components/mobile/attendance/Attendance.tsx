@@ -29,7 +29,7 @@ const Attendance = () => {
 
   return (
     <S.MainWrapper>
-      <MoveModal />
+      <MoveModal locationId={id} />
       <Header />
       <Footer />
       <div className="location_box">

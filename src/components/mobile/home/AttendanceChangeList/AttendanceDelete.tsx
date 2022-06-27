@@ -3,26 +3,14 @@ import { Close } from "../../../../assets";
 import * as S from "./style";
 import attendance from "../../../../lib/api/mobile/attendance";
 import { toast } from "react-toastify";
-import { AttendanceListType } from "../../../../lib/interface/mobile/Attendance";
 
 interface Props {
   modal: any;
   setModal: any;
-  data: AttendanceListType[];
 }
 
-const ListDeleteModal = ({ modal, setModal, data }: Props) => {
+const ListDeleteModal = ({ modal, setModal }: Props) => {
   const queryClient = useQueryClient();
-
-  // TODO : period 제대로 값 찍히면 삭제 API 로직 맞춰봐야함
-  const deleteBtnClickHandle = () => {
-    setModal({ ...modal, modal: false });
-    data
-      ?.filter(
-        (std) => std?.name === modal?.name && std?.period === modal?.period
-      )
-      .map((attendance) => deleteAttendance(attendance.id));
-  };
 
   const { mutate: deleteAttendance } = useMutation(
     ["deleteAttendance"],
@@ -34,6 +22,11 @@ const ListDeleteModal = ({ modal, setModal, data }: Props) => {
       },
     }
   );
+
+  const deleteBtnClickHandle = () => {
+    setModal({ ...modal, modal: false });
+    deleteAttendance(modal.attendance_id);
+  };
 
   return (
     <S.ModalWrapper modal={modal.modal}>

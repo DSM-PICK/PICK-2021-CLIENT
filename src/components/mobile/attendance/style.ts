@@ -50,7 +50,7 @@ export const StudentListTitle = styled(StudentList)`
 export const CheckBoxContainer = styled.div`
   width: 30px;
   height: 30px;
-  border: 1px solid #c7c7c7;
+  border: 1px solid #dadada;
   border-radius: 10px;
 
   :hover {
@@ -71,6 +71,7 @@ export const CheckBoxContainer = styled.div`
     display: none;
   }
 `;
+
 export const CheckPoint = styled.input`
   width: 20px;
   height: 20px;
@@ -85,14 +86,17 @@ export const Title = styled.div`
 `;
 
 export const StudentSelect = styled.select<{ selectState: boolean }>`
+  padding: 7px 10px;
   width: 140px;
-  height: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
   appearance: none;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   outline: none;
-  border: 1px solid #c7c7c7;
+  border: 1px solid #dadada;
   /* color: ${({ selectState }) => (selectState ? "white" : "black")};
   background: ${({ selectState }) => (selectState ? MainColor : "")}; */
 `;
