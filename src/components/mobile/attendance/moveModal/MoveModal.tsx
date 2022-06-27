@@ -1,42 +1,24 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
-import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { Close } from "../../../../assets";
+import { place } from "../../../../constance";
+import attendance from "../../../../lib/api/mobile/attendance";
 import locationApi from "../../../../lib/api/mobile/location/locationApi";
 import { moveModal } from "../../../../modules/mobile/atom/attendance";
 import * as S from "./style";
 
-const MoveModal = () => {
+type Props = {
+  locationId: any;
+};
+
+const MoveModal = ({ locationId }: Props) => {
+  const queryClient = useQueryClient();
   const [selected, setSelected] = useState<number>(1);
   const [modal, setModal] = useRecoilState(moveModal);
   const [selectedPlace, setSelectedPlace] = useState<string>("");
-
-  const place = [
-    {
-      id: 1,
-      place: "2층",
-    },
-    {
-      id: 2,
-      place: "3층",
-    },
-    {
-      id: 3,
-      place: "4층",
-    },
-    {
-      id: 4,
-      place: "5층",
-    },
-    {
-      id: 5,
-      place: "특별실",
-    },
-    {
-      id: 6,
-      place: "직접입력",
-    },
-  ];
+  const resetModal = useResetRecoilState(moveModal);
 
   const { data: placeValue } = useQuery(
     ["place_value", selected],
@@ -51,24 +33,41 @@ const MoveModal = () => {
   const selectedMent = () => {
     if (selectedPlace) {
       return (
-        <>
-          <span>
-            {modal.gcn} {modal.name} 학생 {selectedPlace} 이동을 맞으신가요?
-          </span>
-          <button>출석하기</button>
-        </>
+        <span>
+          {modal.gcn} {modal.name} 학생 {selectedPlace} 이동이 맞으신가요?
+        </span>
       );
     } else {
       return (
-        <>
-          <span>
-            {modal.gcn} {modal.name} 학생 이동 교실을 선택해주세요.
-          </span>
-          <button>출석하기</button>
-        </>
+        <span>
+          {modal.gcn} {modal.name} 학생 이동 교실을 선택해주세요.
+        </span>
       );
     }
   };
+
+  useEffect(() => {
+    setModal({
+      ...modal,
+      location_id: Number(locationId),
+    });
+  }, [locationId]);
+
+  const { mutate: attendanceHandle } = useMutation(
+    () => attendance.patchAttendance(modal),
+    {
+      onSuccess: () => {
+        toast.success("학생 상태가 변경되었습니다.");
+        queryClient.invalidateQueries("attendance_data");
+        resetModal();
+      },
+      onError: () => {
+        toast.error("학생 상태가 변경에 실패했습니다.");
+        queryClient.invalidateQueries("attendance_data");
+        resetModal();
+      },
+    }
+  );
 
   return (
     <S.ModalWrapper modal={modal.open}>
@@ -98,13 +97,22 @@ const MoveModal = () => {
           </S.Placebar>
           <S.PlaceContent>
             {placeValue?.data?.map((place: any) => (
-              <li key={place.id} onClick={() => setSelectedPlace(place.name)}>
+              <li
+                key={place.id}
+                onClick={() => {
+                  setSelectedPlace(place.name);
+                  setModal({ ...modal, location_id: place.id });
+                }}
+              >
                 {place.name}
               </li>
             ))}
           </S.PlaceContent>
         </S.PlaceWrapper>
-        <S.AttendanceButton>{selectedMent()}</S.AttendanceButton>
+        <S.AttendanceButton>
+          {selectedMent()}
+          <button onClick={() => attendanceHandle()}>출석하기</button>
+        </S.AttendanceButton>
       </S.ModalBox>
     </S.ModalWrapper>
   );
