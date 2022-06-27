@@ -1,3 +1,4 @@
+import moment from "moment";
 import { atom } from "recoil";
 import { AttendancePostType } from "../../../../lib/interface/mobile/Attendance";
 
@@ -40,12 +41,13 @@ export const selectCount = atom({
 export const attendanceData = atom<AttendancePostType>({
   key: "attendance",
   default: {
+    location_id: 1,
     teacher_id: localStorage.getItem("teacher_id"),
     student_id: null,
     state: "외출",
-    start_date: "",
+    start_date: moment().format("YYYY-MM-DD"),
     start_period: null,
-    end_date: "",
+    end_date: moment().format("YYYY-MM-DD"),
     end_period: null,
     reason: "",
     name: "",
