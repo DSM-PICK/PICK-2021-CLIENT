@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { MainColor } from "../../../style/color";
 
 export const MainWrapper = styled.section`
   width: 100%;
@@ -97,8 +96,6 @@ export const StudentSelect = styled.select<{ selectState: boolean }>`
   font-size: 15px;
   outline: none;
   border: 1px solid #dadada;
-  /* color: ${({ selectState }) => (selectState ? "white" : "black")};
-  background: ${({ selectState }) => (selectState ? MainColor : "")}; */
 `;
 
 export const StdStateList = styled.div`
