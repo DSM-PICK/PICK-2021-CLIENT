@@ -13,7 +13,7 @@ type Props = {
   selected: string[];
   student: StudentAttendanceType;
   std: StudentAttendanceDetailType;
-  selectState: boolean;
+  period: number;
 };
 
 const Student: FC<Props> = ({
@@ -23,24 +23,36 @@ const Student: FC<Props> = ({
   selected,
   student,
   std,
-  selectState,
+  period,
 }) => {
+  const isAttendanceHandle = () => {
+    if (std?.state === "출석") {
+      return " ";
+    } else if (std?.state === "이동") {
+      return std?.state === "이동" && std?.location_name + " " + std?.state;
+    } else {
+      return std?.state;
+    }
+  };
+
   return (
     <S.StudentSelect
-      id={String(index) + String(idx)}
+      // id={String(index) + String(idx)}
       onChange={(e) => {
         changeSelectHandle([index, idx], e, student, std?.id);
       }}
-      value={selected[index * 3 + idx]}
-      selectState={selectState}
+      // value={selected[index * 4 + idx]}
+      //  value={isAttendanceHandle()}
       style={{
-        background: std?.state.length > 0 ? MainColor : "",
-        color: std?.state.length > 0 ? "white" : "",
-        border: std?.state.length > 0 ? "none" : "",
+        background:
+          std?.state.length > 0 && std?.state !== "출석" ? MainColor : "",
+        color:
+          std?.state.length > 0 && std?.state !== "출석" ? "white" : "white",
+        border: std?.state.length > 0 && std?.state !== "출석" ? "none" : "",
       }}
     >
       <option value=" " selected>
-        {std?.state === "이동" && std?.location_name} {std?.state}
+        {isAttendanceHandle()}
       </option>
       <option value=" ">출석</option>
       <option value="이동">{std?.location_name} 이동</option>
