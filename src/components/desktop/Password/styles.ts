@@ -40,13 +40,15 @@ export const LoginForm = styled.form`
   flex-direction: column;
 `;
 
-export const LoginInput = styled.input`
+export const LoginInput = styled.input<{type?:string}>`
   height: 60px;
   border: 1px solid #767676;
   margin-top: 25px;
   outline: none;
   padding: 0 24px;
   font-size: 18px;
+  font-family: initial;
+
 `;
 
 export const UserHelpContainer = styled.div`

@@ -3,11 +3,14 @@ import * as S from "./styles";
 import Filter from "./Filter";
 import Place from "./Place";
 import StudentStatus from "./StudentStatus";
-import Calendar from "./Canlendar";
+import Calendar from "./Calendar/Canlendar";
+import { useRecoilValue } from "recoil";
+import { afterSchoolDay } from "../../../modules/desktop/atom/AfterSchool";
 const AttendanceCheck = () => {
+  const day = useRecoilValue(afterSchoolDay);
   return (
     <S.AtInquiryWrapper>
-      <S.SysDate>2021년 11월 11일</S.SysDate>
+      <S.SysDate>{day}</S.SysDate>
       <S.AtInquiryBox>
         <S.StatusBox>
           <Calendar />
