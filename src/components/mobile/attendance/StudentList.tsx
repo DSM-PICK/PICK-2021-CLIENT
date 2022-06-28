@@ -84,7 +84,7 @@ const StudentList = ({ data }: Props) => {
       attendance_id
     );
 
-    await attendanceHandle(e.target.value);
+    await attendanceHandle(e.target.value, attendance_id);
   };
 
   // state가 이동이면 modal 띄우기
@@ -98,7 +98,7 @@ const StudentList = ({ data }: Props) => {
 
     // attendance_id가 있을떄
     if (!!attendance_id) {
-      if (stateValue === "이동")
+      if (stateValue === "이동") {
         setModal({
           ...modal,
           open: true,
@@ -109,7 +109,7 @@ const StudentList = ({ data }: Props) => {
           period,
           attendance_id,
         });
-      else {
+      } else {
         setModal({
           ...modal,
           open: false,
@@ -185,11 +185,13 @@ const StudentList = ({ data }: Props) => {
   };
 
   // API 호출
-  const attendanceHandle = (stateData: string) => {
-    // 이동이면 MoveModal에서 처리하기 때문에 아무 요청도 보내지 않음
+  const attendanceHandle = (
+    stateData: string,
+    attendance_id: number | undefined
+  ) => {
     // state가 이동이 아닐때 API 호출
     if (stateData !== "이동") {
-      if (modal.attendance_id) {
+      if (attendance_id) {
         attendancePatchHandle();
       } else {
         attendancePostHandle();
