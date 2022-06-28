@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   getAfterSchool,
   getMajorClub,
-} from "../../../lib/api/mobile/Afterschool";
+} from "../../../lib/api/desktop/Afterschool";
 import * as S from "./styles";
 const floorArr = ["4층", "3층", "2층", "기타"];
 interface PlaceType {

@@ -15,7 +15,6 @@ export default {
       method: "delete",
     });
   },
-
   postAttendance(data: AttendancePostType) {
     return request({
       url: "/attendance",
@@ -46,8 +45,10 @@ export default {
     });
   },
   getAttendanceList(location_id: number) {
+    let id = !!location_id ? location_id : 1;
+
     return request({
-      url: `/attendance/${location_id}`,
+      url: `/attendance/${id}`,
     });
   },
 };
