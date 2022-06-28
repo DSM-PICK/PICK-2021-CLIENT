@@ -6,7 +6,15 @@ import {
   studentFilter,
 } from "../../../modules/desktop/atom/ATCheck";
 const studentArr: string[] = ["전체", "1학년", "2학년", "3학년"];
-const statusArr: string[] = ["전체", "외출", "현체", "귀가", "무단", "취업"];
+const statusArr: string[] = [
+  "전체",
+  "이동",
+  "외출",
+  "현체",
+  "귀가",
+  "무단",
+  "취업",
+];
 
 const Filter = () => {
   const [stuFilterValue, setStuFilterValue] = useRecoilState(studentFilter);

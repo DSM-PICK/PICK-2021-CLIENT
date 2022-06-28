@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { patchPassword } from "../../../lib/api/mobile/Password";
+import { patchPassword } from "../../../lib/api/desktop/Password";
 import * as S from "./styles";
 const Password: FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -25,10 +25,13 @@ const Password: FC = (): JSX.Element => {
       return;
     }
     patchPassword(pw, id)
-      .then((res: any) => {
+      .then(() => {
+        alert("비밀번호가 변경되었습니다.");
         navigate("/");
       })
-      .catch((err: any) => setErrmsg("아이디가 일치하지 않습니다."));
+      .catch((err: any) => {
+        setErrmsg(err.response.data.message);
+      });
   };
   return (
     <S.Container>
@@ -48,6 +51,7 @@ const Password: FC = (): JSX.Element => {
             name="pw"
             value={pw}
             onChange={onChangeInput}
+            autoComplete="on"
           />
           <S.LoginInput
             placeholder={"새 비밀번호 재입력"}
@@ -55,6 +59,7 @@ const Password: FC = (): JSX.Element => {
             name="checkpw"
             value={checkpw}
             onChange={onChangeInput}
+            autoComplete="on"
           />
           <S.LoginSubmit
             type="submit"
