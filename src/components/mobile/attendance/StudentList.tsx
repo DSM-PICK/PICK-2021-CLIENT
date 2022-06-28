@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
 import {
@@ -29,15 +29,17 @@ const StudentList = ({ data }: Props) => {
 
   const date = moment().format("YYYY-MM-DD");
   const queryClient = useQueryClient();
-  const [state, setState] = useState<string>("");
   const [modal, setModal] = useRecoilState(moveModal);
 
   const [attendance, setAttendance] = useState<any>(null);
   const [checkStatus, setCheckStatus] = useState<any[]>([]);
-  const [selectState, setSelectState] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>([
     ...Array(arr.length * timeArray.length).fill(" "),
   ]);
+
+  useEffect(() => {
+    console.log(selected);
+  }, [selected]);
 
   const allCheckClick = (checked: boolean) => {
     if (checked) {
@@ -75,9 +77,9 @@ const StudentList = ({ data }: Props) => {
       selectarr[id[0] * 3 + id[1]] = e.target.value;
     }
 
-    setState(e.target.value);
     // 선택된 select를 바꾸는 setState
     await setSelected([...selectarr]);
+
     // state가 이동이면 모달 띄워주는 함수
     await moveModalHandle(
       e.target.value,
@@ -86,21 +88,17 @@ const StudentList = ({ data }: Props) => {
       attendance_id
     );
 
-    await attendanceHandle();
+    await attendanceHandle(e.target.value);
   };
 
   // state가 이동이면 modal 띄우기
   const moveModalHandle = (
-    stateValue: string,
+    stateData: string,
     student: StudentAttendanceType,
     period: number,
     attendance_id: number | undefined
   ) => {
-    if (stateValue !== "출석") {
-      setSelectState(true);
-    } else {
-      setSelectState(false);
-    }
+    const stateValue = stateData === " " ? "출석" : stateData;
 
     // attendance_id가 있을떄
     if (!!attendance_id) {
@@ -152,8 +150,8 @@ const StudentList = ({ data }: Props) => {
         });
         // attendance Set
         setAttendance({
-          student_id: Number(student?.id),
           state: stateValue,
+          student_id: Number(student?.id),
           end_period: period,
           start_period: period,
           end_date: date,
@@ -190,10 +188,11 @@ const StudentList = ({ data }: Props) => {
     return stdArr.splice(0, data.period);
   };
 
-  const attendanceHandle = () => {
+  // API 호출
+  const attendanceHandle = (stateData: string) => {
     // 이동이면 MoveModal에서 처리하기 때문에 아무 요청도 보내지 않음
 
-    if (state === "이동") {
+    if (stateData === "이동") {
       console.log("이동");
     }
     // state가 이동이 아닐때 API 호출
@@ -270,6 +269,7 @@ const StudentList = ({ data }: Props) => {
               (std: StudentAttendanceDetailType, idx: number) => {
                 return (
                   <Student
+                    period={timeArray.length}
                     key={idx}
                     idx={idx}
                     index={index}
@@ -277,7 +277,6 @@ const StudentList = ({ data }: Props) => {
                     selected={selected}
                     student={student}
                     std={std}
-                    selectState={selectState}
                   />
                 );
               }

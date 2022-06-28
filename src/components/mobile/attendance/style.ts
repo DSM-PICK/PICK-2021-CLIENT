@@ -84,7 +84,7 @@ export const Title = styled.div`
   text-align: center;
 `;
 
-export const StudentSelect = styled.select<{ selectState: boolean }>`
+export const StudentSelect = styled.select`
   padding: 7px 10px;
   width: 140px;
   -webkit-appearance: none;
