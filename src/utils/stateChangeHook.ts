@@ -1,4 +1,6 @@
-export function StateChangeHook(state: string | "") {
+export function StateChangeHook(
+  state: "SELF_STUDY" | "MAJOR" | "AFTER_SCHOOL"
+) {
   switch (state) {
     case "SELF_STUDY":
       return "자습";
