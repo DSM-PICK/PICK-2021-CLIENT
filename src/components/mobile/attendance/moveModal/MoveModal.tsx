@@ -18,7 +18,7 @@ const MoveModal = ({ locationId }: Props) => {
   const date = moment();
   const queryClient = useQueryClient();
 
-  const [selected, setSelected] = useState<number>(1);
+  const [selected, setSelected] = useState<number>(2);
   const [modal, setModal] = useRecoilState(moveModal);
   const resetModal = useResetRecoilState(moveModal);
   const [selectedPlace, setSelectedPlace] = useState<string>("");
@@ -135,17 +135,28 @@ const MoveModal = ({ locationId }: Props) => {
             </ul>
           </S.Placebar>
           <S.PlaceContent>
-            {placeValue?.data?.map((place: any) => (
-              <li
-                key={place.id}
-                onClick={() => {
-                  setSelectedPlace(place.name);
-                  setModal({ ...modal, location_id: place.id });
-                }}
-              >
-                {place.name}
-              </li>
-            ))}
+            {placeValue?.data.length > 0 ? (
+              <>
+                {placeValue?.data?.map((place: any) => {
+                  return (
+                    <li
+                      key={place.id}
+                      onClick={() => {
+                        setSelectedPlace(place.name);
+                        setModal({ ...modal, location_id: place.id });
+                      }}
+                      style={{
+                        color: place.name === selectedPlace ? "#267dff" : "",
+                      }}
+                    >
+                      {place.name}
+                    </li>
+                  );
+                })}
+              </>
+            ) : (
+              <span style={{ color: "gray" }}>등록된 장소가 없습니다.</span>
+            )}
           </S.PlaceContent>
         </S.PlaceWrapper>
         <S.AttendanceButton>

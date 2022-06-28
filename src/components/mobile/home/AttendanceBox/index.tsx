@@ -5,7 +5,7 @@ const AttendanceSelect = () => {
   return (
     <AttendanceSelectWrapper href="/attendance?floor=2&id=">
       <img src={MainBack} alt="" />
-      <span>전공 동아리</span>
+      <span>Today's 출석 체크</span>
     </AttendanceSelectWrapper>
   );
 };

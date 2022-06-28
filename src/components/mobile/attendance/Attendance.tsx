@@ -20,8 +20,7 @@ const Attendance = () => {
     ["attendance_data", id],
     () => AttendanceApi.getAttendanceList(id),
     {
-      enabled: !!id,
-      cacheTime: Infinity,
+      cacheTime: 1000 * 60,
       staleTime: Infinity,
       suspense: false,
     }

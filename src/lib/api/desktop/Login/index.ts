@@ -15,7 +15,6 @@ export const loginRequest = async (
     localStorage.setItem("teacher_id", req.data.teacher_id);
     return req;
   } catch (error: any) {
-    console.log(error);
     return Promise.reject(error);
   }
 };

@@ -2,17 +2,24 @@ import styled from "@emotion/styled";
 import { useRecoilValue } from "recoil";
 import { teacherId } from "../../../../constance";
 import { teacherInfoSelector } from "../../../../modules/mobile/selector/teacher";
+import { scheduleDateSelector } from "../../../../modules/mobile/selector/schedule";
 import { MainColor } from "../../../../style/color";
+import { teacherId } from "../../../../lib/api/mobile/axios";
+import moment from "moment";
+import { StateChangeHook } from "../../../../utils/stateChangeHook";
 
 const Title = () => {
   const info = useRecoilValue(teacherInfoSelector(teacherId));
+  const schedule = useRecoilValue(
+    scheduleDateSelector(moment().format("YYYY-MM-DD"))
+  );
 
   return (
     <TitleBox>
       <span>{info?.name} 선생님은</span>
       <div className="title-item">
-        <span>전공동아리</span>
-        <span>자습감독이십니다.</span>
+        <span>{StateChangeHook(schedule.name)}</span>
+        <span>감독이십니다.</span>
       </div>
     </TitleBox>
   );
