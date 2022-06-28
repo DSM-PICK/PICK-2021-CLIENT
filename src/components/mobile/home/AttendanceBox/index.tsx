@@ -3,7 +3,7 @@ import { MainBack } from "../../../../assets";
 
 const AttendanceSelect = () => {
   return (
-    <AttendanceSelectWrapper href="/attendance?floor=2&id=">
+    <AttendanceSelectWrapper href="/attendance?floor=2&id=1">
       <img src={MainBack} alt="" />
       <span>Today's 출석 체크</span>
     </AttendanceSelectWrapper>
