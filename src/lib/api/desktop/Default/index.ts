@@ -26,6 +26,7 @@ export const getRequestWithToken = (
 
 const instance = axios.create({
   timeout: 100000,
+  baseURL: "https://api-2021.dsm-pick.com",
 });
 
 instance.interceptors.request.use(refresh, refreshError);
