@@ -1,10 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { refresh, refreshError } from "../refresh";
 
-axios.defaults.baseURL = "https://api-2021.dsm-pick.com";
-
 export const request = axios.create({
   timeout: 10000,
+  baseURL: "https://api-2021.dsm-pick.com",
 });
 
 export const getRequestWithToken = (
