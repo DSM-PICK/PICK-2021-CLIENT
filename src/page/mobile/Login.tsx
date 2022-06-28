@@ -53,7 +53,6 @@ const Login = () => {
 
     const reg = "/[~!@#$%;'^,&*()_+|</>=>`?:{[}]/g";
     if (!reg.includes(password)) {
-      console.log("ddd");
     }
   }, [id.length, password, password.length]);
 

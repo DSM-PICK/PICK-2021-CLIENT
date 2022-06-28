@@ -37,10 +37,6 @@ const StudentList = ({ data }: Props) => {
     ...Array(arr.length * timeArray.length).fill(" "),
   ]);
 
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
-
   const allCheckClick = (checked: boolean) => {
     if (checked) {
       const idArray: any = [];
@@ -191,12 +187,8 @@ const StudentList = ({ data }: Props) => {
   // API 호출
   const attendanceHandle = (stateData: string) => {
     // 이동이면 MoveModal에서 처리하기 때문에 아무 요청도 보내지 않음
-
-    if (stateData === "이동") {
-      console.log("이동");
-    }
     // state가 이동이 아닐때 API 호출
-    else {
+    if (stateData !== "이동") {
       if (modal.attendance_id) {
         attendancePatchHandle();
       } else {

@@ -17,7 +17,6 @@ export default {
   },
 
   postAttendance(data: AttendancePostType) {
-    console.log(data);
     return request({
       url: "/attendance",
       method: "post",

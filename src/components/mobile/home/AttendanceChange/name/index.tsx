@@ -39,10 +39,6 @@ const NameItem = () => {
     return () => clearTimeout(debounce);
   }, [nameInput]);
 
-  useEffect(() => {
-    console.log(attendance);
-  }, [attendance]);
-
   return (
     <EnrollmentItem>
       <SubTitle>이름</SubTitle>
