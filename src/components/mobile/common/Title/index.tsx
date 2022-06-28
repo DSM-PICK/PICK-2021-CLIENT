@@ -4,7 +4,6 @@ import { teacherId } from "../../../../constance";
 import { teacherInfoSelector } from "../../../../modules/mobile/selector/teacher";
 import { scheduleDateSelector } from "../../../../modules/mobile/selector/schedule";
 import { MainColor } from "../../../../style/color";
-import { teacherId } from "../../../../lib/api/mobile/axios";
 import moment from "moment";
 import { StateChangeHook } from "../../../../utils/stateChangeHook";
 
