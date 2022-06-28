@@ -30,7 +30,6 @@ export default {
         student_id: data.student_id,
         state: data.state,
         location_id: data.location_id,
-        teacher_id: localStorage.getItem("teacher_id"),
       },
     });
   },

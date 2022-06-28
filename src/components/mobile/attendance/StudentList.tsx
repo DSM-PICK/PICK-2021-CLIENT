@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
 import {
@@ -6,7 +6,7 @@ import {
   StudentAttendanceDetailType,
   StudentAttendanceType,
 } from "../../../lib/interface/mobile/Attendance";
-import { moveModal, stateValue } from "../../../modules/mobile/atom/attendance";
+import { moveModal } from "../../../modules/mobile/atom/attendance";
 import attendanceApi from "../../../lib/api/mobile/attendance";
 import Student from "./Student";
 import * as S from "./style";
