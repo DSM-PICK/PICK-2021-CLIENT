@@ -43,7 +43,7 @@ const Student: FC<Props> = ({
         {std?.state === "이동" && std?.location_name} {std?.state}
       </option>
       <option value=" ">출석</option>
-      <option value="이동">이동</option>
+      <option value="이동">{std?.location_name} 이동</option>
       <option value="외출">외출</option>
       <option value="무단">무단</option>
       <option value="현체">현체</option>
