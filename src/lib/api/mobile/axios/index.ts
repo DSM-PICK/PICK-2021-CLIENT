@@ -1,8 +1,5 @@
 import axios, { AxiosError } from "axios";
 
-export const baseURL = process.env.REACT_APP_BASE_URL;
-export const teacherId = localStorage.getItem("teacher_id");
-
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   timeout: 10000,

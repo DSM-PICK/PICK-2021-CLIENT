@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { baseURL } from "../../lib/api/mobile/axios";
 import { User } from "../../lib/interface/mobile/user";
 import { Logo } from "../../assets";
 import styled from "@emotion/styled";
@@ -30,7 +29,7 @@ const Login = () => {
     e.preventDefault();
 
     axios
-      .post(`${baseURL}/teacher/login`, { id, password })
+      .post(`${process.env.REACT_APP_BASE_URL}/teacher/login`, { id, password })
       .then((res) => {
         localStorage.setItem("access_token", res.data.access_token);
         localStorage.setItem("refresh_token", res.data.refresh_token);
@@ -39,7 +38,6 @@ const Login = () => {
         navigate("/home");
       })
       .catch((e) => {
-        console.log(e);
         toast.error("정보를 다시 입력해주세요");
       });
 

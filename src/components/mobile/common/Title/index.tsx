@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useRecoilValue } from "recoil";
+import { teacherId } from "../../../../constance";
 import { teacherInfoSelector } from "../../../../modules/mobile/selector/teacher";
 import { scheduleDateSelector } from "../../../../modules/mobile/selector/schedule";
 import { MainColor } from "../../../../style/color";

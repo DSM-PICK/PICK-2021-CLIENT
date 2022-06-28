@@ -13,6 +13,8 @@ export const SysDate = styled.div`
     font-size: 24px;
     display: flex;
     align-items: center;
+    height: 40px;
+    margin-left: 20px;
 `;
 export const AtInquiryBox = styled.div`
     width: 100%;
@@ -30,10 +32,10 @@ export const Filter = styled(AtInquiryWrapper)`
 export const FilterTitle = styled(SysDate)`
     font-size: 18px;
     color: #6B6B6B;
-    margin-top: 15px;
+    margin: 15px 0 0 0;
 `
 export const StatusFilterBox = styled(Filter)<{isBig:boolean}>`
-    height:${props=>props.isBig ? "300px" : "200px"};
+    height:${props=>props.isBig ? "320px" : "200px"};
     box-shadow: none;
     margin-bottom: 15px;
 `
@@ -72,7 +74,7 @@ export const Place = styled(StudentStatus)`
     width: 250px;
     height: 425px;
 `
-export const PlaceBox = styled.div`
+export const PlaceBox = styled.div<{isClick:boolean}>`
     width: 220px;
     height: 350px;
     margin: auto;
@@ -80,6 +82,7 @@ export const PlaceBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    visibility: ${props=>props.isClick ? "visible" : "hidden"};
 `
 export const PlaceTitle = styled.h1`
     font-size: 28px;

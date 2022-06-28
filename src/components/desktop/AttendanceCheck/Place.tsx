@@ -1,14 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  getAfterSchool,
+  getClass,
+  getMajorClub,
+} from "../../../lib/api/desktop/Afterschool";
+import {
+  afterschoolClass,
+  afterSchoolDay,
+  afterSchoolStatus,
+} from "../../../modules/desktop/atom/AfterSchool";
+import { useRecoilState, useRecoilValue } from "recoil";
 import * as S from "./styles";
-const floorArr = ["4층", "3층", "2층", "기타"];
-const placeArr = ["교실(3-1)", "세미나실(2-1)", "교실(3-2)", "세미나실(2-2)"];
+const floorArr = [
+  { floorName: "4층", value: 4 },
+  { floorName: "3층", value: 3 },
+  { floorName: "2층", value: 2 },
+  { floorName: "기타", value: 0 },
+];
+type placeType = {
+  id: number;
+  floor: number;
+  name: string;
+  location_name: string;
+  head_name: string;
+  count: number;
+};
+const changeType = (arr: any, day: string) => {
+  if (day === "방과후") {
+    arr.forEach((a: any) => {
+      a.id = a.after_school_id;
+      delete a.after_school_id;
+      a.head_name = a.teacher_name;
+      delete a.teacher_name;
+    });
+  } else if (day === "동아리") {
+    arr.forEach((a: any) => {
+      a.id = a.major_id;
+      delete a.major_id;
+      a.name = a.major_name;
+      delete a.major_name;
+    });
+  } else if (day === "자습") {
+    arr.forEach((a: any) => {
+      a.location_name = a.name;
+      a.head_name = a.teacher_name;
+      delete a.teacher_name;
+    });
+  }
+  return arr;
+};
 const Place = () => {
+  const [placeInfo, setPlaceInfo] = useState<placeType[]>([]);
+  const [place, setPlace] = useState<placeType>();
+  const [floor, setFloor] = useState<number>();
+  const [placeId, setPlaceId] = useRecoilState(afterschoolClass);
+  const today = useRecoilValue(afterSchoolStatus);
+  const date = useRecoilValue(afterSchoolDay);
+  useEffect(() => {
+    if (today === "동아리") {
+      getMajorClub()
+        .then((res) => {
+          const data = changeType(res.data, "동아리");
+          setPlaceInfo(data);
+        })
+        .catch((err) => console.log(err));
+    } else if (today === "방과후") {
+      getAfterSchool()
+        .then((res) => {
+          const data = changeType(res.data, "방과후");
+          setPlaceInfo(data);
+        })
+        .catch((err) => console.log(err));
+    } else if (today === "자습") {
+      getClass().then((res) => {
+        const data = changeType(res.data, "자습");
+        setPlaceInfo(data);
+      });
+    }
+  }, [today]);
   return (
     <S.Place>
-      <S.PlaceBox>
-        <S.PlaceTitle>GRAM</S.PlaceTitle>
-        <S.PlaceInfo>담당교사 : 신요셉</S.PlaceInfo>
-        <S.PlaceInfo>총 학생 : 19명</S.PlaceInfo>
+      <S.PlaceBox isClick={date !== ""}>
+        <S.PlaceTitle>{place?.name}</S.PlaceTitle>
+        <S.PlaceInfo>
+          {today === "동아리" ? "동아리장" : "담당교사"} : {place?.head_name}
+        </S.PlaceInfo>
+        <S.PlaceInfo>총 학생 : {place?.count}명</S.PlaceInfo>
+
         <S.PlaceChoiceBox>
           <S.PlaceChoiceBoxTitle>
             <span>층</span>
@@ -16,13 +94,36 @@ const Place = () => {
           </S.PlaceChoiceBoxTitle>
           <S.PlaceChoiceValueBox>
             <S.PlaceChoiceValue>
-              {floorArr.map((floor, index) => (
-                <span key={index}>{floor}</span>
+              {floorArr.map((fr, index) => (
+                <span
+                  key={index}
+                  onClick={() => setFloor(fr.value)}
+                  style={
+                    floor === fr.value
+                      ? { color: "#ff6e04" }
+                      : { color: "#767676" }
+                  }
+                >
+                  {fr.floorName}
+                </span>
               ))}
             </S.PlaceChoiceValue>
             <S.PlaceChoiceValue>
-              {placeArr.map((place, index) => (
-                <span key={index}>{place}</span>
+              {placeInfo.map((place, index) => (
+                <span
+                  key={index}
+                  onClick={() => {
+                    setPlace(place);
+                    setPlaceId(place.id);
+                  }}
+                  style={
+                    place.floor !== floor
+                      ? { display: "none" }
+                      : { display: "block" }
+                  }
+                >
+                  {place.location_name}
+                </span>
               ))}
             </S.PlaceChoiceValue>
           </S.PlaceChoiceValueBox>
