@@ -20,6 +20,7 @@ const ScheduleChange = () => {
       enabled: !!baseDate && modalOpen,
       cacheTime: Infinity,
       staleTime: Infinity,
+      suspense: false,
     }
   );
 

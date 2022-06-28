@@ -73,7 +73,6 @@ const AttendanceChange: FC = (): JSX.Element => {
   useEffect(() => {
     getAttendanceChangeList().then((res) => {
       setAttendancyChange(res.data);
-      console.log(res.data);
     });
   }, []);
 

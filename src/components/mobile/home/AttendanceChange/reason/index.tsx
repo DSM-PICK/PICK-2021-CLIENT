@@ -1,41 +1,50 @@
 import styled from "@emotion/styled";
-import { useRef } from "react";
-import { useRecoilState } from "recoil";
-import { attendanceData } from "../../../../../modules/mobile/atom/attendance";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import {
+  attendanceData,
+  attendanceDataList,
+  nameInputAtom,
+} from "../../../../../modules/mobile/atom/attendance";
 import { MainColor } from "../../../../../style/color";
 import { toast } from "react-toastify";
 
 const ReasonItem = () => {
-  const reasonRef = useRef<any | null>(null);
   const [attendance, setAttendance] = useRecoilState(attendanceData);
+  const resetNameInput = useResetRecoilState(nameInputAtom);
+  const resetAttendanceReset = useResetRecoilState(attendanceData);
 
-  const { reason } = attendance;
+  const [attendanceList, setAttendanceList] =
+    useRecoilState(attendanceDataList);
 
   const onChange = (e: any) => {
     e.preventDefault();
-    const { value, name } = e.target;
 
     setAttendance({
       ...attendance,
-      [name]: value,
+      reason: e.target.value,
     });
   };
 
-  const addStudents = () => {
+  const addStudents = (e: any) => {
+    e.preventDefault();
+
     if (attendance.reason.length > 10) {
-      toast.error("비고가 10글자를 넘습니다");
-    } else if (attendance.name === "") {
-      toast.error("이름을 입력해주세요");
-    } else if (attendance.term.length === 23 || attendance.term.length === 24) {
-      toast.error("날짜를 선택해주세요");
+      toast.error("이유가 10글자를 넘습니다");
+    } else if (attendance.reason.length === 0) {
+      toast.error(attendance.state + "의 이유를 입력해주세요.");
+    } else if (attendance.name === undefined) {
+      toast.error("학생 이름을 입력해주세요.");
+    } else if (
+      attendance.start_date.length === 23 ||
+      attendance.end_date.length === 24
+    ) {
+      toast.error("날짜를 선택해주세요.");
     } else {
-      setAttendance({
-        student_id: attendance.student_id,
-        state: attendance.state,
-        term: attendance.term,
-        reason: attendance.reason,
-        name: attendance.name,
-      });
+      setAttendanceList(attendanceList.concat(attendance));
+
+      // 이름 입력 state reset
+      resetNameInput();
+      //  resetAttendanceReset();
     }
   };
 
@@ -43,15 +52,14 @@ const ReasonItem = () => {
     <EnrollmentItem>
       <SubTitle>사유</SubTitle>
       <input
-        ref={reasonRef}
+        required
         type="text"
-        name="reason"
-        value={reason}
+        value={attendance.reason}
         onChange={(e) => onChange(e)}
         className="text-input"
         placeholder="사유를 입력해주세요"
       />
-      <SaveButton onClick={addStudents}>학생 추가</SaveButton>
+      <SaveButton onClick={(e) => addStudents(e)}>학생 추가</SaveButton>
     </EnrollmentItem>
   );
 };

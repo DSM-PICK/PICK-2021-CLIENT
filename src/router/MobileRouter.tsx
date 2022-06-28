@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
+import Attendance from "../components/mobile/attendance/Attendance";
 import SplashScreen from "../components/mobile/common/SplashScreen";
 import MainPage from "../page/mobile";
 import Calendar from "../page/mobile/Calendar";
@@ -13,6 +14,7 @@ const MobileRouter: FC = (): JSX.Element => {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<MainPage />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/attendance" element={<Attendance />} />
       </Routes>
     </BrowserRouter>
   );

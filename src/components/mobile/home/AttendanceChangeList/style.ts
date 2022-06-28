@@ -123,8 +123,8 @@ export const ModalWrapper = styled.div<Props>`
         margin: 20px;
         filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.14));
         background: #267dff;
-        border-radius: 5px;
-        padding: 5px 20px;
+        border-radius: 10px;
+        padding: 10px 25px;
         font-size: 18px;
         color: white;
         outline: none;

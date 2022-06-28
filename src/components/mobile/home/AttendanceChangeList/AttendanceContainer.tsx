@@ -3,32 +3,26 @@ import { useQuery } from "react-query";
 import ListDeleteModal from "./AttendanceDelete";
 import ListItem from "./AttendanceItem";
 import attendance from "../../../../lib/api/mobile/attendance";
-import { BarLoader } from "react-spinners";
-import { MainColor } from "../../../../style/color";
 import * as S from "./style";
-import { AttendanceType } from "../../../../lib/interface/mobile/Attendance";
+import { AttendanceListType } from "../../../../lib/interface/mobile/Attendance";
 
-const ListContainer = () => {
-  const [modal, setModal] = useState<boolean>(false);
+type Props = {
+  selected: number;
+};
 
-  const { data: attendanceListValue, isLoading } = useQuery(
-    ["attendance_list_value"],
-    () => attendance.getAttendance(),
+const ListContainer = ({ selected }: Props) => {
+  const [modal, setModal] = useState({ modal: false, attendance_id: "" });
+
+  const { data: attendanceListValue } = useQuery(
+    ["attendance_list_value", selected],
+    () => attendance.getAttendance(selected),
     {
+      enabled: !!selected,
       cacheTime: Infinity,
       staleTime: Infinity,
+      suspense: false,
     }
   );
-
-  if (isLoading)
-    return (
-      <BarLoader
-        color={MainColor}
-        height="4px"
-        width="100%"
-        speedMultiplier={0.5}
-      />
-    );
 
   return (
     <>
@@ -45,14 +39,21 @@ const ListContainer = () => {
         </S.ListHeader>
 
         <S.ListContent>
-          {!!attendanceListValue?.data ? (
+          {attendanceListValue?.data?.length === 0 ? (
             <span style={{ margin: "auto", color: "#818181" }}>
               출결 변동 내역이 입력되지 않았습니다.
             </span>
           ) : (
-            attendanceListValue?.data?.map((item: AttendanceType) => (
-              <ListItem setModal={setModal} modal={modal} item={item} />
-            ))
+            attendanceListValue?.data?.map(
+              (item: AttendanceListType, idx: number) => (
+                <ListItem
+                  key={idx}
+                  setModal={setModal}
+                  modal={modal}
+                  item={item}
+                />
+              )
+            )
           )}
         </S.ListContent>
       </S.ListBoxWrapper>
