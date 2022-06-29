@@ -20,10 +20,17 @@ export const Wrapper = styled.div<Props>`
 `;
 
 export const CalendarWrapper = styled.div`
-  width: 400px;
-  height: 400px;
+  width: 420px;
+  height: 420px;
+  border-radius: 15px;
   background-color: white;
   padding: 15px;
+  position: absolute;
+
+  #close_btn {
+    position: absolute;
+    right: 20px;
+  }
 
   .content {
     display: flex;
@@ -47,7 +54,7 @@ export const CalendarDate = styled.ul`
 
 export const ContentWrap = styled.div`
   width: 100%;
-  height: calc(100% - 40px);
+  height: 75%;
   display: flex;
   flex-wrap: flex-wrap;
   flex-direction: column;
