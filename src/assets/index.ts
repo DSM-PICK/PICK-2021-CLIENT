@@ -1,4 +1,3 @@
-export { default as Logo } from "./icon/Logo.svg";
 export { default as MainBack } from "./img/mainBack.svg";
 export { default as Calendar } from "./icon/calendar.svg";
 export { default as Close } from "./icon/close.svg";
@@ -19,3 +18,4 @@ export { default as homeIcon } from "./icon/homeIcon.svg";
 export { default as activeHomeIcon } from "./icon/activeHomeIcon.svg";
 export { default as attendanceIcon } from "./icon/attendanceIcon.svg";
 export { default as activeAttendanceIcon } from "./icon/activeAttendanceIcon.svg";
+export { default as splashLogoIcon } from "./icon/splashLogoIcon.svg";
