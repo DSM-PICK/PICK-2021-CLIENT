@@ -1,16 +1,19 @@
 /* eslint-disable no-loop-func */
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { Close } from "../../../../../assets";
 import {
   calendarModal,
   date,
   startDateValue,
 } from "../../../../../modules/mobile/atom/calendar";
+import CalendarHead from "../../../calendar/calendarItem/CalendarHead";
 import * as S from "./style";
 
 const CalendarModal = () => {
   const [baseDate, setBaseDate] = useRecoilState(date);
   const [open, setOpen] = useRecoilState(calendarModal);
   const [startDate, setStartDate] = useRecoilState(startDateValue);
+  const resetDate = useResetRecoilState(date);
   const test = baseDate.format("YYYY-MM-DD");
   const week = ["월", "화", "수", "목", "금"];
 
@@ -59,7 +62,10 @@ const CalendarModal = () => {
                 <S.BoxItem
                   className={`box ${isSelected} ${isGrayed}`}
                   key={i}
-                  onClick={() => handleDayClick(current)}
+                  onClick={() => {
+                    handleDayClick(current);
+                    resetDate();
+                  }}
                 >
                   <span>{current.format("D")}</span>
                 </S.BoxItem>
@@ -84,6 +90,13 @@ const CalendarModal = () => {
   return (
     <S.Wrapper open={open}>
       <S.CalendarWrapper>
+        <img
+          src={Close}
+          alt="닫기 버튼"
+          id="close_btn"
+          onClick={() => setOpen(false)}
+        />
+        <CalendarHead />
         <S.CalendarDate>{weekControll(week)}</S.CalendarDate>
         <S.ContentWrap>{generate()}</S.ContentWrap>
       </S.CalendarWrapper>

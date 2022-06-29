@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { User } from "../../lib/interface/mobile/user";
-import styled from "@emotion/styled";
 import { pickLogo } from "../../assets";
+import styled from "@emotion/styled";
 
 const Login = () => {
   const navigate = useNavigate();
