@@ -35,6 +35,7 @@ const Login = () => {
         localStorage.setItem("refresh_token", res.data.refresh_token);
         localStorage.setItem("teacher_id", res.data.teacher_id);
         toast.success("로그인에 성공했습니다.");
+
         navigate("/home");
       })
       .catch((e) => {

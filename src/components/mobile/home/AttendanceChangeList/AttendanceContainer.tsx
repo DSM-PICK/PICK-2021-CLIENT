@@ -41,7 +41,7 @@ const ListContainer = ({ selected }: Props) => {
         <S.ListContent>
           {attendanceListValue?.data?.length === 0 ? (
             <span style={{ margin: "auto", color: "#818181" }}>
-              출결 변동 내역이 입력되지 않았습니다.
+              해당 층에 출결 변동이 없습니다.
             </span>
           ) : (
             attendanceListValue?.data?.map(

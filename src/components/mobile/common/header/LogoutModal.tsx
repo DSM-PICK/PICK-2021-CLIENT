@@ -16,10 +16,13 @@ const LogoutModal = ({ modal, setModal }: Props) => {
   const logoutHandle = () => {
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("access_token");
+    localStorage.removeItem("teacher_id");
     toast.success("로그아웃 되었습니다.");
 
     setTimeout(() => {
+      window.location.reload();
       window.location.href = "/";
+
       setModal(false);
     }, 1000);
   };

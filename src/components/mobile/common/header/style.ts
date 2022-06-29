@@ -98,7 +98,7 @@ export const ModalContent = styled.div`
   border-radius: 20px;
 
   > img {
-    width: 250px;
+    width: 200px;
   }
 
   > span {
