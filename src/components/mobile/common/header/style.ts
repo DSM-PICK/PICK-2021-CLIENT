@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { MainColor } from "../../../../style/color";
 
 interface Props {
   modal: boolean;
@@ -73,7 +74,7 @@ export const FooterWrapper = styled(HeaderWrapper)`
 
 export const ModalWrapper = styled.div<Props>`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   right: 0;
   width: 100%;
@@ -82,14 +83,46 @@ export const ModalWrapper = styled.div<Props>`
   display: ${({ modal }) => (modal ? "flex" : "none")};
   justify-content: center;
   align-items: center;
+`;
 
-  .box {
-    width: 400px;
-    height: 250px;
-    background-color: white;
+export const ModalContent = styled.div`
+  width: 400px;
+  height: 250px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 20px;
+
+  > img {
+    width: 200px;
+  }
+
+  > span {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+
+  .btn_box {
     display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    box-sizing: border-box;
+    gap: 20px;
+
+    button {
+      padding: 6px 20px;
+      border-radius: 15px;
+      font-size: 18px;
+      border: none;
+      background: ${MainColor};
+      color: white;
+      filter: drop-shadow(0px 2px 5px rgba(153, 153, 153, 0.25));
+
+      :nth-of-type(1) {
+        background: #c7c7c7;
+      }
+    }
   }
 `;

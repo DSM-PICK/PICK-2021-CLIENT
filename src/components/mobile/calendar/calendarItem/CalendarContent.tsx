@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import schedule from "../../../../lib/api/mobile/schedule/scheduleApi";
 import { ScheduleListType } from "../../../../lib/interface/mobile/schedule/schedule";
 import { ScheduleTeacherType } from "../../../../lib/interface/mobile/teacher";
+import { AxiosError } from "axios";
 
 const CalendarContent = () => {
   const [baseDate, setBaseDate] = useRecoilState(date);
@@ -29,6 +30,11 @@ const CalendarContent = () => {
       staleTime: Infinity,
       keepPreviousData: true,
       suspense: false,
+
+      onError: (e: AxiosError) => {
+        if (e.response?.status === 404) {
+        }
+      },
     }
   );
 

@@ -10,24 +10,29 @@ import {
   TeacherFloorType,
   TeacherType,
 } from "../../../../../lib/interface/mobile/teacher";
-import { modal } from "../../../../../modules/mobile/atom/schedule";
+import { AxiosError } from "axios";
 
 const TeacherChange = () => {
   const queryClient = useQueryClient();
   const teacherList = useRecoilValue(teacherListSelector);
   const baseDate = useRecoilValue(date);
   const dateContent = useRecoilValue(dateValue);
-  const modalOpen = useRecoilValue(modal);
 
   // 층별 선생님 리스트
   const { data: teacherFloor } = useQuery(
     ["teacher_floor", baseDate],
     () => teacherApi.getTeacherApi(baseDate.format("YYYY-MM-DD")),
     {
-      enabled: !!dateContent && modalOpen,
+      enabled: !!dateContent,
       cacheTime: Infinity,
       staleTime: Infinity,
       suspense: false,
+      retry: false,
+
+      onError: (e: AxiosError) => {
+        if (e.response?.status === 404) {
+        }
+      },
     }
   );
 
@@ -36,7 +41,7 @@ const TeacherChange = () => {
       schedule.patchTeacher(baseDate.format("YYYY-MM-DD"), floor, id),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("teacher_floor");
+        queryClient.invalidateQueries(["teacher_floor", baseDate]);
         queryClient.invalidateQueries("scehdule_list");
         toast.success("자습감독 선생님이 교체되었습니다.");
       },
@@ -72,7 +77,7 @@ const TeacherChange = () => {
 
   return (
     <>
-      {teacherFloor?.data?.teachers?.length !== 0 ? (
+      {teacherFloor?.data?.teachers?.length > 0 ? (
         <S.TeacherInfoWrapper>
           <S.FloorItemBox>
             {teacherFloor?.data?.teachers?.map((item: TeacherFloorType) => {

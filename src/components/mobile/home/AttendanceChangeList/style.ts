@@ -77,7 +77,7 @@ export const StdListItem = styled.div`
 
 export const ModalWrapper = styled.div<Props>`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   right: 0;
   width: 100%;

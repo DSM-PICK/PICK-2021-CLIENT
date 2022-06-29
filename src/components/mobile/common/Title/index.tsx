@@ -1,21 +1,30 @@
 import styled from "@emotion/styled";
 import { useRecoilValue } from "recoil";
-import { teacherId } from "../../../../constance";
-import { teacherInfoSelector } from "../../../../modules/mobile/selector/teacher";
 import { scheduleDateSelector } from "../../../../modules/mobile/selector/schedule";
 import { MainColor } from "../../../../style/color";
 import moment from "moment";
 import { StateChangeHook } from "../../../../utils/stateChangeHook";
+import { useQuery } from "react-query";
+import request from "../../../../lib/api/mobile/axios";
 
 const Title = () => {
-  const info = useRecoilValue(teacherInfoSelector(teacherId));
   const schedule = useRecoilValue(
     scheduleDateSelector(moment().format("YYYY-MM-DD"))
   );
 
+  const { data: teacherInfo } = useQuery(
+    ["teacher_info", localStorage.getItem("teacher_id")],
+    () => request(`/teacher/${localStorage.getItem("teacher_id")}/information`),
+    {
+      enabled: !!localStorage.getItem("teacher_id"),
+      cacheTime: Infinity,
+      staleTime: Infinity,
+    }
+  );
+
   return (
     <TitleBox>
-      <span>{info?.name} 선생님은</span>
+      <span>{teacherInfo?.data?.name} 선생님은</span>
       <div className="title-item">
         <span>{StateChangeHook(schedule.name)}</span>
         <span>감독이십니다.</span>

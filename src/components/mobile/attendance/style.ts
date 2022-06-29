@@ -85,6 +85,7 @@ export const Title = styled.div`
 `;
 
 export const StudentSelect = styled.select`
+  background: white;
   padding: 7px 10px;
   width: 140px;
   -webkit-appearance: none;
