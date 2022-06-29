@@ -12,7 +12,7 @@ export const CModal = atom({
 
 export const studentFilter = atom({
     key: "studentFilter",
-    default: '전체'    
+    default: 0    
 })
 
 export const statusFilter = atom({

@@ -51,12 +51,13 @@ const changeType = (arr: any, day: string) => {
 };
 const Place = () => {
   const [placeInfo, setPlaceInfo] = useState<placeType[]>([]);
-  const [place, setPlace] = useState<placeType>();
+  const [place, setPlace] = useState<placeType | undefined>(undefined);
   const [floor, setFloor] = useState<number>();
   const [placeId, setPlaceId] = useRecoilState(afterschoolClass);
   const today = useRecoilValue(afterSchoolStatus);
   const date = useRecoilValue(afterSchoolDay);
   useEffect(() => {
+    setPlace(undefined);
     if (today === "동아리") {
       getMajorClub()
         .then((res) => {
@@ -80,12 +81,14 @@ const Place = () => {
   }, [today]);
   return (
     <S.Place>
-      <S.PlaceBox isClick={date !== ""}>
-        <S.PlaceTitle>{place?.name}</S.PlaceTitle>
-        <S.PlaceInfo>
-          {today === "동아리" ? "동아리장" : "담당교사"} : {place?.head_name}
-        </S.PlaceInfo>
-        <S.PlaceInfo>총 학생 : {place?.count}명</S.PlaceInfo>
+      <S.PlaceBox isClick={date.day !== ""}>
+        <S.PlaceInfoContainer isChoice={place === undefined}>
+          <S.PlaceTitle>{place?.name}</S.PlaceTitle>
+          <S.PlaceInfo>
+            {today === "동아리" ? "동아리장" : "담당교사"} : {place?.head_name}
+          </S.PlaceInfo>
+          <S.PlaceInfo>총 학생 : {place?.count}명</S.PlaceInfo>
+        </S.PlaceInfoContainer>
 
         <S.PlaceChoiceBox>
           <S.PlaceChoiceBoxTitle>
@@ -109,20 +112,16 @@ const Place = () => {
               ))}
             </S.PlaceChoiceValue>
             <S.PlaceChoiceValue>
-              {placeInfo.map((place, index) => (
+              {placeInfo.map((pl, index) => (
                 <span
                   key={index}
                   onClick={() => {
-                    setPlace(place);
-                    setPlaceId(place.id);
+                    setPlace(pl);
+                    setPlaceId(pl.id);
                   }}
-                  style={
-                    place.floor !== floor
-                      ? { display: "none" }
-                      : { display: "block" }
-                  }
+                  style={{ display: pl.floor !== floor ? "none" : "block" }}
                 >
-                  {place.location_name}
+                  {pl.location_name}
                 </span>
               ))}
             </S.PlaceChoiceValue>

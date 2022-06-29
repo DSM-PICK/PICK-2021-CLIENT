@@ -6,7 +6,10 @@ export const afterSchoolStatus = atom({
 });
 export const afterSchoolDay = atom({
   key: 'afterschoolDay',
-  default: '',
+  default: {
+    day: '',
+    period: 0
+  },
 })
 export const afterschoolClass = atom({
   key: 'afterschoolClass',

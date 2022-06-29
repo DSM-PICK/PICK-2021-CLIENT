@@ -44,17 +44,24 @@ export const StudentStatus = styled(Filter)`
     font-size: 22px;
     color: #6E6E6E;
     text-align: center;
+    justify-content: initial;
+    overflow-y: scroll;
+    p{
+        margin-top: 45%;
+    }
 `
 export const StatusBox = styled(StudentStatus)`
     width: 250px;
     justify-content: space-between;
     box-shadow: none;
+    overflow-y: initial;
 `
 export const Calendar = styled(StudentStatus)`
     height:270px;
     width: 250px;
+    overflow-y: initial;
 `
-export const Btn = styled(AtInquiryWrapper)<{isCheked:boolean}>`
+export const Btn = styled(AtInquiryWrapper)<{isCheked?:boolean}>`
     width: 80px;
     height: 35px;
     margin:none;
@@ -65,14 +72,13 @@ export const Btn = styled(AtInquiryWrapper)<{isCheked:boolean}>`
     font-size: 16px;
     font-weight: 500;
     color: ${props=>props.isCheked ? "#EEEEEE" : "#6B6B6B"};
-    :hover{
         cursor: pointer;
-    }
 `;
 //Place
 export const Place = styled(StudentStatus)`
     width: 250px;
     height: 425px;
+    overflow-y: initial;
 `
 export const PlaceBox = styled.div<{isClick:boolean}>`
     width: 220px;
@@ -119,8 +125,36 @@ export const PlaceChoiceValue = styled.div`
     span{
         font-size: 16px;
         color: #767676;
-        :hover{
-          cursor:pointer;
-        }
+        cursor:pointer;
     }
 `
+export const StudentStatusContainer = styled.div<{isFilter:boolean}>`
+    width: 100%;
+    height: 50px;
+    display: ${props=>props.isFilter ? "flex" : "none"};
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 20px;
+    margin-top: 10px;
+`;
+export const StudentInfo = styled.span`
+    font-size: 16px;
+    color: #3a3a3a;
+`;
+export const StudentMove = styled(Btn)<{isChange:boolean}>`
+    cursor: default;
+    margin: 0;
+    background-color: ${props=>props.isChange ? "#415481": "#EDEDED"};
+    color: ${props=>props.isChange ? "white" : "#6B6B6B"};
+    width: auto;
+    padding: 0 25px;
+`;
+export const PlaceInfoContainer = styled.div<{isChoice:boolean}>`
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    visibility: ${props=>props.isChoice ? 'hidden' : 'visibility'};
+`;

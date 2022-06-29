@@ -80,11 +80,18 @@ const Calendar: FC = (): JSX.Element => {
     const getMonth = Number(month) + 1 < 10 ? `0${month + 1}` : month + 1;
     const getDate = date < 10 ? `0${date}` : date;
     const theDay = year + "-" + getMonth + "-" + getDate;
-    setToday(year + "-" + String(Number(month) + 1) + "-" + date);
-    setTodayInRecoil(theDay);
-    getSchedule(theDay).then((res) =>
-      setAfterSchool(StateChangeHook(res.data.name))
-    );
+
+    getSchedule(theDay)
+      .then((res) => {
+        setAfterSchool(StateChangeHook(res.data.name));
+        setTodayInRecoil({ day: theDay, period: res.data.period });
+        setToday(year + "-" + String(Number(month) + 1) + "-" + date);
+      })
+      .catch(() => {
+        setToday(year + "-" + String(Number(month) + 1) + "-" + date);
+        alert("당일의 데이터가 없습니다.");
+        setTodayInRecoil({ day: "", period: 0 });
+      });
   };
   return (
     <S.Container>
