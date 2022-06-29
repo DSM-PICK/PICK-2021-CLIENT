@@ -45,7 +45,7 @@ const Student: FC<Props> = ({
       //  value={isAttendanceHandle()}
       style={{
         background:
-          std?.state.length > 0 && std?.state !== "출석" ? MainColor : "",
+          std?.state.length > 0 && std?.state !== "출석" ? MainColor : "white",
         color:
           std?.state.length > 0 && std?.state !== "출석" ? "white" : "white",
         border: std?.state.length > 0 && std?.state !== "출석" ? "none" : "",
