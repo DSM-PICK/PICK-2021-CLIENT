@@ -28,6 +28,15 @@ instance.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
 
+    if (error.response.status === 401) {
+      toast.success("로그아웃 되었습니다.");
+
+      setTimeout(() => {
+        window.location.href = "/login";
+        localStorage.clear();
+      }, 1000);
+    }
+
     if (response?.status === 401 && localStorage.getItem("refresh_token")) {
       try {
         const res = await axios({
