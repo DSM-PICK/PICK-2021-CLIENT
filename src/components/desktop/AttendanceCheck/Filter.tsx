@@ -5,7 +5,12 @@ import {
   statusFilter,
   studentFilter,
 } from "../../../modules/desktop/atom/ATCheck";
-const studentArr: string[] = ["전체", "1학년", "2학년", "3학년"];
+const studentArr = [
+  { name: "전체", value: 0 },
+  { name: "1학년", value: 1 },
+  { name: "2학년", value: 2 },
+  { name: "3학년", value: 3 },
+];
 const statusArr: string[] = [
   "전체",
   "이동",
@@ -20,22 +25,17 @@ const Filter = () => {
   const [stuFilterValue, setStuFilterValue] = useRecoilState(studentFilter);
   const [statusFilterValue, setStatusFilterValue] =
     useRecoilState(statusFilter);
-
-  const onClick = (isStu: boolean, text: string) => {
-    isStu ? setStuFilterValue(text) : setStatusFilterValue(text);
-  };
-
   return (
     <S.Filter>
       <S.FilterTitle>학생별</S.FilterTitle>
       <S.StatusFilterBox isBig={false}>
         {studentArr.map((filter, i) => (
           <S.Btn
-            onClick={() => onClick(true, filter)}
+            onClick={() => setStuFilterValue(filter.value)}
             key={i}
-            isCheked={filter === stuFilterValue}
+            isCheked={filter.value === stuFilterValue}
           >
-            {filter}
+            {filter.name}
           </S.Btn>
         ))}
       </S.StatusFilterBox>
@@ -44,7 +44,7 @@ const Filter = () => {
       <S.StatusFilterBox isBig={true}>
         {statusArr.map((filter, i) => (
           <S.Btn
-            onClick={() => onClick(false, filter)}
+            onClick={() => setStatusFilterValue(filter)}
             key={i}
             isCheked={filter === statusFilterValue}
           >

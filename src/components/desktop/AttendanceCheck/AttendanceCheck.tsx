@@ -10,7 +10,7 @@ const AttendanceCheck = () => {
   const day = useRecoilValue(afterSchoolDay);
   return (
     <S.AtInquiryWrapper>
-      <S.SysDate>{day}</S.SysDate>
+      <S.SysDate>{day.day}</S.SysDate>
       <S.AtInquiryBox>
         <S.StatusBox>
           <Calendar />
