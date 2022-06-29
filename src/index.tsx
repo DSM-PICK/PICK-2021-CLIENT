@@ -5,9 +5,9 @@ import { RecoilRoot } from "recoil";
 import { BarLoader } from "react-spinners";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Router from "./router";
 import styled from "@emotion/styled";
 import "./style/global.css";
+import App from "./App";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,7 +41,7 @@ ReactDOM.render(
         }
       >
         <QueryClientProvider client={queryClient}>
-          <Router />
+          <App />
         </QueryClientProvider>
       </Suspense>
     </RecoilRoot>
