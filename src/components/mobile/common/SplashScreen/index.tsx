@@ -1,17 +1,13 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { PickMainLogo } from "../../../../assets";
+import { splashLogoIcon } from "../../../../assets";
 
 const SplashScreen = () => {
   const navigate = useNavigate();
 
   return (
-    <MainWrapper
-      onClick={() => {
-        navigate("/login");
-      }}
-    >
-      <img src={PickMainLogo} alt="" />
+    <MainWrapper onClick={() => navigate("/login")}>
+      <img src={splashLogoIcon} alt="splash 화며 Pick 로고" />
 
       <span>화면을 클릭해주세요.</span>
     </MainWrapper>

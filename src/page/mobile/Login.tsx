@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { User } from "../../lib/interface/mobile/user";
-import { Logo } from "../../assets";
 import styled from "@emotion/styled";
+import { pickLogo } from "../../assets";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const Login = () => {
   return (
     <LoginWrapper>
       <LoginBox onSubmit={(e) => onSubmit(e)} btnColor={btnColor}>
-        <img src={Logo} alt="픽로고" />
+        <img src={pickLogo} alt="픽로고" />
         <div className="input_box">
           <input
             type="text"

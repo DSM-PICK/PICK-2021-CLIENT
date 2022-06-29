@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { date } from "../../../../../modules/mobile/atom/calendar";
 import * as S from "../style";
 import { modal } from "../../../../../modules/mobile/atom/schedule";
@@ -11,7 +11,7 @@ import { AxiosError } from "axios";
 const ScheduleChange = () => {
   const queryClient = useQueryClient();
   const baseDate = useRecoilValue(date);
-  const [modalOpen, setModalOpen] = useRecoilState(modal);
+  const setModalOpen = useSetRecoilState(modal);
 
   // 일정에 대한 state : 방과후 / 동아리 / 자습
   const { data: scheduleValue } = useQuery(
