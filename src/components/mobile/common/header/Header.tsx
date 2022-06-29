@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { teacherInfoSelector } from "../../../../modules/mobile/selector/teacher";
 import { pickLogo } from "../../../../assets";
 import LogoutModal from "./LogoutModal";
 import * as S from "./style";
-import { teacherId } from "../../../../constance";
+import { useQuery } from "react-query";
+import request from "../../../../lib/api/mobile/axios";
 
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
-  const info = useRecoilValue(teacherInfoSelector(teacherId));
+
+  const { data: teacherInfo } = useQuery(
+    ["teacher_info", localStorage.getItem("teacher_id")],
+    () => request(`/teacher/${localStorage.getItem("teacher_id")}/information`),
+    {
+      enabled: !!localStorage.getItem("teacher_id"),
+      cacheTime: Infinity,
+      staleTime: Infinity,
+    }
+  );
 
   return (
     <>
@@ -20,7 +28,7 @@ const Header = () => {
         </Link>
         <div className="item_box" onClick={() => setModal(!modal)}>
           <span>감독교사</span>
-          <span>{info?.name}</span>
+          <span>{teacherInfo?.data?.name}</span>
         </div>
       </S.HeaderWrapper>
     </>

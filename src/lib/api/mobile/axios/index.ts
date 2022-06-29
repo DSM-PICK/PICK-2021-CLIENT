@@ -46,10 +46,11 @@ instance.interceptors.response.use(
             refresh_token: localStorage.getItem("refresh_token"),
           },
         });
-        const { access_token, refresh_token } = res.data;
+        const { access_token, refresh_token, teacher_id } = res.data;
 
         localStorage.setItem("access_token", access_token);
         localStorage.setItem("refresh_token", refresh_token);
+        localStorage.setItem("teacher_id", teacher_id);
 
         config.headers.Authorization = `Bearer ${access_token}`;
 

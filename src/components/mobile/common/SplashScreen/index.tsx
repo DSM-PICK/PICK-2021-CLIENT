@@ -8,7 +8,6 @@ const SplashScreen = () => {
   return (
     <MainWrapper onClick={() => navigate("/login")}>
       <img src={splashLogoIcon} alt="splash 화며 Pick 로고" />
-
       <span>화면을 클릭해주세요.</span>
     </MainWrapper>
   );
