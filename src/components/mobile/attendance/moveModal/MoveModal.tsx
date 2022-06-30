@@ -40,11 +40,13 @@ const MoveModal = ({ locationId }: Props) => {
       onSuccess: () => {
         toast.success("학생 상태가 변경되었습니다.");
         queryClient.invalidateQueries("attendance_data");
+        setSelectedPlace("");
         resetModal();
       },
       onError: () => {
         toast.error("학생 상태가 변경에 실패했습니다.");
         queryClient.invalidateQueries("attendance_data");
+        setSelectedPlace("");
         resetModal();
       },
     }
@@ -56,11 +58,13 @@ const MoveModal = ({ locationId }: Props) => {
       onSuccess: () => {
         toast.success("학생 상태가 변경되었습니다.");
         queryClient.invalidateQueries("attendance_data");
+        setSelectedPlace("");
         resetModal();
       },
       onError: () => {
         toast.error("학생 상태가 변경에 실패했습니다.");
         queryClient.invalidateQueries("attendance_data");
+        setSelectedPlace("");
         resetModal();
       },
     }
