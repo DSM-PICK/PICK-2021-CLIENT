@@ -48,8 +48,6 @@ const CalendarContent: FC<Props> = ({ scheduleList }) => {
                 (schedule: ScheduleListType) => schedule.date === current.format("YYYY-MM-DD")
               );
 
-              console.log(_schedule, scheduleList);
-
               return (
                 <S.BoxItem
                   className={`box ${isSelected} ${isGrayed}`}
