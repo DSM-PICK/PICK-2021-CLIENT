@@ -58,6 +58,7 @@ const ChangeModal: FC<Props> = ({ refetchScheduleList }) => {
       suspense: false,
       retry: false,
       onSuccess: (response) => {
+        setHasTeacher([false, false, false]);
         if (response.data.teachers.length >= 3) {
           setTeacherFloorArr(response.data.teachers);
           setHasTeacher([true, true, true]);
