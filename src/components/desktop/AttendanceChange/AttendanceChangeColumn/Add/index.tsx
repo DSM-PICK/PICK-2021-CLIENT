@@ -18,36 +18,36 @@ import {
 
 const Add: FC = (): JSX.Element => {
   const [search, setSearch] = useRecoilState(searchStatus);
-  const [searchedStudentsArr, setSearchedStudentsArr] =
-    useRecoilState(searchedStudents);
+  const [searchedStudentsArr, setSearchedStudentsArr] = useRecoilState(searchedStudents);
   const [inputValue, setInputValue] = useState<string>("");
-  const [studentObject, setStudentObject] =
-    useRecoilState<StudentObjectType[]>(StudentObject);
-  const setSelectedIndex = useSetRecoilState<number>(SelectedIndex);
+  const [studentObject, setStudentObject] = useRecoilState<StudentObjectType[]>(StudentObject);
+  const setSelectedIndex = useSetRecoilState(SelectedIndex);
   const today = useRecoilValue(Today);
+
   const selectStudent = async (object: SelectedStudentsType) => {
-    if (studentObject.find((value: any) => value.id === object.id)) {
+    if (studentObject.find((value) => value.id === object.id)) {
       alert("이미 추가하신 학생입니다.");
       return;
     }
 
-    const data = {
+    const data: StudentObjectType = {
       id: object.id,
       gcn: object.gcn,
       name: object.name,
-      sdate: today,
-      fdate: today,
-      sclass: "",
-      fclass: "",
+      start_date: today,
+      end_date: today,
+      start_period: "",
+      end_period: "",
       type: 0,
       reason: "",
       teacher_id: localStorage.getItem("teacher_id"),
     };
+
     setSearch(!search);
     setInputValue("");
     setSearchedStudentsArr([]);
     setSelectedIndex(object.id);
-    setStudentObject(studentObject.concat(data));
+    setStudentObject([...studentObject, data]);
   };
 
   const getStudentDataOnSearch = async () => {
@@ -68,9 +68,7 @@ const Add: FC = (): JSX.Element => {
     <AttendanceChangeColumn>
       <S.SearchAbsentsContainer>
         <S.AddStudentTitle>변동학생</S.AddStudentTitle>
-        <S.AddAbsents onClick={() => setSearch(!search)}>
-          학생 추가
-        </S.AddAbsents>
+        <S.AddAbsents onClick={() => setSearch(!search)}>학생 추가</S.AddAbsents>
         <S.SearchedStudentWrapper>
           <S.SearchStudentsInput
             placeholder="학생을 입력해주세요"
@@ -81,9 +79,7 @@ const Add: FC = (): JSX.Element => {
             value={inputValue}
           />
           <S.SearchedContainer
-            display={
-              searchedStudentsArr.length != 0 && search ? "flex" : "none"
-            }
+            display={searchedStudentsArr.length != 0 && search ? "flex" : "none"}
           >
             {searchedStudentsArr.map((value: StudentObjectType) => {
               return (
@@ -97,18 +93,11 @@ const Add: FC = (): JSX.Element => {
         </S.SearchedStudentWrapper>
       </S.SearchAbsentsContainer>
       <S.AddedStudentsContainer>
-        {studentObject.map(
-          (value: { id: number; gcn: number; name: string }) => {
-            return (
-              <SelectedStudent
-                id={value.id}
-                gcn={value.gcn}
-                name={value.name}
-                key={value.gcn}
-              />
-            );
-          }
-        )}
+        {studentObject.map((value: { id: number; gcn: number; name: string }) => {
+          return (
+            <SelectedStudent id={value.id} gcn={value.gcn} name={value.name} key={value.gcn} />
+          );
+        })}
       </S.AddedStudentsContainer>
     </AttendanceChangeColumn>
   );

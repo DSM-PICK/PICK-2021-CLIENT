@@ -14,106 +14,95 @@ import {
 } from "../../../../../modules/desktop/atom/ATChange";
 import Calendar from "../../../Calendar/Calendar";
 import { StudentObjectType } from "../../../../../lib/interface/desktop/ATChange";
+import { typeArray } from "../../../../../constance/index";
 
 const DatePick: FC = (): JSX.Element => {
   const [isFOpen, setIsFOpen] = useRecoilState<boolean>(FModal);
   const [isSOpen, setIsSOpen] = useRecoilState<boolean>(SModal);
-  const fdateValue = useRecoilValue<string>(FDateValue);
-  const sdateValue = useRecoilValue<string>(SDateValue);
-  const [studentObject, setStudentObject] = useRecoilState<
-    StudentObjectType[] | any
-  >(StudentObject);
+  const endDateValue = useRecoilValue<string>(FDateValue);
+  const startDateValue = useRecoilValue<string>(SDateValue);
+  const [studentObject, setStudentObject] = useRecoilState<StudentObjectType[] | any>(
+    StudentObject
+  );
   const selectedIndex = useRecoilValue(SelectedIndex);
-  const [sdate, setSdate] = useState("");
-  const [fdate, setFdate] = useState("");
-  const [sclass, setSclass] = useRecoilState<string>(SClassValue);
-  const [fclass, setFclass] = useRecoilState<string>(FClassValue);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [startPeriod, setStartPeriod] = useRecoilState<string>(SClassValue);
+  const [endPeriod, setEndPeriod] = useRecoilState<string>(FClassValue);
 
   const handleClassInputStart = (e: any) => {
     if (studentObject.length === 0) return;
-    setStudentObject((prevArr: any) =>
-      prevArr.map((value: any) => {
-        return value.id === selectedIndex
-          ? { ...value, sclass: e.target.value }
-          : value;
+    setStudentObject((prevArr: StudentObjectType[]) =>
+      prevArr.map((value: StudentObjectType) => {
+        return value.id === selectedIndex ? { ...value, start_period: e.target.value } : value;
       })
     );
-    setSclass(e.target.value);
+    setStartPeriod(e.target.value);
   };
 
   const handleClassInputFinish = (e: any) => {
     if (studentObject.length === 0) return;
-    setStudentObject((prevArr: any) =>
-      prevArr.map((value: any) => {
-        return value.id === selectedIndex
-          ? { ...value, fclass: e.target.value }
-          : value;
+    setStudentObject((prevArr: StudentObjectType[]) =>
+      prevArr.map((value: StudentObjectType) => {
+        return value.id === selectedIndex ? { ...value, end_period: e.target.value } : value;
       })
     );
-    setFclass(e.target.value);
+    setEndPeriod(e.target.value);
   };
 
   useEffect(() => {
     if (studentObject.length === 0) return;
-    return (
-      setSdate(
-        `${
-          studentObject
-            .find((value: StudentObjectType) => value.id === selectedIndex)
-            .sdate.split("-")[0]
-        }년
+    setStartDate(
+      `${
+        studentObject
+          .find((value: StudentObjectType) => value.id === selectedIndex)
+          .start_date.split("-")[0]
+      }년
          ${
            studentObject
              .find((value: StudentObjectType) => value.id === selectedIndex)
-             .sdate.split("-")[1]
+             .start_date.split("-")[1]
          }월
          ${
            studentObject
              .find((value: StudentObjectType) => value.id === selectedIndex)
-             .sdate.split("-")[2]
+             .start_date.split("-")[2]
          }일`
-      ),
-      setFdate(
-        `${
-          studentObject
-            .find((value: StudentObjectType) => value.id === selectedIndex)
-            .fdate.split("-")[0]
-        }년
+    );
+
+    setEndDate(
+      `${
+        studentObject
+          .find((value: StudentObjectType) => value.id === selectedIndex)
+          .end_date.split("-")[0]
+      }년
            ${
              studentObject
                .find((value: StudentObjectType) => value.id === selectedIndex)
-               .fdate.split("-")[1]
+               .end_date.split("-")[1]
            }월
            ${
              studentObject
                .find((value: StudentObjectType) => value.id === selectedIndex)
-               .fdate.split("-")[2]
+               .end_date.split("-")[2]
            }일`
-      )
     );
-  }, [selectedIndex, fdateValue, sdateValue]);
+  }, [selectedIndex, endDateValue, startDateValue]);
 
   useEffect(() => {
-    setSclass("");
-    setFclass("");
     if (studentObject.length === 0) return;
-    setSclass(
-      studentObject.find(
-        (value: StudentObjectType) => value.id === selectedIndex
-      ).sclass === ""
+    setStartPeriod("");
+    setEndPeriod("");
+    setStartPeriod(
+      studentObject.find((value: StudentObjectType) => value.id === selectedIndex).start_period ===
+        ""
         ? ""
-        : studentObject.find(
-            (value: StudentObjectType) => value.id === selectedIndex
-          ).sclass
+        : studentObject.find((value: StudentObjectType) => value.id === selectedIndex).start_period
     );
-    setFclass(
-      studentObject.find(
-        (value: StudentObjectType) => value.id === selectedIndex
-      ).fclass === ""
+    setEndPeriod(
+      studentObject.find((value: StudentObjectType) => value.id === selectedIndex).end_period === ""
         ? ""
-        : studentObject.find(
-            (value: StudentObjectType) => value.id === selectedIndex
-          ).fclass
+        : studentObject.find((value: StudentObjectType) => value.id === selectedIndex).end_period
     );
   }, [selectedIndex]);
 
@@ -125,19 +114,15 @@ const DatePick: FC = (): JSX.Element => {
           <S.Date>
             <S.DateText
               onClick={() => {
-                if (sdate === "학생을 추가해주세요") return;
+                if (startDate === "학생을 추가해주세요") return;
                 setIsFOpen(!isFOpen);
               }}
             >
-              {sdate}
+              {startDate}
             </S.DateText>
             <Calendar isOpen={isFOpen} index={0} />
             <div className="classContainer">
-              <S.ClassInput
-                maxLength={2}
-                value={sclass}
-                onChange={handleClassInputStart}
-              />
+              <S.ClassInput maxLength={2} value={startPeriod} onChange={handleClassInputStart} />
               <div>교시</div>
             </div>
           </S.Date>
@@ -145,19 +130,15 @@ const DatePick: FC = (): JSX.Element => {
           <S.Date>
             <S.DateText
               onClick={() => {
-                if (fdate === "학생을 추가해주세요") return;
+                if (endDate === "학생을 추가해주세요") return;
                 setIsSOpen(!isSOpen);
               }}
             >
-              {fdate}
+              {endDate}
             </S.DateText>
             <Calendar isOpen={isSOpen} index={1} />
             <div className="classContainer">
-              <S.ClassInput
-                maxLength={2}
-                value={fclass}
-                onChange={handleClassInputFinish}
-              />
+              <S.ClassInput maxLength={2} value={endPeriod} onChange={handleClassInputFinish} />
               <div>교시</div>
             </div>
           </S.Date>

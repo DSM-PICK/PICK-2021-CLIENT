@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect } from "react";
+import { FC, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   StudentObject,
@@ -11,9 +11,7 @@ import { StudentObjectType } from "../../../../../lib/interface/desktop/ATChange
 
 const Reason: FC = (): JSX.Element => {
   const [reason, setReason] = useRecoilState(ReasonAtom);
-  const [studentObject, setStudentObject] = useRecoilState<
-    StudentObjectType | any
-  >(StudentObject);
+  const [studentObject, setStudentObject] = useRecoilState<StudentObjectType[]>(StudentObject);
   const selectedIndex = useRecoilValue(SelectedIndex);
 
   const checkWordLength = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,21 +19,17 @@ const Reason: FC = (): JSX.Element => {
     setStudentObject(
       studentObject.length === 0
         ? studentObject
-        : (prevArr: any) =>
-            prevArr.map((value: any) => {
-              return value.id === selectedIndex
-                ? { ...value, reason: e.target.value }
-                : value;
+        : (prevArr: StudentObjectType[]) =>
+            prevArr.map((value: StudentObjectType) => {
+              return value.id === selectedIndex ? { ...value, reason: e.target.value } : value;
             })
     );
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (studentObject.length === 0) return;
     setReason(
-      studentObject.find(
-        (value: StudentObjectType) => value.id === selectedIndex
-      ).reason
+      studentObject.find((value: StudentObjectType) => value.id === selectedIndex)?.reason ?? ""
     );
   }, [selectedIndex]);
 

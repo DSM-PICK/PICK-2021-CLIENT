@@ -20,49 +20,56 @@ import {
 import List from "./List";
 import { COLOR } from "../../../style/color";
 
-//출결 변경
 const AttendanceChange: FC = (): JSX.Element => {
   const ACListArray: string[] = ["결석일", "결석자", "종류", "신고자", "비고"];
   const AttendanceChangeNavArr = ["전체", "2층", "3층", "4층", "5층", "특별실"];
   const ReasonState = useRecoilValue(ReasonAtom);
-  const [attendancyChange, setAttendancyChange] =
-    useRecoilState(AttendanceChanges);
+  const [attendanceChange, setAttendanceChange] = useRecoilState(AttendanceChanges);
   const studentObject = useRecoilValue(StudentObject);
   const resetStudentObject = useResetRecoilState(StudentObject);
   const [navBarIndex, setNavBarIndex] = useState(0);
 
-  const postChanges = async () => {
+  const handleAttendanceChangeList = async () => {
+    const data = await getAttendanceChangeList(navBarIndex + 1);
+
+    setAttendanceChange(data.data);
+  };
+
+  const postChanges = () => {
     let data: postDataType[] = [];
-    await studentObject.map((value: StudentObjectType) => {
+
+    studentObject.map((value: StudentObjectType) => {
       data.push({
         state: typeArray[value.type],
-        term: `${value.sdate}-${value.sclass}T${value.fdate}-${value.fclass}`,
+        start_date: value.start_date,
+        end_date: value.end_date,
+        start_period: Number(value.start_period) ?? 0,
+        end_period: Number(value.end_period) ?? 0,
         student_id: value.id,
         reason: value.reason,
-        teacher_id: localStorage.getItem("teacher_id"),
+        teacher_id: localStorage.getItem("teacher_id") ?? "",
+        location_id: 2,
       });
     });
 
-    data.map((value: postDataType) => {
-      if (value.term.length <= 24) {
-        alert("교시를 입력해주세요");
+    data.forEach((value: postDataType, index) => {
+      if (!value.start_period && !value.end_period) {
+        alert(`${studentObject[index].name} 학생의 교시를 입력해주세요`);
         return;
       }
       if (value.reason.length === 0) {
-        alert("비고를 작성해주세요");
+        alert(`${studentObject[index].name} 학생의 비고를 작성해주세요`);
         return;
       }
       if (value.reason.length >= 10) {
-        alert("비고가 10글자를 넘었어요");
+        alert(`${studentObject[index].name} 학생의 비고가 10글자를 넘었어요`);
         return;
       }
 
       postAttendanceChange(value)
         .then(() => {
           resetStudentObject();
-          getAttendanceChangeList().then((res) => {
-            setAttendancyChange(res.data);
-          });
+          handleAttendanceChangeList();
         })
         .catch((err) => {
           console.log(err);
@@ -71,14 +78,8 @@ const AttendanceChange: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    getAttendanceChangeList().then((res) => {
-      setAttendancyChange(res.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    console.log(studentObject);
-  }, [studentObject]);
+    handleAttendanceChangeList();
+  }, [navBarIndex]);
 
   return (
     <S.Wrapper>
@@ -89,9 +90,7 @@ const AttendanceChange: FC = (): JSX.Element => {
           <S.RowDivider />
           {studentObject.length === 0 ? (
             <S.PleaseAddContainer>
-              <S.PleaseAddStudentsFirstText>
-                학생을 추가해주세요
-              </S.PleaseAddStudentsFirstText>
+              <S.PleaseAddStudentsFirstText>학생을 추가해주세요</S.PleaseAddStudentsFirstText>
               <S.PleaseAddStudentsFirstIMG />
             </S.PleaseAddContainer>
           ) : (
@@ -108,7 +107,7 @@ const AttendanceChange: FC = (): JSX.Element => {
           >
             추가하기
           </S.AddButton>
-          <S.ErrorMessage display={ReasonState.length > 10 ? "block" : "none"}>
+          <S.ErrorMessage display={ReasonState.length >= 10 ? "block" : "none"}>
             비고의 내용이 10글자를 넘었습니다
           </S.ErrorMessage>
         </S.AttendanceAddContainer>
@@ -133,15 +132,11 @@ const AttendanceChange: FC = (): JSX.Element => {
       <S.AttendanceChangeListContainer>
         <S.AttendanceChangeListHeader>
           {ACListArray.map((value: string, index: number) => {
-            return (
-              <S.AttendanceChangeListHead key={index}>
-                {value}
-              </S.AttendanceChangeListHead>
-            );
+            return <S.AttendanceChangeListHead key={index}>{value}</S.AttendanceChangeListHead>;
           })}
         </S.AttendanceChangeListHeader>
         <S.AttendanceChangeListBody>
-          {attendancyChange.map((value: StudentListDataType) => {
+          {attendanceChange.map((value: StudentListDataType) => {
             return (
               <List
                 index={value.id}
@@ -151,6 +146,7 @@ const AttendanceChange: FC = (): JSX.Element => {
                 teacherName={value.teacher_id}
                 reason={value.reason}
                 type={value.state}
+                handleAttendanceChange={handleAttendanceChangeList}
               />
             );
           })}

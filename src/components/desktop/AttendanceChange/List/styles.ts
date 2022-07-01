@@ -17,6 +17,8 @@ export const ACListColumns = styled.div`
   grid-template-columns: 35% 13% 13% 13% 25%;
   position: relative;
   color: ${COLOR.black};
+  border-radius: 3px;
+
   &:hover {
     transition: 0.2s;
     background-color: ${COLOR.grey};
@@ -57,13 +59,13 @@ export const ACListSettings = styled.div<{ opacity: number }>`
 export const SettingModal = styled.div<{ display: string; opacity: number }>`
   position: absolute;
   width: 40px;
-  height: 50px;
+  height: 30px;
   right: 0;
   transform: translate(-85%, 45%);
   border-radius: 5px;
   box-shadow: rgb(0 0 0 / 20%) 0px 4px 4px 0px;
   display: ${(props) => props.display};
-  grid-template-rows: repeat(2, 1fr);
+  /* grid-template-rows: repeat(2, 1fr); */
   z-index: 10;
   background-color: ${COLOR.white};
   opacity: ${(props) => props.opacity};
