@@ -14,7 +14,7 @@ export interface MoveModalType {
 }
 
 export const moveModal = atom<MoveModalType>({
-  key: "modal",
+  key: "moveModal",
   default: {} as MoveModalType,
 });
 

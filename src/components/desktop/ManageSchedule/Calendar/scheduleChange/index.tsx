@@ -66,7 +66,17 @@ const ChangeModal: FC<Props> = ({ refetchScheduleList }) => {
           setTeacherFloorArr(teacherListWhenUndefined);
           setHasTeacher([false, false, false]);
         } else {
-          setTeacherFloorArr(response.data.teachers);
+          setTeacherFloorArr(() => {
+            const arr = [...teacherListWhenUndefined];
+
+            response.data.teachers.map(
+              (value: { teacher_id: string; teacher_name: string; floor: number }) => {
+                arr[value.floor - 2] = value;
+              }
+            );
+
+            return arr;
+          });
 
           setHasTeacher((prev) => {
             const arr = [...prev];
