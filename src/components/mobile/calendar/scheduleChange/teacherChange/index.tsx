@@ -47,13 +47,15 @@ const TeacherChange = () => {
   );
 
   const teacherListHandler = (list: TeacherType[]) => {
+    if (!list) return;
     const num = [2, 3, 4];
+
     for (let i = 2; i <= 4; i++) {
       return (
         <>
           {num.map((i) => (
             <div className="teacher_wrap" key={i}>
-              {list?.map((item) => (
+              {list.map((item) => (
                 <span
                   key={item.teacher_id}
                   onClick={() => patchTeacherHandle({ floor: i, id: item.teacher_id })}
