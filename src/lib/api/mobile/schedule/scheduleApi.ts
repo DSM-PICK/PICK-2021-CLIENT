@@ -59,4 +59,14 @@ export default {
       },
     });
   },
+  getSchedule(year: number, month: number) {
+    return request({
+      url: "/schedule/director/export?year=2022&month=6",
+      method: "get",
+      params: {
+        year: year,
+        month: month,
+      },
+    });
+  },
 };
