@@ -8,21 +8,25 @@ export interface StudentObjectType {
   id: number;
   gcn: number;
   name: string;
-  sdate: string;
-  fdate: string;
-  sclass: string;
-  fclass: string;
+  start_date: string;
+  end_date: string;
+  start_period: string;
+  end_period: string;
   type: number;
   reason: string;
   teacher_id: string | null;
 }
 
 export interface postDataType {
-  state: string;
-  term: string;
-  student_id: number;
   reason: string;
-  teacher_id: string | null;
+  state: string;
+  student_id: number;
+  teacher_id: string;
+  start_date: string;
+  end_date: string;
+  start_period: number;
+  end_period: number;
+  location_id: 2 | 3 | 4;
 }
 
 export interface StudentListDataType {

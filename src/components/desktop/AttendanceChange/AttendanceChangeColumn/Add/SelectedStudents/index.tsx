@@ -5,7 +5,7 @@ import {
   StudentObject,
 } from "../../../../../../modules/desktop/atom/ATChange";
 import { useRecoilState } from "recoil";
-import { StudentObjectType } from "../../../../../../lib/interface/desktop/ATChange";
+import { StudentObjectType } from "../../../../../../lib/interface/desktop/AttendanceChange";
 
 interface Props {
   id: number;

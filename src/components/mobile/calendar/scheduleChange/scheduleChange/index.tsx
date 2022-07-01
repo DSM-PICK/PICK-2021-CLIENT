@@ -38,7 +38,7 @@ const ScheduleChange = () => {
       onSuccess: () => {
         setModalOpen(false);
         queryClient.invalidateQueries("state_value");
-        queryClient.invalidateQueries("scehdule_list");
+        queryClient.invalidateQueries("schedule_list");
         toast.success("일정이 변경되었습니다.");
       },
       onError: () => {

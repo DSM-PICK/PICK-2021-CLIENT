@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { StudentObjectType } from "../../../../lib/interface/desktop/ATChange";
+import { StudentObjectType } from "../../../../lib/interface/desktop/AttendanceChange";
 const date = new Date();
 
 export const FModal = atom({

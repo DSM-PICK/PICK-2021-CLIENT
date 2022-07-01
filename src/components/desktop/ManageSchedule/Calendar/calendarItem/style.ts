@@ -85,14 +85,15 @@ export const ContentWrap = styled.div`
 `;
 
 export const ChangeBtnWrap = styled.section`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 32px;
+  box-sizing: border-box;
 
   button {
-    position: absolute;
     padding: 8px 15px;
     background: ${MainColor};
     border: none;
@@ -102,8 +103,6 @@ export const ChangeBtnWrap = styled.section`
     font-size: 18px;
     cursor: pointer;
   }
-
-  box-sizing: border-box;
 
   .item_center {
     text-align: center;
@@ -132,15 +131,17 @@ export const BoxItem = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
+`;
 
-  .teacher_list {
-    margin: 5px 0;
-    display: flex;
-    flex-direction: column;
+export const TeacherList = styled.div`
+  margin: 5px 0;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+`;
 
-    span {
-      padding: 0.1rem 0;
-      box-sizing: border-box;
-    }
-  }
+export const TeacherInformation = styled.span<{ gridStart: number; gridEnd: number }>`
+  padding: 0.1rem 0;
+  box-sizing: border-box;
+  grid-row-start: ${(props) => props.gridStart};
+  grid-row-end: ${(props) => props.gridEnd};
 `;
