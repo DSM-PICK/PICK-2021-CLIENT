@@ -23,26 +23,25 @@ export const TeacherInfoWrapper = styled.div`
 `;
 
 export const FloorItemBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   border-bottom: 1px solid #dfdfdf;
   padding: 2rem 0;
+`;
 
-  .teacher_wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
+export const TeacherWrap = styled.div<{ gridStart: number; gridEnd: number }>`
+  display: grid;
+  grid-column-start: ${(props) => props.gridStart};
+  grid-column-end: ${(props) => props.gridEnd};
+  place-items: center;
 
-    span:nth-of-type(1) {
-      font-size: 20px;
-      margin-bottom: 5px;
-    }
-    span:nth-of-type(2) {
-      font-size: 24px;
-      font-weight: 600;
-    }
+  span:nth-of-type(1) {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  span:nth-of-type(2) {
+    font-size: 24px;
+    font-weight: 600;
   }
 `;
 
@@ -82,6 +81,7 @@ export const TeacherItemBox = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 2rem 0;
+
   .teacher_wrap {
     text-align: center;
     display: flex;

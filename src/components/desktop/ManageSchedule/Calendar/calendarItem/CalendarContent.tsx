@@ -1,43 +1,28 @@
-/* eslint-disable no-loop-func */
 import moment from "moment";
 import { useRecoilState } from "recoil";
 import { date } from "../../../../../modules/mobile/atom/calendar";
 import * as S from "./style";
 import { StateChangeHook } from "../../../../../utils/stateChangeHook";
-import { useQuery } from "react-query";
-import schedule from "../../../../../lib/api/mobile/schedule/scheduleApi";
 import { ScheduleListType } from "../../../../../lib/interface/mobile/schedule/schedule";
 import { ScheduleTeacherType } from "../../../../../lib/interface/mobile/teacher";
+import { FC } from "react";
+import { AxiosResponse } from "axios";
 
-const CalendarContent = () => {
+interface Props {
+  scheduleList: AxiosResponse<any, any> | undefined;
+}
+
+const CalendarContent: FC<Props> = ({ scheduleList }) => {
   const [baseDate, setBaseDate] = useRecoilState(date);
   const week = ["월", "화", "수", "목", "금"];
 
   const handleDayClick = (current: moment.Moment) => setBaseDate(current);
 
-  // 달별로 일정 리스트
-  const { data: scheduleList } = useQuery(
-    ["scehdule_list", baseDate.format("MM")],
-    () =>
-      schedule.getScheduleListMonth(
-        baseDate.format("YYYY"),
-        baseDate.format("MM")
-      ),
-    {
-      enabled: !!baseDate.format("MM"),
-      cacheTime: Infinity,
-      staleTime: Infinity,
-      keepPreviousData: true,
-    }
-  );
-
   function generate() {
     const today = baseDate;
     const startWeek = today.clone().startOf("month").week();
     const endWeek =
-      today.clone().endOf("month").week() === 1
-        ? 53
-        : today.clone().endOf("month").week();
+      today.clone().endOf("month").week() === 1 ? 53 : today.clone().endOf("month").week();
 
     let calendar = [];
 
@@ -55,17 +40,15 @@ const CalendarContent = () => {
                 .add(i + 1, "day");
 
               let isSelected =
-                today.format("YYYY-MM-DD") === current.format("YYYY-MM-DD")
-                  ? "selected"
-                  : "";
+                today.format("YYYY-MM-DD") === current.format("YYYY-MM-DD") ? "selected" : "";
 
-              let isGrayed =
-                current.format("MM") !== today.format("MM") ? "grayed" : "";
+              let isGrayed = current.format("MM") !== today.format("MM") ? "grayed" : "";
 
               const _schedule = scheduleList?.data?.find(
-                (schedule: ScheduleListType) =>
-                  schedule.date === current.format("YYYY-MM-DD")
+                (schedule: ScheduleListType) => schedule.date === current.format("YYYY-MM-DD")
               );
+
+              console.log(_schedule, scheduleList);
 
               return (
                 <S.BoxItem
@@ -77,13 +60,17 @@ const CalendarContent = () => {
                     <span>{current.format("D")}</span>
                     <span>{StateChangeHook(_schedule?.name)}</span>
                   </div>
-                  <div className="teacher_list">
-                    {_schedule?.director?.map(
-                      (teacher: ScheduleTeacherType) => (
-                        <span key={teacher.teacher_id}>{teacher.name}</span>
-                      )
-                    )}
-                  </div>
+                  <S.TeacherList>
+                    {_schedule?.director?.map((teacher: ScheduleTeacherType, index: number) => (
+                      <S.TeacherInformation
+                        key={`${baseDate}${teacher.teacher_id}${index}`}
+                        gridStart={teacher.floor - 1}
+                        gridEnd={teacher.floor}
+                      >
+                        {`${teacher.floor}층 ${teacher.name ?? "왜에러"}`}
+                      </S.TeacherInformation>
+                    ))}
+                  </S.TeacherList>
                 </S.BoxItem>
               );
             })}

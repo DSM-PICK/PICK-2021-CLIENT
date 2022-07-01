@@ -7,6 +7,7 @@ const CalendarChangeBtn = () => {
 
   return (
     <S.ChangeBtnWrap>
+      <button id="getSchedule">일정 받기</button>
       <div className="item_center">
         일정 교체를 원하시면 일정 교체를 선택한 후
         <br /> 변경하실 일정을 선택해주세요.

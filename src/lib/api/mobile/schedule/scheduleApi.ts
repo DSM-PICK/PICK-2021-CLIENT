@@ -38,4 +38,25 @@ export default {
       },
     });
   },
+  postTeacher(floor: number, date: string, teacher_id: string) {
+    return request({
+      url: "/schedule/director",
+      method: "post",
+      data: {
+        floor,
+        date,
+        teacher_id,
+      },
+    });
+  },
+  postSchedule(date: string, name: "SELF_STUDY" | "MAJOR" | "AFTER_SCHOOL") {
+    return request({
+      url: "/schedule",
+      method: "post",
+      data: {
+        date: date,
+        name: name,
+      },
+    });
+  },
 };

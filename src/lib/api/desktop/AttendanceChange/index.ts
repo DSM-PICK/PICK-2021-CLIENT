@@ -1,5 +1,5 @@
 import { postDataType } from "../../../interface/desktop/ATChange";
-import instance, { request } from "../Default";
+import instance from "../Default";
 
 export const searchStudents = async (name: string) => {
   try {
@@ -10,9 +10,9 @@ export const searchStudents = async (name: string) => {
   }
 };
 
-export const getAttendanceChangeList = async () => {
+export const getAttendanceChangeList = async (floor: number) => {
   try {
-    const req = await instance.get("/attendance");
+    const req = await instance.get(`/attendance/today?floor=${floor}`);
     return req;
   } catch (error) {
     throw error;
@@ -20,9 +20,12 @@ export const getAttendanceChangeList = async () => {
 };
 
 export const postAttendanceChange = async (data: postDataType) => {
-  const submitData = data;
   try {
-    const req = await instance.post("/attendance", submitData);
+    const req = await instance.post("/attendance", data, {
+      params: {
+        floor: 2,
+      },
+    });
     return req;
   } catch (error) {
     throw error;
@@ -31,8 +34,7 @@ export const postAttendanceChange = async (data: postDataType) => {
 
 export const deleteAttendanceChange = async (id: number) => {
   try {
-    const req = await instance.delete("/attendance");
-
+    const req = await instance.delete(`/attendance/${id}`);
     return req;
   } catch (error) {
     throw error;

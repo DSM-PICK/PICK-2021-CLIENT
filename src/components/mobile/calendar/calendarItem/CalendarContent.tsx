@@ -18,12 +18,8 @@ const CalendarContent = () => {
 
   // 달별로 일정 리스트
   const { data: scheduleList } = useQuery(
-    ["scehdule_list", baseDate.format("MM")],
-    () =>
-      schedule.getScheduleListMonth(
-        baseDate.format("YYYY"),
-        baseDate.format("MM")
-      ),
+    ["schedule_list", baseDate.format("MM")],
+    () => schedule.getScheduleListMonth(baseDate.format("YYYY"), baseDate.format("MM")),
     {
       enabled: !!baseDate.format("MM"),
       cacheTime: Infinity,
@@ -43,9 +39,7 @@ const CalendarContent = () => {
 
     const startWeek = today.clone().startOf("month").week();
     const endWeek =
-      today.clone().endOf("month").week() === 1
-        ? 53
-        : today.clone().endOf("month").week();
+      today.clone().endOf("month").week() === 1 ? 53 : today.clone().endOf("month").week();
 
     let calendar = [];
 
@@ -63,16 +57,12 @@ const CalendarContent = () => {
                 .add(i + 1, "day");
 
               let isSelected =
-                today.format("YYYY-MM-DD") === current.format("YYYY-MM-DD")
-                  ? "selected"
-                  : "";
+                today.format("YYYY-MM-DD") === current.format("YYYY-MM-DD") ? "selected" : "";
 
-              let isGrayed =
-                current.format("MM") !== today.format("MM") ? "grayed" : "";
+              let isGrayed = current.format("MM") !== today.format("MM") ? "grayed" : "";
 
               const _schedule = scheduleList?.data?.find(
-                (schedule: ScheduleListType) =>
-                  schedule.date === current.format("YYYY-MM-DD")
+                (schedule: ScheduleListType) => schedule.date === current.format("YYYY-MM-DD")
               );
 
               return (
@@ -86,11 +76,9 @@ const CalendarContent = () => {
                     <span>{StateChangeHook(_schedule?.name)}</span>
                   </div>
                   <div className="teacher_list">
-                    {_schedule?.director?.map(
-                      (teacher: ScheduleTeacherType) => (
-                        <span key={teacher.teacher_id}>{teacher.name}</span>
-                      )
-                    )}
+                    {_schedule?.director?.map((teacher: ScheduleTeacherType) => (
+                      <span key={teacher.teacher_id}>{teacher.name}</span>
+                    ))}
                   </div>
                 </S.BoxItem>
               );

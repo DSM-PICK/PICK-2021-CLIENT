@@ -1,12 +1,5 @@
 import * as S from "./styles";
-import {
-  FC,
-  MutableRefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, MutableRefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Prev, Next } from "../../../assets";
 import { COLOR } from "../../../style/color";
 import {
@@ -19,6 +12,7 @@ import {
 } from "../../../modules/desktop/atom/ATChange";
 import { CModal, CDateValue } from "../../../modules/desktop/atom/ATCheck";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+import { StudentObjectType } from "../../../lib/interface/desktop/ATChange";
 
 interface Props {
   isOpen: boolean;
@@ -79,7 +73,6 @@ const Calendar: FC<Props> = ({ isOpen, index }): JSX.Element => {
   };
 
   const renderDay = () => {
-    //달력 칸 42개 렌더링하기
     const dayArray = [];
     for (let i = 1; i <= 42; i++) {
       dayArray.push(<S.Days key={i} />);
@@ -110,20 +103,16 @@ const Calendar: FC<Props> = ({ isOpen, index }): JSX.Element => {
 
   const selectCalendar = (e: any, count: any) => {
     if (studentObject.length === 0) return;
-    const selectDate = `${year}-${
-      month + 1 < 10 ? `0${month + 1}` : month + 1
-    }-${
+    const selectDate = `${year}-${month + 1 < 10 ? `0${month + 1}` : month + 1}-${
       e.target.innerHTML < 10 ? `0${e.target.innerHTML}` : e.target.innerHTML
     }`;
     if (index === 0) {
       setStudentObject(
         studentObject.length === 0
           ? studentObject
-          : (prevArr: any) =>
-              prevArr.map((value: any) => {
-                return value.id === count
-                  ? { ...value, sdate: selectDate }
-                  : value;
+          : (prevArr: StudentObjectType[]) =>
+              prevArr.map((value: StudentObjectType) => {
+                return value.id === count ? { ...value, start_date: selectDate } : value;
               })
       );
       setFDate(selectDate);
@@ -132,11 +121,9 @@ const Calendar: FC<Props> = ({ isOpen, index }): JSX.Element => {
       setStudentObject(
         studentObject.length === 0
           ? studentObject
-          : (prevArr: any) =>
-              prevArr.map((value: any) => {
-                return value.id === count
-                  ? { ...value, fdate: selectDate }
-                  : value;
+          : (prevArr: StudentObjectType[]) =>
+              prevArr.map((value: StudentObjectType) => {
+                return value.id === count ? { ...value, end_date: selectDate } : value;
               })
       );
       setSDate(selectDate);
