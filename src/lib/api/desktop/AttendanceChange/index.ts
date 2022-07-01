@@ -1,4 +1,4 @@
-import { postDataType } from "../../../interface/desktop/ATChange";
+import { postDataType } from "../../../interface/desktop/AttendanceChange";
 import instance from "../Default";
 
 export const searchStudents = async (name: string) => {

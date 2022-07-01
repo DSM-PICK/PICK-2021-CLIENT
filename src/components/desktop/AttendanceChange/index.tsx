@@ -16,7 +16,7 @@ import {
   postDataType,
   StudentObjectType,
   StudentListDataType,
-} from "../../../lib/interface/desktop/ATChange";
+} from "../../../lib/interface/desktop/AttendanceChange";
 import List from "./List";
 import { COLOR } from "../../../style/color";
 

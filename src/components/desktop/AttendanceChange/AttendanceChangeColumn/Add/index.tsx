@@ -14,7 +14,7 @@ import SelectedStudent from "./SelectedStudents/index";
 import {
   SelectedStudentsType,
   StudentObjectType,
-} from "../../../../../lib/interface/desktop/ATChange";
+} from "../../../../../lib/interface/desktop/AttendanceChange";
 
 const Add: FC = (): JSX.Element => {
   const [search, setSearch] = useRecoilState(searchStatus);

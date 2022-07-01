@@ -7,7 +7,7 @@ import {
 } from "../../../../../modules/desktop/atom/ATChange";
 import * as S from "./styles";
 import * as ACS from "../styles";
-import { StudentObjectType } from "../../../../../lib/interface/desktop/ATChange";
+import { StudentObjectType } from "../../../../../lib/interface/desktop/AttendanceChange";
 
 const Reason: FC = (): JSX.Element => {
   const [reason, setReason] = useRecoilState(ReasonAtom);

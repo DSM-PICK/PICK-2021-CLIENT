@@ -12,7 +12,7 @@ import {
 } from "../../../modules/desktop/atom/ATChange";
 import { CModal, CDateValue } from "../../../modules/desktop/atom/ATCheck";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
-import { StudentObjectType } from "../../../lib/interface/desktop/ATChange";
+import { StudentObjectType } from "../../../lib/interface/desktop/AttendanceChange";
 
 interface Props {
   isOpen: boolean;

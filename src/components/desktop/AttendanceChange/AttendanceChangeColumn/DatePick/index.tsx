@@ -13,7 +13,7 @@ import {
   FClassValue,
 } from "../../../../../modules/desktop/atom/ATChange";
 import Calendar from "../../../Calendar/Calendar";
-import { StudentObjectType } from "../../../../../lib/interface/desktop/ATChange";
+import { StudentObjectType } from "../../../../../lib/interface/desktop/AttendanceChange";
 import { typeArray } from "../../../../../constance/index";
 
 const DatePick: FC = (): JSX.Element => {

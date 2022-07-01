@@ -8,7 +8,7 @@ import {
   SelectedIndex,
 } from "../../../../../modules/desktop/atom/ATChange";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { StudentObjectType } from "../../../../../lib/interface/desktop/ATChange";
+import { StudentObjectType } from "../../../../../lib/interface/desktop/AttendanceChange";
 
 const AttendanceChange: FC = (): JSX.Element => {
   const ACListArray: string[] = ["결석일", "결석자", "종류", "신고자", "비고"];
