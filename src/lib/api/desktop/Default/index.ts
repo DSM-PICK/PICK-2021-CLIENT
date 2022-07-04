@@ -1,61 +1,72 @@
 import axios, { AxiosError } from "axios";
-import { refresh, refreshError } from "../refresh";
-
-export const request = axios.create({
-  timeout: 10000,
-  baseURL: "https://api-2021.dsm-pick.com",
-});
-
-export const getRequestWithToken = (
-  token: string,
-  type: "json" | "blob" | "text" = "json"
-) => {
-  const request = axios.create({
-    timeout: 10000,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      withCredentials: true,
-    },
-    responseType: type,
-    withCredentials: true,
-  });
-
-  return request;
-};
+import { toast } from "react-toastify";
 
 const instance = axios.create({
-  timeout: 100000,
-  baseURL: "https://api-2021.dsm-pick.com",
+  baseURL: process.env.REACT_APP_BASE_URL,
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-instance.interceptors.request.use(refresh, refreshError);
+instance.interceptors.request.use(
+  (config: any) => {
+    config.headers.Authorization = "Bearer " + localStorage.getItem("access_token");
+
+    return config;
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  }
+);
 
 instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error: AxiosError) => {
-    const refreshToken = localStorage.getItem("refresh_token");
-    const Autorization = {
-      refresh_token: refreshToken,
-    };
-    if (error.response?.status === 401) {
-      request
-        .put("/teacher/auth", Autorization)
-        .then((res) => {
-          localStorage.setItem("access_token", res.data.access_token);
-          localStorage.setItem("refresh_token", res.data.refresh_token);
-        })
-        .catch((err: AxiosError) => {
-          if (err.response?.status === 401) {
-            // alert("로그인 후 이용하실 수 있습니다.");
-            window.location.href = "/login";
-          }
+  async (error) => {
+    const { config, response } = error;
+
+    if (error.response.status === 401) {
+      toast.success("로그아웃 되었습니다.");
+
+      setTimeout(() => {
+        window.location.href = "/login";
+        localStorage.clear();
+      }, 1000);
+    }
+
+    if (response?.status === 401 && localStorage.getItem("refresh_token")) {
+      try {
+        const res = await axios({
+          method: "put",
+          url: `${process.env.REACT_APP_BASE_URL}/teacher/auth`,
+          data: {
+            refresh_token: localStorage.getItem("refresh_token"),
+          },
         });
+        const { access_token, refresh_token, teacher_id } = res.data;
+
+        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("refresh_token", refresh_token);
+        localStorage.setItem("teacher_id", teacher_id);
+
+        config.headers.Authorization = `Bearer ${access_token}`;
+
+        return axios(config);
+      } catch (err: any) {
+        if (err.response.status === 401) {
+          toast.success("로그아웃 되었습니다.");
+
+          setTimeout(() => {
+            window.location.href = "/login";
+            localStorage.clear();
+          }, 1000);
+        }
+      }
     }
 
     return Promise.reject(error);
   }
 );
-
 export default instance;
